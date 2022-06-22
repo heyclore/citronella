@@ -9,14 +9,14 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 setup(
     name="citronella",
     version="0.0.0",
-    description="a selenium extension for page object model"
+    description="a selenium extension for page object model",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/heyclore/citronella",
     author="heyclore",
     author_email="cloore@gmail.com",
     classifiers=[
-        "Development Status :: 0 - Planning",
+        "Development Status :: 1 - Planning",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Testing",
         "License :: OSI Approved :: MIT License",
