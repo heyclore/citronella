@@ -40,48 +40,48 @@ There's only 2 class import in this module.
 ```python
 import pytest
 from selenium import webdriver
-from citronella import WebdriverExtension
+from citronella import SelfBrowser
 
 
 @pytest.fixture(autouse=True, scope='class')
 def init_browser(request):
     driver = webdriver.Chrome()
-    browser = WebdriverExtension(driver)
+    browser = SelfBrowser(driver)
     request.cls.browser = browser
     yield
-    browser.quit()
+    driver.quit()
 ```
 
 * second module for `Page Object Model`
 
 ```python
 from selenium.webdriver.common.by import By
-from citronella import We
+from citronella import Ui
 from Pages.component.HeaderMenu import HeaderMenu
 
 
 class HomePage(HeaderMenu):
 
     def some_button(self):
-        return We(by.XPATH, '//a[@name="foo"]')
+        return Ui(By.XPATH, '//a[@name="foo"]')
 
     def search_input(self):
-        return We(by.ID, 'search')
+        return Ui(By.ID, 'search')
         
     def search_button(self):
         from Pages.SearchPage import SearchPage 
-        return We(by.NAME, 'search-button', SearchPage)
+        return Ui(By.NAME, 'search-button', SearchPage)
 ```
 
 ___
 # Usage
         
-### citronella.WebdriverExtension
+### citronella.SelfBrowser
 
 ###### Args:
 - webdriver
 
-###### command lists:
+###### function lists:
 - page
 - page_object
 - get_window_size
@@ -89,14 +89,14 @@ ___
 - sleep
 - back
 
-### citronella.We
+### citronella.Ui
 
 ###### Args:
 - selenium_by
 - string_locator
 - new_page_object(optional)
 
-###### returned object command lists:
+###### function lists:
 - get_attribute
 - get_element
 - get_elements
