@@ -30,6 +30,14 @@ class TestNavigationMenu:
         self.browser.page.register_button.click()
         assert 'Register" in self.browser.driver.title
 ```
+
+___
+## Install Package
+
+```bash
+pip install citronella
+```
+
 ___
 ## Documentation
 
