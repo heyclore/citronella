@@ -1,6 +1,6 @@
 # Webdriver Extension with Page Object Wrapper
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mauris ac nulla cursus efficitur. Sed finibus risus eleifend nulla tincidunt tristique. Praesent nibh risus, vestibulum non tincidunt tempor, fermentum et turpis. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mauris ac nulla cursus efficitur. Sed finibus risus eleifend nulla tincidunt tristique. Praesent nibh risus, vestibulum non tincidunt tempor, fermentum et turpis.
 
 ## Example Test
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mauris ac nulla cursus efficitur.
@@ -14,7 +14,7 @@ class TestNavigationMenu:
     def test_help_page(self):
         self.browser.driver.get('https://pypi.org/')
         self.browser.page_object(HomePage)
-        
+
         self.browser.page.help_button.click()
         assert 'Help" in self.browser.driver.title
 
@@ -25,7 +25,7 @@ class TestNavigationMenu:
     def test_login_page(self):
         self.browser.page.login_button.click()
         assert 'Log" in self.browser.driver.title
-        
+
     def test_register_page(self):
         self.browser.page.register_button.click()
         assert 'Register" in self.browser.driver.title
@@ -67,21 +67,22 @@ class HomePage(HeaderMenu):
 
     def search_input(self):
         return Ui(By.ID, 'search')
-        
+
     def search_button(self):
-        from Pages.SearchPage import SearchPage 
+        from Pages.SearchPage import SearchPage
         return Ui(By.NAME, 'search-button', SearchPage)
 ```
 
 ___
 # Usage
-        
+
 ### citronella.SelfBrowser
 
 ###### Args:
 - webdriver
 
 ###### function lists:
+- driver
 - page
 - page_object
 - get_window_size

@@ -50,5 +50,4 @@ class Ui:
     @logger
     def text(self):
         """return text of web element."""
-        return self._webdriver_wait(EC.element_to_be_clickable(
-            self._locator)).text
+        return self.get_element().text

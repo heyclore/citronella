@@ -3,7 +3,7 @@ from time import sleep
 from .page_decorator import Page_Decorator
 
 
-class WebBrowser:
+class SelfBrowser:
     """
     a browser class that use across the tests.
 
