@@ -22,7 +22,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3 :: Only",
     ],
-    keywords="test, unittest", "pytest", "pytest-html,
+    keywords="test, unittest, pytest, pytest-html",
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     python_requires=">=3, < 4",
