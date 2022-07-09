@@ -1,9 +1,9 @@
-# Webdriver Extension with Page Object Wrapper
+# Citronella
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mauris ac nulla cursus efficitur. Sed finibus risus eleifend nulla tincidunt tristique. Praesent nibh risus, vestibulum non tincidunt tempor, fermentum et turpis.
+Citronella is a selenium webdriver extension with page object wrapper for create a tests a bit simple.
 
 ## Example Test
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mauris ac nulla cursus efficitur.
+[a full documentation / demo examples here.](https://github.com/heyclore/citronella/tree/main/example)
 
 ```python
 import pytest
@@ -85,19 +85,19 @@ class HomePage(HeaderMenu):
 ___
 ## Usage
 
-### citronella.SelfBrowser
+### citronella.WebPage
 
 ###### Args:
 - webdriver
 
-###### function lists:
-- driver
-- page
-- page_object
-- get_window_size
-- ready_state
-- sleep
-- back
+###### Method Lists:
+- [driver](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L13)
+- [page_object](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L21)
+- [page](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L29)
+- [back](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L36)
+- [get_window_size](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L45)
+- [ready_state](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L54)
+- [sleep](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L60)
 
 ### citronella.Ui
 
@@ -106,10 +106,10 @@ ___
 - string_locator
 - new_page_object
 
-###### function lists:
-- get_attribute
-- get_element
-- get_elements
-- click
-- send_keys
-- text
+###### Method Lists:
+- [send_keys](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L70)
+- [click](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L79)
+- [get_attribute](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L87)
+- [get_element](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L96)
+- [get_elements](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L102)
+- [text](https://github.com/heyclore/citronella/blob/9ed18b33fc87beb59c8fe92768ce3ec7c5a40f29/example/Tests/test_usage_demo.py#L109)
