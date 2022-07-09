@@ -7,28 +7,29 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mauris a
 
 ```python
 import pytest
-from Pages.HomePage import HomePage
+from Pages.home.home_page import HomePage
 
 
 class TestNavigationMenu:
-    def test_help_page(self):
-        self.browser.driver.get('https://pypi.org/')
-        self.browser.page_object(HomePage)
 
-        self.browser.page.help_button.click()
-        assert 'Help" in self.browser.driver.title
+    def test_help_page(self):
+        self.web.driver.get('https://pypi.org/')
+        self.web.page_object(HomePage)
+
+        self.web.page.help_button.click()
+        assert 'Help' in self.web.driver.title
 
     def test_sponsors_page(self):
-        self.browser.page.sponsors_button.click()
-        assert 'Sponsors" in self.browser.driver.title
+        self.web.page.sponsors_button.click()
+        assert 'Sponsors' in self.web.driver.title
 
     def test_login_page(self):
-        self.browser.page.login_button.click()
-        assert 'Log" in self.browser.driver.title
+        self.web.page.login_button.click()
+        assert 'Log' in self.web.driver.title
 
     def test_register_page(self):
-        self.browser.page.register_button.click()
-        assert 'Register" in self.browser.driver.title
+        self.web.page.register_button.click()
+        assert 'Create' in self.web.driver.title
 ```
 
 ___
@@ -41,21 +42,21 @@ pip install citronella
 ___
 ## Documentation
 
-There's only 2 class import in this module.
+There's only 2 modules import in this package.
 
 * first module for `conftest.py`
 
 ```python
 import pytest
 from selenium import webdriver
-from citronella import SelfBrowser
+from citronella import WebPage
 
 
 @pytest.fixture(autouse=True, scope='class')
-def init_browser(request):
+def browser(request):
     driver = webdriver.Chrome()
-    browser = SelfBrowser(driver)
-    request.cls.browser = browser
+    web = WebPage(driver)
+    request.cls.web = web
     yield
     driver.quit()
 ```
@@ -82,7 +83,7 @@ class HomePage(HeaderMenu):
 ```
 
 ___
-# Usage
+## Usage
 
 ### citronella.SelfBrowser
 
@@ -103,7 +104,7 @@ ___
 ###### Args:
 - selenium_by
 - string_locator
-- new_page_object(optional)
+- new_page_object
 
 ###### function lists:
 - get_attribute

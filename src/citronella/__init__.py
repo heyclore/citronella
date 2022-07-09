@@ -1,2 +1,2 @@
 from .ui import Ui
-from .selfbrowser import SelfBrowser
+from .webpage import WebPage

@@ -4,7 +4,7 @@ from Pages.components import Header, Footer
 
 
 class LoginPage(Header, Footer):
-    def usename_input(self):
+    def username_input(self):
         return Ui(By.ID, 'username')
 
     def password_input(self):

@@ -1,5 +1,5 @@
 from selenium import webdriver
-from citronella import SelfBrowser
+from citronella import WebPage
 import pytest
 
 
@@ -31,7 +31,7 @@ def browser(request):
     # if there's a way aside using global variable for hook to html report ?
     global driver
     driver = webdriver.Chrome()
-    browser = SelfBrowser(driver)
-    request.cls.browser = browser
+    web = WebPage(driver)
+    request.cls.web = web
     yield
     driver.quit()

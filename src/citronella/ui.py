@@ -33,10 +33,10 @@ class Ui:
             self._locator))
 
     @logger
-    def click(self):
+    def click(self, switch_page=True):
         """click to web element."""
         self._webdriver_wait(EC.element_to_be_clickable(self._locator)).click()
-        if self._page != None:
+        if self._page and switch_page:
             self._page_object(self._page)
 
     @logger

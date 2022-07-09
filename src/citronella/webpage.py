@@ -3,16 +3,16 @@ from time import sleep
 from .page_decorator import Page_Decorator
 
 
-class SelfBrowser:
+class WebPage:
     """
-    a browser class that use across the tests.
+    an object class that use across the tests.
 
     Args:
         webdriver
 
     Usage:
         driver = webdriver.Chrome()
-        browser = WebBrowser(driver)
+        web = WebPage(driver)
     """
     def __init__(self, driver):
         self._page = []
@@ -64,24 +64,10 @@ class SelfBrowser:
         """use time.sleep module to manually wait."""
         sleep(time)
 
-    def back(self, change_page=True):
+    def back(self):
         """
-        return to previous page, if the current url doesn't have pom, use False
-        as keyword arguments.
+        return to previous page.
 
-        Args:
-            change_page=False
-
-        Usage:
-            self.browser.link_to_url_with_no_pom_object.click()
-            self.browser.back(change_page=False)
         """
         self.driver.back()
-        if not change_page:
-            return
-
         self._page.pop()
-
-    def quit(self):
-        """quit selenium webdriver session."""
-        self.driver.quit()
