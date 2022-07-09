@@ -1,4 +1,4 @@
-```bash
+```
 .
 |-- Pages
 |   |-- account

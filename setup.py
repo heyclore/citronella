@@ -8,7 +8,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="citronella",
-    version="0.0.1",
+    version="0.0.2",
     description="Webdriver Extension with Page Object Wrapper",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -16,7 +16,7 @@ setup(
     author="heyclore",
     author_email="cloore@gmail.com",
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Testing",
         "License :: OSI Approved :: MIT License",

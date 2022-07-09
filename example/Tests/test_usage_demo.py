@@ -36,7 +36,7 @@ class TestUsageDemo:
     def test_back(self):
         # return to previous page
         # this class can hold up to 3 history's and page object.
-        # when this command executed, the current page object get deleted
+        # when this command executed, the current page object get switch
         # to previous url and page object
 
         self.web.back()
