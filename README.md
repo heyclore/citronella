@@ -1,5 +1,8 @@
 # Citronella
 
+[![PyPI version](https://badge.fury.io/py/citronella.svg)](https://badge.fury.io/py/citronella)
+[![Downloads](https://pepy.tech/badge/citronella)](https://pepy.tech/project/citronella)
+
 Citronella is a selenium webdriver extension with page object wrapper for create a tests a bit simple.
 
 ## Example Test

@@ -17,6 +17,8 @@ class WebPage:
     def __init__(self, driver):
         self._page = []
         self._driver = driver
+        self._ready_state = True
+        self._app = 'appium' in str(driver.__class__)
 
     @property
     def driver(self):
@@ -34,7 +36,7 @@ class WebPage:
         initialize page object module object.
 
         Args:
-            Homepage
+            page_object_model
 
         Usage:
             self.browser.page_object(Homepage)
@@ -55,19 +57,22 @@ class WebPage:
         return SimpleNamespace(**self.driver.get_window_size())
 
     @property
+    def ready_state_toggle(self):
+        """switch ready_state bool"""
+        self._ready_state = not self._ready_state
+
+    @property
     def ready_state(self):
-        """execute javascript for page to fully load."""
-        while self.driver.execute_script(
-                'return document.readyState') != 'complete': sleep(1)
+        """execute javascript for page to fully load, disabled for appium"""
+        if self._ready_state and not self._app:
+            while self.driver.execute_script(
+                    'return document.readyState') != 'complete': sleep(1)
 
     def sleep(self, time):
         """use time.sleep module to manually wait."""
         sleep(time)
 
     def back(self):
-        """
-        return to previous page.
-
-        """
+        """return to previous page."""
         self.driver.back()
         self._page.pop()
