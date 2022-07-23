@@ -1,0 +1,1 @@
+class PlaceholderPage: pass

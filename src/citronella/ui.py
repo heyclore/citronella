@@ -22,11 +22,13 @@ class Ui:
         return self._webdriver_wait(EC.presence_of_element_located(
             self._locator)).get_attribute(attribute)
 
+    @logger
     def get_element(self):
         """return web element, equal as find_element."""
         return self._webdriver_wait(EC.presence_of_element_located(
             self._locator))
 
+    @logger
     def get_elements(self):
         """return list of web element, equal as find_elements."""
         return self._webdriver_wait(EC.visibility_of_all_elements_located(

@@ -15,15 +15,11 @@ class WebPage:
         web = WebPage(driver)
     """
     def __init__(self, driver):
+        self.driver = driver
         self._page = []
-        self._driver = driver
         self._ready_state = True
-        self._app = 'appium' in str(driver.__class__)
-
-    @property
-    def driver(self):
-        """return webdriver object."""
-        return self._driver
+        self._app = driver.current_package if 'appium' in str(
+                driver.__class__) else None
 
     @property
     def page(self):
@@ -31,7 +27,7 @@ class WebPage:
         self.ready_state
         return Page_Decorator(self._page[-1], self.driver, self.page_object)
 
-    def page_object(self, new_page):
+    def page_object(self, new_page, get_start=False):
         """
         initialize page object module object.
 
@@ -44,6 +40,12 @@ class WebPage:
         self._page.append(new_page)
         if len(self._page) > 3:
             self._page.pop(0)
+        if get_start:
+            if 'ACTIVITY' not in dir(new_page):
+                raise ValueError(f'XXX is not exist in {x.__qualname__}')
+            if self._app:
+                return self.driver.start_activity(self._app, new_page.ACTIVITY)
+            self.driver.get(new_page.ACTIVITY)
 
     @property
     def get_window_size(self):
