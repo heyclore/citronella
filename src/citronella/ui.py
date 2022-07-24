@@ -11,7 +11,7 @@ class Ui:
         self._driver = None
         self._page_object = None
         self._name = None
-        self._wait = 8
+        self._wait = None
 
     def _webdriver_wait(self, ec):
         """return a web element or elements."""
@@ -23,6 +23,13 @@ class Ui:
             self._locator)).get_attribute(attribute)
 
     @logger
+    def is_located(self):
+        """return bool if element is located without wait"""
+        self._wait = 1
+        return True if self._webdriver_wait(
+                EC.presence_of_all_elements_located(self._locator)) else False
+
+    @logger
     def get_element(self):
         """return web element, equal as find_element."""
         return self._webdriver_wait(EC.presence_of_element_located(
@@ -31,7 +38,7 @@ class Ui:
     @logger
     def get_elements(self):
         """return list of web element, equal as find_elements."""
-        return self._webdriver_wait(EC.visibility_of_all_elements_located(
+        return self._webdriver_wait(EC.presence_of_all_elements_located(
             self._locator))
 
     @logger

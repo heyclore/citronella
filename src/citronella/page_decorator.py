@@ -1,9 +1,10 @@
 class Page_Decorator:
     """This is a decorator class."""
-    def __init__(self, cls, driver, setter):
+    def __init__(self, cls, driver, setter, webdriver_wait):
         self.cls = cls()
         self.driver = driver
         self.setter = setter
+        self.webdriver_wait = webdriver_wait
 
     def __getattr__(self,attr):
         cls_attr = self.cls.__getattribute__(attr)
@@ -14,6 +15,7 @@ class Page_Decorator:
                 cls._driver = self.driver
                 cls._page_object = self.setter
                 cls._name = attr
+                cls._wait = self.webdriver_wait
                 if cls == self.cls:
                     return self
 

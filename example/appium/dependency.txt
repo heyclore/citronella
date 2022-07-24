@@ -1,0 +1,5 @@
+Appium-Python-Client
+selenium
+pytest
+pytest-html
+citronella
