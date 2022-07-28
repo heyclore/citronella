@@ -3,9 +3,12 @@
 [![PyPI version](https://badge.fury.io/py/citronella.svg)](https://badge.fury.io/py/citronella)
 [![Downloads](https://pepy.tech/badge/citronella)](https://pepy.tech/project/citronella)
 
-Citronella is a selenium webdriver extension with page object wrapper for create a tests a bit simple.
+Citronella is a selenium and/or appium webdriver extension with page object wrapper for create a tests a bit simple.
 
 ## Example Test
+
+### Selenium
+
 ```python
 import pytest
 from Pages.home.home_page import HomePage
@@ -33,6 +36,36 @@ class TestNavigationMenu:
         assert 'Create' in self.web.driver.title
 ```
 
+### Appium
+
+```python
+import pytest
+from Pages.api_demos_page import ApiDemosPage
+
+
+class TestNavigationMenu:
+
+    def test_accessibility_page(self):
+        self.web.page_object(ApiDemosPage)
+
+        self.web.page.accessibility_button.click()
+        assert self.web.page.accessibility_node_provider_button.get_element().is_visible()
+
+    def test_animation_page(self):
+        self.web.back
+        self.web.page.animation_button.click()
+        assert self.web.page.cloning_button.get_element().is_visible()
+
+    def test_app_page(self):
+        self.web.back
+        self.web.page.app_button.click()
+        assert self.web.page.activity_button.get_element().is_visible()
+
+    def test_os_page(self):
+        self.web.back
+        self.web.page.os_button.click()
+        assert self.web.page.morse_code_button.get_element().is_visible()
+```
 ___
 ## Install Package
 
@@ -46,6 +79,8 @@ ___
 There's only 3 modules import in this package.
 
 * first module for `conftest.py`
+
+### Selenium
 
 ```python
 import pytest
@@ -62,7 +97,31 @@ def browser(request):
     driver.quit()
 ```
 
+### Appium
+
+```python
+import pytest
+import os
+from appium import webdriver
+from appium.options.android import UiAutomator2Options
+from citronella import WebPage
+
+
+@pytest.fixture(autouse='true', scope='class')
+def init_driver(request):
+    options = UiAutomator2Options()
+    options.platformName = 'Android'
+    options.app = os.getcwd() + '/APK/ApiDemos-debug.apk.zip'
+    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', options=options)
+    web = WebPage(driver)
+    request.cls.web = web
+    yield
+    driver.quit()
+```
+
 * second and third module for `Page Object Model`
+
+### Selenium
 
 ```python
 from selenium.webdriver.common.by import By
@@ -84,6 +143,30 @@ class HomePage(HeaderMenu):
 
     def link_to_somewhere_currently_dont_have_page_object(self):
         return Ui(By.NAME, 'search-button', PlaceholderPage)
+```
+
+### Appium
+
+```python
+from appium.webdriver.common.appiumby import AppiumBy
+from citronella import Ui, PlaceholderPage
+from Pages.component.HeaderMenu import HeaderMenu
+
+
+class HomePage(HeaderMenu):
+
+    def some_button(self):
+        return Ui(AppiumBy.XPATH, '//a[@name="foo"]')
+
+    def search_input(self):
+        return Ui(AppiumBy.ACCESSIBILITY_ID, 'search')
+
+    def search_button(self):
+        from Pages.SearchPage import SearchPage
+        return Ui(AppiumBy.ID, 'search-button', SearchPage)
+
+    def link_to_somewhere_currently_dont_have_page_object(self):
+        return Ui(AppiumBy.ACCESSIBILITY_ID, 'search-button', PlaceholderPage)
 ```
 
 ___
