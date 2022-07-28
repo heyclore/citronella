@@ -8,7 +8,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="citronella",
-    version="0.0.2",
+    version="0.0.3",
     description="Webdriver Extension with Page Object Wrapper",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -16,13 +16,13 @@ setup(
     author="heyclore",
     author_email="cloore@gmail.com",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Testing",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3 :: Only",
     ],
-    keywords="test, unittest, pytest, pytest-html",
+    keywords="test, unittest, pytest, webdriver, appium, selenium",
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     python_requires=">=3, < 4",

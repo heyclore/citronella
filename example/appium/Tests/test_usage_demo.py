@@ -1,6 +1,6 @@
 import pytest
-from Pages.home.home_page import HomePage
-from logging import getLogger
+from Pages.api_demos_page import ApiDemosPage
+from Pages.animation.bouncing_balls.bouncing_balls_page import BouncingBallsPage
 
 
 class TestUsageDemo:
@@ -11,104 +11,116 @@ class TestUsageDemo:
     ### citronella.SelfBrowser ###
 
     def test_driver(self):
-        # get the original selenium driver object
+        # get the original selenium driver object.
         # foo = self.web.driver.find_element(By.ID, 'foo')
 
-        self.web.driver.get('https://pypi.org/')
         driver = self.web.driver
-        getLogger().warning(f'driver : {driver}')
+
 
     def test_page_object(self):
-        # add page object for current url
+        # add page object for current url.
         # this class can hold up to 3 history's and page object.
         # args: POM class
+        # optional kwargs: get_start=True.
 
-        self.web.page_object(HomePage)
-        getLogger().warning(f'page_object : {HomePage}')
+        self.web.page_object(ApiDemosPage)
+
+        # an alternative way if the page object provide an 'ACTIVITY' constant
+        # variable with url value.
+        # it's equal as self.web.driver.start_activity(pkg_name, activity)
+
+        self.web.page_object(BouncingBallsPage, get_start=True)
+
 
     def test_page(self):
-        # get a decorated page object
+        # get a decorated page object.
+
+        self.web.driver.start_activity(self.web._app, '.ApiDemos')
+        self.web.page_object(ApiDemosPage)
 
         page = self.web.page
-        getLogger().warning(f'page: {page}')
-        self.web.page.login_button.click()
+        self.web.page.accessibility_button.click()
+
 
     def test_back(self):
-        # return to previous page
-        # this class can hold up to 3 history's and page object.
+        # this class / object can hold up to 3 history's and page object.
         # when this command executed, the current page object get switch
-        # to previous url and page object
+        # to previous url and page object.
 
-        self.web.back()
-        getLogger().warning(f'back: {self.web.back}')
+        self.web.back
+
+
+    def test_webdriver_wait(self):
+        # set a webdriver wait.
+
+        self.web.webdriver_wait(60)
+
 
     def test_get_window_size(self):
-        # get current browser height or width
+        # get current browser height or width.
 
         height = self.web.get_window_size.height
-        getLogger().warning(f'height: {height}')
-
         width = self.web.get_window_size.width
-        getLogger().warning(f'width: {width}')
 
-    def test_ready_state(self):
-        # execute javascript ready_state for wait to page fully to load
-        # it's always executed by default after click / redirect to new url
-
-        self.web.ready_state
 
     def test_sleep(self):
-        # forwarding time.sleep module, it may useful for debugging
+        # forwarding time.sleep module, it may useful for debugging.
         # args: number / int
 
         self.web.sleep(1)
-        getLogger().warning(f'sleep: {self.web.sleep}')
+
+        self.web.page.os_button.click()
+        self.web.page.morse_code_button.click()
+
 
 
     ### citronella.Ui ###
 
     def test_send_keys(self):
-        # webdriver send_keys with optional clear input before insert the text
+        # webdriver send_keys with optional clear input before insert the text.
         # arg: text
         # kwargs: clear=bool
 
-        self.web.page.search_input.send_keys('citronella')
-        self.web.page.search_input.send_keys('citro', clear=True)
-        getLogger().warning(f'send_keys: {self.web.page.search_input.send_keys}')
+
+        self.web.page.morse_input.send_keys('citronella')
+        self.web.page.morse_input.send_keys('citro', clear=True)
+
 
     def test_click(self):
-        # webdriver click with optional switch page object interruption
-        # see example at 'test_auth.py'
+        # webdriver click with optional switch page object interruption.
+        # see example at 'test_auth.py'.
         # kwargs: switch_page=bool
 
-        self.web.page.search_button.click()
-        getLogger().warning(f'click: {self.web.page.search_button.click}')
+        self.web.page.vibrate_button.click()
+
+
+    def test_is_located(self):
+        # get webdriver element state without wait in boolean (True / False).
+
+        element = self.web.page.vibrate_button.is_located()
+
 
     def test_get_attribute(self):
-        # webdriver get_attribute
+        # webdriver get_attribute.
         # args: attribute name
 
-        id = self.web.page.order_by_option.get_attribute('id')
-        class_name = self.web.page.order_by_option.get_attribute('class')
-        name = self.web.page.order_by_option.get_attribute('name')
-        getLogger().warning(f'id: {id}, class: {class_name}, name: {name}')
+        text = self.web.page.morse_input.get_attribute('text')
+        class_name = self.web.page.morse_input.get_attribute('class')
+
 
     def test_get_element(self):
-        # webdriver get_element
+        # webdriver get_element.
 
-        element = self.web.page.order_by_option.get_element()
-        getLogger().warning(f'element: {element}')
+        element = self.web.page.vibrate_button.get_element()
+
 
     def test_get_elements(self):
-        # webdriver get_elements
+        # webdriver get_elements.
 
-        elements = self.web.page.search_lists_result.get_elements()
-        for x in elements:
-            getLogger().warning(f'element: {x.text}')
+        elements = self.web.page.vibrate_button.get_elements()
+
 
     def test_text(self):
-        # webdriver text
-        self.web.page.search_input.send_keys('citronella', clear=True)
-        self.web.page.search_button.click()
-        result = self.web.page.search_lists_result.get_element().text
-        getLogger().warning(f'result: {result}')
+        # webdriver text.
+
+        result = self.web.page.morse_input.get_element().text

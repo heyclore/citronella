@@ -1,6 +1,8 @@
-from selenium import webdriver
-from citronella import WebPage
 import pytest
+import os
+from appium import webdriver
+from appium.options.android import UiAutomator2Options
+from citronella import WebPage
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -26,11 +28,13 @@ def pytest_runtest_setup(item):
         if previousfailed is not None:
             pytest.skip("previous test failed (%s)" %previousfailed.name)
 
-@pytest.fixture(scope='class', autouse=True)
-def browser(request):
-    # if there's a way aside using global variable for hook to html report ?
+@pytest.fixture(autouse='true', scope='class')
+def init_driver(request):
     global driver
-    driver = webdriver.Chrome()
+    options = UiAutomator2Options()
+    options.platformName = 'Android'
+    options.app = os.getcwd() + '/APK/ApiDemos-debug.apk.zip'
+    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', options=options)
     web = WebPage(driver)
     request.cls.web = web
     yield

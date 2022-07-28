@@ -11,7 +11,7 @@ class TestUsageDemo:
     ### citronella.SelfBrowser ###
 
     def test_driver(self):
-        # get the original selenium driver object
+        # get the original selenium driver object.
         # foo = self.web.driver.find_element(By.ID, 'foo')
 
         self.web.driver.get('https://pypi.org/')
@@ -19,7 +19,7 @@ class TestUsageDemo:
 
 
     def test_page_object(self):
-        # add page object for current url
+        # add page object for current url.
         # this class can hold up to 3 history's and page object.
         # args: POM class
         # optional kwargs: get_start=True.
@@ -84,7 +84,7 @@ class TestUsageDemo:
     ### citronella.Ui ###
 
     def test_send_keys(self):
-        # webdriver send_keys with optional clear input before insert the text
+        # webdriver send_keys with optional clear input before insert the text.
         # arg: text
         # kwargs: clear=bool
 
@@ -93,20 +93,21 @@ class TestUsageDemo:
 
 
     def test_click(self):
-        # webdriver click with optional switch page object interruption
-        # see example at 'test_auth.py'
+        # webdriver click with optional switch page object interruption.
+        # see example at 'test_auth.py'.
         # kwargs: switch_page=bool
 
         self.web.page.search_button.click()
 
 
     def test_is_located(self):
-        # get webdriver element state without wait in boolean (True / False)
+        # get webdriver element state without wait in boolean (True / False).
 
         element = self.web.page.order_by_option.is_located()
 
+
     def test_get_attribute(self):
-        # webdriver get_attribute
+        # webdriver get_attribute.
         # args: attribute name
 
         id = self.web.page.order_by_option.get_attribute('id')
@@ -115,19 +116,19 @@ class TestUsageDemo:
 
 
     def test_get_element(self):
-        # webdriver get_element
+        # webdriver get_element.
 
         element = self.web.page.order_by_option.get_element()
 
 
     def test_get_elements(self):
-        # webdriver get_elements
+        # webdriver get_elements.
 
         elements = self.web.page.search_lists_result.get_elements()
 
 
     def test_text(self):
-        # webdriver text
+        # webdriver text.
 
         self.web.page.search_input.send_keys('citronella', clear=True)
         self.web.page.search_button.click()
