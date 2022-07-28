@@ -79,6 +79,7 @@ class WebPage:
             while self.driver.execute_script(
                     'return document.readyState') != 'complete': sleep(1)
 
+    @property
     def ready_state_toggle(self):
         """switch ready_state bool"""
         self._ready_state = not self._ready_state
@@ -91,6 +92,7 @@ class WebPage:
         """use time.sleep module to manually wait."""
         sleep(time)
 
+    @property
     def back(self):
         """return to previous page."""
         self.driver.back()

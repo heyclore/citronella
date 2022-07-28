@@ -4,6 +4,8 @@ from Pages.components import Header, Footer
 
 
 class RegisterPage(Header, Footer):
+    ACTIVITY = 'https://pypi.org/account/register/'
+
     def full_name_input(self):
         return Ui(By.ID, 'full_name')
 
