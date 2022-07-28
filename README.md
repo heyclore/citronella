@@ -6,8 +6,6 @@
 Citronella is a selenium webdriver extension with page object wrapper for create a tests a bit simple.
 
 ## Example Test
-[a full documentation / demo examples here.](https://github.com/heyclore/citronella/tree/main/example)
-
 ```python
 import pytest
 from Pages.home.home_page import HomePage
@@ -45,7 +43,7 @@ pip install citronella
 ___
 ## Documentation
 
-There's only 2 modules import in this package.
+There's only 3 modules import in this package.
 
 * first module for `conftest.py`
 
@@ -97,28 +95,32 @@ ___
 - webdriver
 
 ###### Method Lists:
-- [driver]
-- [page_object]
-- [page]
-- [back]
-- [webdriver_wait]
-- [ready_state]
-- [ready_state_toggle]
-- [get_window_size]
-- [sleep]
+| Method Name       | Selenium      | Appium  |
+| ------------------ |:-------------:| -----:|
+| driver             | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L13)| [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L13) |
+| page_object        | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L21) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L20) |
+| page               | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L35) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L35) |
+| back               | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L42) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L45) |
+| webdriver_wait     | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L50) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L53) |
+| ready_state        | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L56) | disabled |
+| ready_state_toggle | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L63) | disabled |
+| get_window_size    | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L69) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L59) |
+| sleep              | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L76) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L66) |
 
 ### citronella.Ui
 
 ###### Args:
-- selenium_by
-- string_locator
-- new_page_object
+- by
+- value
+- page_object (optional)
 
 ###### Method Lists:
-- [send_keys]
-- [click]
-- [is_located]
-- [get_attribute]
-- [get_element]
-- [get_elements]
-- [text]
+| Method Name       | Selenium      | Appium  |
+| ------------------ |:-------------:| -----:|
+| send_keys          | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L86)| [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L79) |
+| click              | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L95) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L89) |
+| is_located         | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L103) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L97) |
+| get_attribute      | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L109) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L103) |
+| get_element        | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L118) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L111) |
+| get_elements       | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L124) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L117) |
+| text               | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/selenium/Tests/test_usage_demo.py#L130) | [example](https://github.com/heyclore/citronella/blob/82d8a46f8ef7976a1f5e796783644343470714d3/example/appium/Tests/test_usage_demo.py#L123) |
