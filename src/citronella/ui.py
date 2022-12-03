@@ -10,7 +10,8 @@ class Ui:
         self._page = page
         self._driver = None
         self._page_object = None
-        self._name = None
+        self._function_name = None
+        self._class_name = None
         self._wait = None
 
     def _webdriver_wait(self, ec):

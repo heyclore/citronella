@@ -14,7 +14,8 @@ class Page_Decorator:
                 cls = cls_attr(*args, **kwargs)
                 cls._driver = self.driver
                 cls._page_object = self.setter
-                cls._name = attr
+                cls._function_name = attr
+                cls._class_name = self.cls.__class__.__name__
                 cls._wait = self.webdriver_wait
                 if cls == self.cls:
                     return self

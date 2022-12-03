@@ -16,24 +16,24 @@ from Pages.home.home_page import HomePage
 
 class TestNavigationMenu:
 
-    def test_help_page(self):
-        self.web.driver.get('https://pypi.org/')
-        self.web.page_object(HomePage)
+    def test_help_page(self, web):
+        web.driver.get('https://pypi.org/')
+        web.page_object(HomePage)
 
-        self.web.page.help_button.click()
-        assert 'Help' in self.web.driver.title
+        web.page.help_button.click()
+        assert 'Help' in web.driver.title
 
-    def test_sponsors_page(self):
-        self.web.page.sponsors_button.click()
-        assert 'Sponsors' in self.web.driver.title
+    def test_sponsors_page(self, web):
+        web.page.sponsors_button.click()
+        assert 'Sponsors' in web.driver.title
 
-    def test_login_page(self):
-        self.web.page.login_button.click()
-        assert 'Log' in self.web.driver.title
+    def test_login_page(self, web):
+        web.page.login_button.click()
+        assert 'Log' in web.driver.title
 
-    def test_register_page(self):
-        self.web.page.register_button.click()
-        assert 'Create' in self.web.driver.title
+    def test_register_page(self, web):
+        web.page.register_button.click()
+        assert 'Create' in web.driver.title
 ```
 
 ### Appium
@@ -45,26 +45,26 @@ from Pages.api_demos_page import ApiDemosPage
 
 class TestNavigationMenu:
 
-    def test_accessibility_page(self):
-        self.web.page_object(ApiDemosPage)
+    def test_accessibility_page(self, web):
+        web.page_object(ApiDemosPage)
 
-        self.web.page.accessibility_button.click()
-        assert self.web.page.accessibility_node_provider_button.get_element().is_visible()
+        web.page.accessibility_button.click()
+        assert web.page.accessibility_node_provider_button.get_element().is_visible()
 
-    def test_animation_page(self):
-        self.web.back
-        self.web.page.animation_button.click()
-        assert self.web.page.cloning_button.get_element().is_visible()
+    def test_animation_page(self, web):
+        web.back
+        web.page.animation_button.click()
+        assert web.page.cloning_button.get_element().is_visible()
 
-    def test_app_page(self):
-        self.web.back
-        self.web.page.app_button.click()
-        assert self.web.page.activity_button.get_element().is_visible()
+    def test_app_page(self, web):
+        web.back
+        web.page.app_button.click()
+        assert web.page.activity_button.get_element().is_visible()
 
-    def test_os_page(self):
-        self.web.back
-        self.web.page.os_button.click()
-        assert self.web.page.morse_code_button.get_element().is_visible()
+    def test_os_page(self, web):
+        web.back
+        web.page.os_button.click()
+        assert web.page.morse_code_button.get_element().is_visible()
 ```
 ___
 ## Install Package
@@ -89,11 +89,9 @@ from citronella import WebPage
 
 
 @pytest.fixture(autouse=True, scope='class')
-def browser(request):
+def web(request):
     driver = webdriver.Chrome()
-    web = WebPage(driver)
-    request.cls.web = web
-    yield
+    yield WebPage(driver)
     driver.quit()
 ```
 
@@ -108,14 +106,12 @@ from citronella import WebPage
 
 
 @pytest.fixture(autouse='true', scope='class')
-def init_driver(request):
+def web(request):
     options = UiAutomator2Options()
     options.platformName = 'Android'
     options.app = os.getcwd() + '/APK/ApiDemos-debug.apk.zip'
     driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', options=options)
-    web = WebPage(driver)
-    request.cls.web = web
-    yield
+    yield WebPage(driver)
     driver.quit()
 ```
 
