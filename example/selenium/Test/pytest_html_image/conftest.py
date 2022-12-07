@@ -20,18 +20,9 @@ def pytest_runtest_makereport(item, call):
             parent = item.parent
             parent._previousfailed = item
 
-def pytest_runtest_setup(item):
-    if "incremental" in item.keywords:
-        previousfailed = getattr(item.parent, "_previousfailed", None)
-        if previousfailed is not None:
-            pytest.skip("previous test failed (%s)" %previousfailed.name)
-
 @pytest.fixture(scope='class', autouse=True)
-def browser(request):
-    # if there's a way aside using global variable for hook to html report ?
+def web(request):
     global driver
     driver = webdriver.Chrome()
-    web = WebPage(driver)
-    request.cls.web = web
-    yield
+    yield WebPage(driver)
     driver.quit()

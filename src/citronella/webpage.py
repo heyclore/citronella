@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 from time import sleep
-from .page_decorator import Page_Decorator
+from .page_decorator import PageDecorator
 
 
 class WebPage:
@@ -26,7 +26,7 @@ class WebPage:
     def page(self):
         """return latest page object model after execute ready_state func."""
         self.ready_state
-        return Page_Decorator(self._page[-1], self.driver, self.page_object,
+        return PageDecorator(self._page[-1], self.driver, self.page_object,
                 self._webdriver_wait)
 
     def page_object(self, new_page, get_start=False):

@@ -1,4 +1,4 @@
-class Page_Decorator:
+class PageDecorator:
     """This is a decorator class."""
     def __init__(self, cls, driver, setter, webdriver_wait):
         self.cls = cls()

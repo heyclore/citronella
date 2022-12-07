@@ -26,7 +26,7 @@ class Ui:
     @logger
     def is_located(self):
         """return bool if element is located without wait"""
-        self._wait = 1
+        self._wait = 2
         return True if self._webdriver_wait(
                 EC.presence_of_all_elements_located(self._locator)) else False
 
@@ -52,7 +52,8 @@ class Ui:
     @logger
     def send_keys(self, text, clear=False):
         """custom webdriver send_keys with optional clear field."""
-        element = self.get_element()
+        element = self._webdriver_wait(
+                EC.element_to_be_clickable(self._locator))
         if clear:
             element.clear()
         element.send_keys(text)
