@@ -4,6 +4,8 @@ from Pages.components import Header, Footer
 
 
 class LoginPage(Header, Footer):
+    ACTIVITY = 'https://pypi.org/account/login/'
+
     def username_input(self):
         return Ui(By.ID, 'username')
 

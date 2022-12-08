@@ -1,3 +1,4 @@
+```
 Pages
 |-- account
 |   |-- login
@@ -25,5 +26,4 @@ Pages
 |   `-- sitemap_page.py
 `-- sponsors
     `-- sponsors_page.py
-
-12 directories, 14 files
+```
