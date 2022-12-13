@@ -181,12 +181,12 @@ ___
 | Method Name        | Args*       | Kwargs**         | Note |
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | None        | None             |      |
-| page_object        | Page Object | get_start=(Bool) | Page Object must contain 'ACTIVITY' variable with URL value if using Kwargs**| 
+| page_object        | Page Object | get_start=(Bool) | Page Object must contain 'ACTIVITY' variable with URL value if using Kwargs** | 
 | page               | None        | None             |      |
 | back               | None        | None             |      |
-| webdriver_wait     | Number(sec) | None             |      |
-| ready_state        | None        | None             |      |
-| ready_state_toggle | None        | None             |      |
+| webdriver_wait     | Number(sec) | None             | default value is 8 (sec) |
+| ready_state        | None        | None             | execute js script `document.readyState` manually |
+| ready_state_toggle | None        | None             | enable by default, triggered automatically each `Ui.click` triggered |
 | get_window_size    | None        | None             |      |
 | sleep              | Number(sec) | None             |      |
 
@@ -201,8 +201,8 @@ ___
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
 | send_keys     | String | clear=(Bool)       |      |
-| click         | None   | switch_page=(Bool) |      |
-| is_located    | None   | None               |      |
+| click         | None   | switch_page=(Bool) | see [test_auth.py](example/selenium/Test/pytest_html_image/test_auth.py) example |
+| is_located    | None   | None               | return Bool value without wait |
 | get_attribute | String | None               |      |
 | get_element   | None   | None               |      |
 | get_elements  | None   | None               |      |
