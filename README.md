@@ -5,9 +5,9 @@
 
 Citronella is a selenium and/or appium webdriver extension with page object wrapper for create a tests a bit simple.
 
-![alt terminal](https://github.com/heyclore/citronella/blob/main/screenshot/terminal.png?raw=true)
-![alt pytest-html](https://github.com/heyclore/citronella/blob/main/screenshot/pytest_html.png?raw=true)
-![alt github-action](https://github.com/heyclore/citronella/blob/main/screenshot/github_action.png?raw=true)
+![alt terminal](https://github.com/heyclore/citronella/blob/main/python/screenshot/terminal.png?raw=true)
+![alt pytest-html](https://github.com/heyclore/citronella/blob/main/python/screenshot/pytest_html.png?raw=true)
+![alt github-action](https://github.com/heyclore/citronella/blob/main/python/screenshot/github_action.png?raw=true)
 
 ## Example Test
 
