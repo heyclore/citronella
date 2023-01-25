@@ -9,6 +9,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 setup(
     name="citronella",
     version="0.0.4",
+    license="GPLv2",
     description="Webdriver Extension with Page Object Wrapper",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -19,7 +20,7 @@ setup(
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Testing",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Programming Language :: Python :: 3 :: Only",
     ],
     keywords="test, unittest, pytest, webdriver, appium, selenium",
@@ -28,6 +29,6 @@ setup(
     python_requires=">=3, < 4",
     install_requires=["selenium"],
     project_urls={
-        "Source": "https://github.com/heyclore/citronella",
+        "Source": "https://github.com/heyclore/citronella/tree/main/python",
     },
 )
