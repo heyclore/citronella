@@ -1,8 +1,4 @@
-const webdriver = require('selenium-webdriver');
-
-
-var until = webdriver.until;
-var By = webdriver.By;
+const {By, until, Builder} = require('selenium-webdriver');
 
 function logWrapper(className, functionName, func) {
   return function() {
@@ -23,18 +19,18 @@ function pageDecorator(cls, driver, pageLists, webdriverWait)
   for (let i in propertyNames) {
     let propertyName = propertyNames[i];
     let property = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(page), propertyName);
+    //console.log(property)
     if (property.get) {
+      //console.log(property.get)
       originalGetters[propertyName] = property.get;
       Object.defineProperty(page, propertyName, {
         get: function () {
           let obj = originalGetters[propertyName].call(this);
-          obj.driver = driver
-          obj.pageLists = pageLists
-          //obj.functionName = propertyName
-          //obj.className = page.constructor.name
-          obj.wait = webdriverWait
-          obj.click = logWrapper(page.constructor.name, propertyName, obj.click);
-          return obj;
+          let element = new Ui(driver, obj.by, obj.page, pageLists, webdriverWait)
+          element.click = logWrapper(page.constructor.name, propertyName, element.click);
+          element.sendKeys = logWrapper(page.constructor.name, propertyName, element.sendKeys);
+          element.getElements = logWrapper(page.constructor.name, propertyName, element.getElements);
+          return element
         }
       });
     }
@@ -65,15 +61,13 @@ class WebPage
 
 class Ui
 {
-  constructor(by, page)
+  constructor(driver, by, page, pageLists, wait)
   {
+    this.driver = driver;
     this.locator = by;
     this.page = page;
-    this.driver = null;
-    this.pageLists = null;
-    //this.functionName = null;
-    //this.className = null;
-    this.wait = null;
+    this.pageLists = pageLists;
+    this.wait = wait;
   }
 
   async click()
@@ -87,39 +81,79 @@ class Ui
       this.pageLists.pop()
     }
   }
+  async sendKeys(x)
+  {
+    let el = await this.driver.wait(until.elementLocated(this.locator),15000);
+    await el.sendKeys(x)
+  }
+  async getElements()
+  {
+    let el = await this.driver.wait(until.elementsLocated(this.locator),15000);
+    return el
+  }
 }
 
+function ui(by, page){
+  return {
+    'by': by,
+    'page': page,
+  }
+}
+
+class Foobar
+{
+  get foo()
+  {
+    console.log('foo')
+    return ui(By.xpath('fooo'), HomePage);
+  }
+}
 
 class HomePage
 {
-  get helpMenuButton()
+  get searchPackagesInput()
   {
-    return new Ui(By.xpath('//li[@class="horizontal-menu__item"][1]'), HelpPage);
+    return ui(By.name('q'));
+  }
+  get searchButton()
+  {
+    return ui(By.css('button[type="submit"]'), SearchPage);
   }
 }
 
-class HelpPage
+class SearchPage
 {
-  get homeMenuButton()
+  get searchResultLists()
   {
-    return new Ui(By.className('site-header__logo'), HomePage);
+    return ui(By.css('a[target="_self"]'));
   }
 }
 
-
-
+class WebdriverDummy
+{
+  get (x){return 1}
+  wait (x){return this}
+  sendKeys (x){return 1}
+  click (x){return 1}
+  getText(){return [11,2,3]}
+}
 
 
 async function example()
 {
-  let driver = await new webdriver.Builder().forBrowser('chrome').build();
+  //let driver = await new WebdriverDummy()
+  let driver = await new Builder().forBrowser('chrome').build();
   let web = new WebPage(driver);
   web.pageObject(HomePage);
-  await driver.get('https://pypi.org/')
-  await web.page.helpMenuButton.click()
-  await web.page.homeMenuButton.click()
-  await web.page.helpMenuButton.click()
-  await web.page.homeMenuButton.click()
+  await driver.get('https://www.npmjs.com/')
+  await web.page.searchPackagesInput.sendKeys('selenium')
+  await web.page.searchButton.click()
+  let ElementsResult = await web.page.searchResultLists.getElements()
+  let textList = []
+  for (let i in ElementsResult) {
+    textList.push(await ElementsResult[i].getText())
+  }
+  console.log(textList)
 }
 
 example()
