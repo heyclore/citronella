@@ -1,7 +1,9 @@
 const {By, until, Builder} = require('selenium-webdriver');
 
-function logWrapper(className, functionName, func) {
-  return function() {
+function logWrapper(className, functionName, func)
+{
+  return function()
+  {
     console.log(className +' => '+ functionName +' => ' + func.name);
     let result = func.apply(this, arguments);
     //console.log("Function result: ", result);
@@ -11,149 +13,189 @@ function logWrapper(className, functionName, func) {
 
 function pageDecorator(cls, driver, pageLists, webdriverWait)
 {
-  let page =  new cls();
-  let originalGetters = {};
-  let propertyNames = Object.getOwnPropertyNames(Object.getPrototypeOf(page));
+  page = new cls();
 
-  //for (let i = 0; i < propertyNames.length; i++) {
-  for (let i in propertyNames) {
-    let propertyName = propertyNames[i];
-    let property = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(page), propertyName);
-    //console.log(property)
-    if (property.get) {
-      //console.log(property.get)
-      originalGetters[propertyName] = property.get;
-      Object.defineProperty(page, propertyName, {
-        get: function () {
-          let obj = originalGetters[propertyName].call(this);
-          let element = new Ui(driver, obj.by, obj.page, pageLists, webdriverWait)
-          element.click = logWrapper(page.constructor.name, propertyName, element.click);
-          element.sendKeys = logWrapper(page.constructor.name, propertyName, element.sendKeys);
-          element.getElements = logWrapper(page.constructor.name, propertyName, element.getElements);
-          return element
+  function listPropertiesRecursive(x)
+  {
+    let proto = Object.getPrototypeOf(x);
+    if (proto !== null)
+    {
+      let propertyNames = Object.getOwnPropertyNames(proto);
+      let originalGetters = {};
+
+      for (let i in propertyNames)
+      {
+        let propertyName = propertyNames[i];
+        let property = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(x), propertyName);
+        if (property.get)
+        {
+          originalGetters[propertyName] = property.get;
+
+          if (property.get.name == 'get __proto__')
+          {
+            return
+          } else if(property.get().click)
+          {
+            return
+          }
+
+          Object.defineProperty(x, propertyName, {
+            get: function ()
+            {
+              let obj = originalGetters[propertyName].call(this);
+              let ui = new Ui(driver, obj.by, obj.page, pageLists, webdriverWait)
+              ui.click = logWrapper(page.constructor.name, propertyName, ui.click);
+              ui.sendKeys = logWrapper(page.constructor.name, propertyName, ui.sendKeys);
+              ui.getElements = logWrapper(page.constructor.name, propertyName, ui.getElements);
+              ui.propertyName = logWrapper(page.constructor.name, propertyName, ui.getElements);
+              return ui
+            }
+          });
         }
-      });
+      }
+
+      listPropertiesRecursive(proto);
     }
   }
+
+  listPropertiesRecursive(page)
   return page
 }
 
+
 class WebPage
 {
+  #driver;
+  #webdriverWait;
+  #pageLists;
+
   constructor(driver, wait=10000)
   {
-    this.driver = driver;
-    this.webdriverWait = wait;
-    this.pageLists = [];
+    this.#driver = driver;
+    this.#webdriverWait = wait;
+    this.#pageLists = [];
   }
+
   pageObject(x)
   {
-    this.pageLists.unshift(x)
+    this.#pageLists.unshift(x)
   }
+
+  get driver()
+  {
+    return this.#driver
+  }
+
   get page()
   {
-    //let page =  new this.pageLists[0]();
-    //pageDecorator(page, this.driver, this.pageLists, page.constructor.name, this.webdriverWait)
-    //return page;
-    return pageDecorator(this.pageLists[0], this.driver, this.pageLists, this.webdriverWait)
+    return pageDecorator(this.#pageLists[0], this.#driver, this.#pageLists, this.#webdriverWait)
   }
 }
 
 class Ui
 {
+  #driver;
+  #locator;
+  #page;
+  #pageLists;
+  #wait;
+
   constructor(driver, by, page, pageLists, wait)
   {
-    this.driver = driver;
-    this.locator = by;
-    this.page = page;
-    this.pageLists = pageLists;
-    this.wait = wait;
+    this.#driver = driver;
+    this.#locator = by;
+    this.#page = page;
+    this.#pageLists = pageLists;
+    this.#wait = wait;
   }
 
   async click()
   {
-    let el = await this.driver.wait(until.elementLocated(this.locator),15000);
+    let el = await this.#driver.wait(until.elementLocated(this.#locator),15000);
     await el.click()
-    this.pageLists.unshift(this.page)
+    this.#pageLists.unshift(this.#page)
     //console.log(this)
-    if(this.pageLists.length >= 5)
+    if(this.#pageLists.length >= 5)
     {
-      this.pageLists.pop()
+      this.#pageLists.pop()
     }
   }
+
   async sendKeys(x)
   {
-    let el = await this.driver.wait(until.elementLocated(this.locator),15000);
+    let el = await this.#driver.wait(until.elementLocated(this.#locator),15000);
     await el.sendKeys(x)
   }
+
   async getElements()
   {
-    let el = await this.driver.wait(until.elementsLocated(this.locator),15000);
-    return el
+    return await this.#driver.wait(until.elementsLocated(this.#locator),15000);
   }
 }
 
-function ui(by, page){
+function ui(by, page)
+{
   return {
     'by': by,
     'page': page,
   }
 }
 
-class Foobar
-{
-  get foo()
-  {
-    console.log('foo')
-    return ui(By.xpath('fooo'), HomePage);
-  }
-}
-
-class HomePage
+class SearchComponents
 {
   get searchPackagesInput()
   {
     return ui(By.name('q'));
   }
+
   get searchButton()
   {
     return ui(By.css('button[type="submit"]'), SearchPage);
   }
 }
 
-class SearchPage
+class HomePage extends SearchComponents
 {
+
+  get homeHeadline()
+  {
+    return ui(By.className('f-subheadline-m'));
+  }
+}
+
+class SearchPage extends SearchComponents
+{
+
   get searchResultLists()
   {
     return ui(By.css('a[target="_self"]'));
   }
 }
 
-class WebdriverDummy
+class SimulateWebdriver
 {
   get (x){return 1}
   wait (x){return this}
   sendKeys (x){return 1}
   click (x){return 1}
-  getText(){return [11,2,3]}
 }
-
 
 async function example()
 {
-  //let driver = await new WebdriverDummy()
+  //let driver = new SimulateWebdriver()
   let driver = await new Builder().forBrowser('chrome').build();
   let web = new WebPage(driver);
   web.pageObject(HomePage);
-  await driver.get('https://www.npmjs.com/')
+  await web.driver.get('https://www.npmjs.com/')
   await web.page.searchPackagesInput.sendKeys('selenium')
   await web.page.searchButton.click()
-  let ElementsResult = await web.page.searchResultLists.getElements()
+  let elementsResult = await web.page.searchResultLists.getElements()
   let textList = []
-  for (let i in ElementsResult) {
-    textList.push(await ElementsResult[i].getText())
+  for (let i in elementsResult) {
+    textList.push(await elementsResult[i].getText())
   }
   console.log(textList)
+
 }
 
 example()
