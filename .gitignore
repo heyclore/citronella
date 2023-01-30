@@ -4,3 +4,5 @@ dist/
 *.egg
 *.py[cod]
 __pycache__/
+
+node_modules/
