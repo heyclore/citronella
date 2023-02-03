@@ -2,27 +2,31 @@
 module Citronella
   module UiWrapper
     class Ui
-      def initialize(driver, webdriver_wait, pages, locator)
+      def initialize(driver, webdriver_wait, pages, ui)
         @driver = driver
-        @webdriver_wait = webdriver_wait
+        #@webdriver_wait = webdriver_wait
+        @webdriver_wait = Selenium::WebDriver::Wait.new(timeout: webdriver_wait) # seconds
         @pages = pages
-        @locator = locator.first
-        @page = locator.last
+        @locator = ui.first.first
+        @page = ui.last
       end
 
-      def get_elements
-        puts :get_elements
+      def send_keys(text)
+        @webdriver_wait.until { @driver.find_element(@locator).displayed? }
+        @driver.find_element(@locator).send_keys text
       end
 
       def click
-        puts :click
+        @webdriver_wait.until { @driver.find_element(@locator).displayed? }
+        el = @driver.find_element(@locator).click
         if @page
           @pages.get << @page
         end
       end
 
-      def text
-        puts :text
+      def get_elements
+        @webdriver_wait.until { @driver.find_element(@locator).displayed? }
+        @driver.find_elements(@locator)
       end
     end
   end
@@ -78,7 +82,7 @@ end
 #WebPage
 module Citronella
   class WebPage
-    def initialize(driver, webdriver_wait=10000)
+    def initialize(driver, webdriver_wait=10)
       @driver = driver
       @webdriver_wait = webdriver_wait
       @pages = Citronella::Pages::PagesList.new

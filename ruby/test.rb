@@ -1,33 +1,37 @@
+require "selenium-webdriver"
 require_relative 'citronella.rb'
 
 class Component
   def search_input
-    ui(:q) 
+    ui([name: 'q'], SearchPage)
   end
+
 end
 
 class HomePage < Component
   def search_button
-    ui(:xpath, SearchPage)
+    ui([css: 'button[type="submit"]'], SearchPage)
   end
 end
 
 class SearchPage < Component
-  def home_button
-    ui(:name, HomePage)
+  def search_lists
+    ui([css: 'a[target="_self"]'], SearchPage)
   end
 end
 
+options = Selenium::WebDriver::Chrome::Options.new
+#options.add_argument('--headless')
+driver = Selenium::WebDriver.for :chrome, options: options
 
 
-web = Citronella::WebPage.new(:asutenan)
-web.page_object(HomePage)
-web.page.search_input.text
+web = Citronella::WebPage.new(driver)
+web.page_object HomePage
+web.driver.navigate.to "https://www.npmjs.com/"
+web.page.search_input.send_keys 'selenium'
 web.page.search_button.click
-web.page.search_input.text
-web.page.home_button.click
-web.page.search_input.text
-web.page.search_button.click
-web.page.search_input.text
-web.page.home_button.click
-web.page.search_input.text
+lists = web.page.search_lists.get_elements
+for x in lists
+  puts x.text
+end
+web.driver.quit
