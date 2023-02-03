@@ -3,20 +3,20 @@ require_relative 'citronella.rb'
 
 class Component
   def search_input
-    ui([name: 'q'], SearchPage)
+    ui(id: 'home_query', page: SearchPage)
   end
 
 end
 
 class HomePage < Component
   def search_button
-    ui([css: 'button[type="submit"]'], SearchPage)
+    ui(css: 'input[type="submit"]', page: SearchPage , exception: :foo)
   end
 end
 
 class SearchPage < Component
   def search_lists
-    ui([css: 'a[target="_self"]'], SearchPage)
+    ui(class: 'gems__gem__name')
   end
 end
 
@@ -27,9 +27,8 @@ driver = Selenium::WebDriver.for :chrome, options: options
 
 web = Citronella::WebPage.new(driver)
 web.page_object HomePage
-web.driver.navigate.to "https://www.npmjs.com/"
-web.page.search_input.send_keys 'selenium'
-web.page.search_button.click
+web.driver.navigate.to "https://rubygems.org/"
+web.page.search_input.send_keys('selenium', enter: true)
 lists = web.page.search_lists.get_elements
 for x in lists
   puts x.text

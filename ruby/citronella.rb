@@ -2,23 +2,33 @@
 module Citronella
   module UiWrapper
     class Ui
-      def initialize(driver, webdriver_wait, pages, ui)
+      def initialize(driver, webdriver_wait, pages, locator, page, exception)
         @driver = driver
-        #@webdriver_wait = webdriver_wait
-        @webdriver_wait = Selenium::WebDriver::Wait.new(timeout: webdriver_wait) # seconds
+        @webdriver_wait = Selenium::WebDriver::Wait.new(timeout: webdriver_wait)
         @pages = pages
-        @locator = ui.first.first
-        @page = ui.last
+        @locator = locator
+        @page = page
+        @exception = exception
       end
 
-      def send_keys(text)
+      def send_keys(text, enter: false)
         @webdriver_wait.until { @driver.find_element(@locator).displayed? }
-        @driver.find_element(@locator).send_keys text
+        el = @driver.find_element(@locator)
+        el.send_keys text
+
+        if enter
+          el.send_keys :return
+
+          if @page
+            @pages.get << @page
+          end
+        end
       end
 
       def click
         @webdriver_wait.until { @driver.find_element(@locator).displayed? }
-        el = @driver.find_element(@locator).click
+        @driver.find_element(@locator).click
+
         if @page
           @pages.get << @page
         end
@@ -39,8 +49,9 @@ module Citronella
       original_method = klass.instance_method(method_name)
       klass.define_method(method_name) do
         puts method_name
-        locator = original_method.bind(self).call
-        Citronella::UiWrapper::Ui.new(driver, webdriver_wait, pages, locator)
+        args = original_method.bind(self).call
+        Citronella::UiWrapper::Ui.new(driver, webdriver_wait, pages,
+                                      args.locator, args.page, args.exception)
       end
     end
 
@@ -102,6 +113,7 @@ module Citronella
   end
 end
 
-def ui(x,y=nil)
-  [x,y]
+def ui(args)
+  baz = Struct.new(:page, :exception, :locator)
+  baz.new(args.delete(:page), args.delete(:exception), args)
 end
