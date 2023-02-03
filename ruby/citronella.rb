@@ -6,8 +6,8 @@ module Citronella
         @driver = driver
         @webdriver_wait = webdriver_wait
         @pages = pages
-        @locator = locator[0]
-        @page = locator[1]
+        @locator = locator.first
+        @page = locator.last
       end
 
       def get_elements
@@ -31,30 +31,28 @@ end
 #page_decorator
 module Citronella
   module Decorator
-    def self.wrapper(cls, method_name, driver, webdriver_wait, pages)
-      #if cls.respond_to?(method_name)
-      #  puts :raise
-      #  return
-      #end
-      original_method = cls.instance_method(method_name)
-      cls.define_method(method_name) do
+    def self.method_wrapper(klass, method_name, driver, webdriver_wait, pages)
+      original_method = klass.instance_method(method_name)
+      klass.define_method(method_name) do
         puts method_name
         locator = original_method.bind(self).call
         Citronella::UiWrapper::Ui.new(driver, webdriver_wait, pages, locator)
       end
     end
 
-    def self.page_decorator(driver, webdriver_wait, pages)
-      cls = pages.get.last
-      return cls.new if cls.instance_variable_defined?(:@decorated)
-      cls.instance_variable_set(:@decorated, true)
+    def self.class_decorator(klass, driver, webdriver_wait, pages)
+      return if klass.instance_variable_defined?(:@decorated)
+      klass.instance_variable_set(:@decorated, true)
+      return if klass.name == "Object"
+      lists = klass.instance_methods(false)
+      lists.each { |method| method_wrapper(klass, method, driver, webdriver_wait, pages) }
+      class_decorator(klass.superclass, driver, webdriver_wait, pages)
+    end
 
-      lists = cls.instance_methods(false)
-      #lists.each { |method| wrapper(cls, method, driver, webdriver_wait, pages) }
-      for method in lists
-        wrapper(cls, method, driver, webdriver_wait, pages)
-      end
-      cls.new
+    def self.page_decorator(driver, webdriver_wait, pages)
+      klass = pages.get.last
+      class_decorator(klass, driver, webdriver_wait, pages)
+      klass.new
     end
   end
 end
