@@ -3,7 +3,7 @@
 [![PyPI version](https://badge.fury.io/py/citronella.svg)](https://badge.fury.io/py/citronella)
 [![Downloads](https://pepy.tech/badge/citronella)](https://pepy.tech/project/citronella)
 
-Citronella is a selenium and/or appium webdriver extension with page object wrapper for create a tests a bit simple.
+Webdriver extension with a page object wrapper.
 
 ![alt terminal](https://github.com/heyclore/citronella/blob/main/python/screenshot/terminal.png?raw=true)
 ![alt pytest-html](https://github.com/heyclore/citronella/blob/main/python/screenshot/pytest_html.png?raw=true)
@@ -207,3 +207,8 @@ ___
 | get_element   | None   | None               |      |
 | get_elements  | None   | None               |      |
 | text          | None   | None               |      |
+
+
+## Testing powered by
+<a target="_blank" href="https://www.browserstack.com/"><img width="200" src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png"></a><br>
+[BrowserStack Open-Source Program](https://www.browserstack.com/open-source)

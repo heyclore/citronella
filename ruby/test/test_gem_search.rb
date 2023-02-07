@@ -1,5 +1,5 @@
 require "selenium-webdriver"
-require_relative 'citronella.rb'
+require_relative '../lib/citronella'
 
 class Component
   def search_input
