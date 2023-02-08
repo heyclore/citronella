@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
     Webdriver extension with a page object wrapper
   DESCRIPTION
 
-  s.licenses = 'GPL-2.0'
+  s.licenses = 'MIT'
   s.required_ruby_version = '>= 2.7.0'
   s.homepage = 'https://github.com/heyclore/citronella#readme'
   s.metadata = {
