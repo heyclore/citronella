@@ -1,7 +1,24 @@
 from types import SimpleNamespace
 from time import sleep
 from .page_decorator import PageDecorator
+from logging import warning
 
+
+class PageTab:
+    _pages = []
+
+    @property
+    def current_page(self):
+        return self._pages[-1]
+
+    def append(self, new_page):
+        self._pages.append(new_page)
+        if len(self._pages) > 5:
+            self._pages.pop(0)
+
+    def pop(self):
+        self._pages.pop()
+    
 
 class WebPage:
     """
@@ -15,19 +32,21 @@ class WebPage:
         web = WebPage(driver)
     """
     def __init__(self, driver):
-        self.driver = driver
+        self._driver = driver
         self._webdriver_wait = 8
-        self._page = []
+        self._pages = PageTab()
         self._ready_state = True
         self._app = driver.current_package if 'appium' in str(
                 driver.__class__) else None
 
     @property
+    def driver(self):
+        return self._driver
+
+    @property
     def page(self):
         """return latest page object model after execute ready_state func."""
-        self.ready_state
-        return PageDecorator(self._page[-1], self.driver, self.page_object,
-                self._webdriver_wait)
+        return PageDecorator(self.driver, self._webdriver_wait, self._pages)
 
     def page_object(self, new_page, get_start=False):
         """
@@ -50,9 +69,7 @@ class WebPage:
             or
             self.browser.page_object(Homepage, get_start=True)
         """
-        self._page.append(new_page)
-        if len(self._page) > 3:
-            self._page.pop(0)
+        self._pages.append(new_page)
         if get_start:
             if 'ACTIVITY' not in dir(new_page):
                 raise ValueError(
@@ -60,6 +77,12 @@ class WebPage:
             if self._app:
                 return self.driver.start_activity(self._app, new_page.ACTIVITY)
             self.driver.get(new_page.ACTIVITY)
+
+    @property
+    def back(self):
+        """return to previous page."""
+        self.driver.back()
+        self._pages.pop()
 
     @property
     def get_window_size(self):
@@ -91,9 +114,3 @@ class WebPage:
     def sleep(self, time):
         """use time.sleep module to manually wait."""
         sleep(time)
-
-    @property
-    def back(self):
-        """return to previous page."""
-        self.driver.back()
-        self._page.pop()

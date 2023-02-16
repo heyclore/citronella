@@ -1,9 +1,11 @@
+from .web_ui import WebUi
+
 class PageDecorator:
     """This is a decorator class."""
-    def __init__(self, cls, driver, setter, webdriver_wait):
-        self.cls = cls()
+    def __init__(self, driver, webdriver_wait, pages):
+        self.cls = pages.current_page()
         self.driver = driver
-        self.setter = setter
+        self.pages = pages
         self.webdriver_wait = webdriver_wait
 
     def __getattr__(self,attr):
@@ -11,18 +13,22 @@ class PageDecorator:
         if callable(cls_attr):
             def wrap(*args, **kwargs):
                 """This is a wrapper function."""
-                cls = cls_attr(*args, **kwargs)
-                cls._driver = self.driver
-                cls._page_object = self.setter
-                cls._function_name = attr
-                cls._class_name = self.cls.__class__.__name__
-                cls._wait = self.webdriver_wait
-                if cls == self.cls:
-                    return self
+                f = cls_attr(*args, **kwargs)
+                return WebUi(self.driver, self.webdriver_wait, self.pages,
+                          f['by'], f['value'], f['page'], attr,
+                          self.cls.__class__.__name__)
 
-                return cls
+                #cls._driver = self.driver
+                #cls._pages = self.setter
+                #cls._function_name = attr
+                #cls._class_name = self.cls.__class__.__name__
+                #cls._wait = self.webdriver_wait
+                #if cls == self.cls:
+                #    return self
+
+                #return ui
 
             return wrap()
 
-        else:
-            return cls_attr
+        #else:
+        #    return cls_attr
