@@ -5,9 +5,10 @@ from src.citronella import Ui, ui
 
 class SearchPage:
     def home_button(self):
-        return ui(By.XPATH, '//button[@type="submit"]/i', HomePage)
+        return Ui(By.XPATH, '//button[@type="submit"]/i', HomePage)
 
 class HomePage:
+    ACTIVITY = 'https://pypi.org/'
     def search_button(self):
         return ui(By.XPATH, '//button[@type="submit"]/i', SearchPage)
 
@@ -15,10 +16,12 @@ class HomePage:
 class TestNavigationMenu:
 
     def test_help_page(self, web):
+        web.page_object(HomePage, get_start=True)
         web.driver.get('https://pypi.org/')
-        web.page_object(HomePage)
         web.page.search_button.click()
         web.page.home_button.click()
+        web.ready_state_toggle
+        web.ready_state
         web.back
 
     def test_sponsors_page(self, web):

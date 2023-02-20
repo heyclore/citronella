@@ -1,24 +1,8 @@
 from types import SimpleNamespace
 from time import sleep
 from .page_decorator import PageDecorator
-from logging import warning
+from .page_tab import PageTab
 
-
-class PageTab:
-    _pages = []
-
-    @property
-    def current_page(self):
-        return self._pages[-1]
-
-    def append(self, new_page):
-        self._pages.append(new_page)
-        if len(self._pages) > 5:
-            self._pages.pop(0)
-
-    def pop(self):
-        self._pages.pop()
-    
 
 class WebPage:
     """
@@ -31,11 +15,11 @@ class WebPage:
         driver = webdriver.Chrome()
         web = WebPage(driver)
     """
-    def __init__(self, driver):
+    def __init__(self, driver, webdriver_wait=10, logger=True):
         self._driver = driver
-        self._webdriver_wait = 8
+        self._webdriver_wait = webdriver_wait
         self._pages = PageTab()
-        self._ready_state = True
+        self._logger = logger
         self._app = driver.current_package if 'appium' in str(
                 driver.__class__) else None
 
@@ -46,7 +30,8 @@ class WebPage:
     @property
     def page(self):
         """return latest page object model after execute ready_state func."""
-        return PageDecorator(self.driver, self._webdriver_wait, self._pages)
+        return PageDecorator(self.driver, self._webdriver_wait, self._pages,
+                             self._logger)
 
     def page_object(self, new_page, get_start=False):
         """
@@ -98,14 +83,11 @@ class WebPage:
     @property
     def ready_state(self):
         """execute javascript for page to fully load, disabled for appium"""
-        if self._ready_state and not self._app:
-            while self.driver.execute_script(
-                    'return document.readyState') != 'complete': sleep(1)
-
-    @property
-    def ready_state_toggle(self):
-        """switch ready_state bool"""
-        self._ready_state = not self._ready_state
+        if not self._app:
+            for x in range(30):
+                if self.driver.execute_script(
+                        'return document.readyState') != 'complete':
+                    sleep(1)
 
     def webdriver_wait(self, wait):
         """set webdriver wait."""
@@ -114,3 +96,13 @@ class WebPage:
     def sleep(self, time):
         """use time.sleep module to manually wait."""
         sleep(time)
+
+    #MARK TO REMOVE {
+    @property
+    def ready_state_toggle(self):
+        """switch ready_state bool"""
+        #self._ready_state = not self._ready_state
+        from logging import warning
+        warning("ready_state_toggle are decrepated !!!")
+        warning("will remove this method for next version")
+    #MARK TO REMOVE }

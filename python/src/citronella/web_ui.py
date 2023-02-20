@@ -5,16 +5,16 @@ from .logger import logger
 
 class WebUi:
     """a wrapped object of a web element."""
-    #def __init__(self, by, attr, page=None):
-    def __init__(self, driver, webdriver_wait, pages, by, value, new_page,
-                 function_name, class_name):
+    def __init__(self, driver, webdriver_wait, pages, logger, by, value,
+                 new_page, function_name, class_name):
+        self._driver = driver
+        self._wait = webdriver_wait
+        self._pages = pages
+        self._logger = logger
         self._locator = (by, value)
         self._new_page = new_page
-        self._driver = driver
-        self._pages = pages
         self._function_name = function_name
         self._class_name = class_name
-        self._wait = webdriver_wait
 
     def _webdriver_wait(self, ec):
         """return a web element or elements."""
