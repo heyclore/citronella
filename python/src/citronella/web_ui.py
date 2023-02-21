@@ -22,6 +22,7 @@ class WebUi:
 
     def _webdriver_wait(self, ec):
         """return a web element or elements."""
+        WebDriverWait(self._driver, self._wait)
         return WebDriverWait(self._driver, self._wait).until(ec)
 
     @logger
@@ -50,6 +51,12 @@ class WebUi:
         if clear:
             element.clear()
         element.send_keys(text)
+
+    @logger
+    def ec_element_to_be_clickable(self):
+        """redirect of EC.element_to_be_clickable"""
+        return self._webdriver_wait(
+                element_to_be_clickable(self._locator))
 
     @logger
     def ec_presence_of_element_located(self):
@@ -97,7 +104,7 @@ class WebUi:
 #MARK TO REMOVE {
     def get_attribute(self, attribute):
         from logging import warning
-        warning("get_attribute are decrepated !!!")
+        warning("get_attribute module is deprecated and will be removed in the next version.")
         warning('use "web.page.foobar.get_element.get_attribute(attribute)" instead')
         return self._webdriver_wait(presence_of_element_located(
             self._locator)).get_attribute(attribute)
@@ -105,7 +112,7 @@ class WebUi:
     @logger
     def is_located(self):
         from logging import warning
-        warning("is_located are decrepated !!!")
+        warning("is_located module is deprecated and will be removed in the next version.")
         warning('use "web.page.foobar.ec_presence_of_element_located" instead')
         return True if self._webdriver_wait(
                 presence_of_all_elements_located(self._locator)) else False
@@ -113,7 +120,7 @@ class WebUi:
     @logger
     def text(self):
         from logging import warning
-        warning("text are decrepated !!!")
+        warning("text module is deprecated and will be removed in the next version.")
         warning('use "web.page.foobar.get_element.text" instead')
         return self.get_element().text
 #MARK TO REMOVE }

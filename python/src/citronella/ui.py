@@ -8,7 +8,7 @@ def ui(by, value, page=None):
 #MARK TO REMOVE {
 def Ui(by, value, page=None):
     from logging import warning
-    warning("Ui module is decrepated")
+    warning("Ui module is deprecated and will be removed in the next version.")
     warning('use "from citronella import ui" instead "from citronella import Ui"')
     return ui(by, value, page)
 #MARK TO REMOVE }

@@ -103,6 +103,6 @@ class WebPage:
         """switch ready_state bool"""
         #self._ready_state = not self._ready_state
         from logging import warning
-        warning("ready_state_toggle are decrepated !!!")
+        warning("ready_state_toggle module is deprecated and will be removed in the next version.")
         warning("will remove this method for next version")
     #MARK TO REMOVE }
