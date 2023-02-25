@@ -2,6 +2,7 @@ from types import SimpleNamespace
 from time import sleep
 from .page_decorator import PageDecorator
 from .page_tab import PageTab
+from .web_ui import WebUi
 
 
 class WebPage:
@@ -62,6 +63,11 @@ class WebPage:
             if self._app:
                 return self.driver.start_activity(self._app, new_page.ACTIVITY)
             self.driver.get(new_page.ACTIVITY)
+
+    def locate(self, by, value):
+        return WebUi(self._driver, self._webdriver_wait, self._pages,
+                     self._logger, by, value, None, self.locate.__name__,
+                     self.__class__.__name__)
 
     @property
     def back(self):

@@ -40,7 +40,11 @@ class WebUi:
     @logger
     def click(self, switch_page=True):
         """click to web element."""
-        self._webdriver_wait(element_to_be_clickable(self._locator)).click()
+        try:
+            self._webdriver_wait(element_to_be_clickable(self._locator)).click()
+        except Exception as e:
+            self._webdriver_wait(element_to_be_clickable(self._locator)).click()
+
         if self._new_page and switch_page:
             self._pages.append(self._new_page)
 

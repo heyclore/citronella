@@ -6,5 +6,5 @@ import pytest
 @pytest.fixture(scope='class', autouse=True)
 def web(request):
     driver = webdriver.Chrome()
-    yield WebPage(driver, logger=False)
+    yield WebPage(driver)
     driver.quit()

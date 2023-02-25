@@ -1,5 +1,6 @@
 import pytest
 from Pages.home.home_page import HomePage
+from selenium.webdriver.common.by import By
 
 
 class TestNavigationMenu:
@@ -33,4 +34,9 @@ class TestNavigationMenu:
         web.page.register_button.ec_visibility_of_any_elements_located()
         #web.page.register_button.ec_element_located_to_be_selected()
         #web.page.register_button.ec_invisibility_of_element_located()
-        assert 'Create' in web.driver.title
+
+    def test_locate(self, web):
+        web.locate(By.ID, 'search').send_keys('citrone')
+        web.locate(By.XPATH, '//button[@type="submit"]/i').click()
+        assert 'citronella' in [x.text for x in web.locate(By.XPATH,
+        '//span[@class="package-snippet__name"]').get_elements()]
