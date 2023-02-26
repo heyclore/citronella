@@ -8,9 +8,14 @@ from .web_ui import WebUi
 class WebPage:
     """
     an object class that use across the tests.
+    webdriver_wait is set '10' seconds by default
+    logger is set 'True' by default
 
     Args:
-        webdriver
+        driver
+    Kwargs (optional):
+        webdriver_wait
+        logger
 
     Usage:
         driver = webdriver.Chrome()
@@ -26,11 +31,12 @@ class WebPage:
 
     @property
     def driver(self):
+        """return the original selenium / appium driver."""
         return self._driver
 
     @property
     def page(self):
-        """return latest page object model after execute ready_state func."""
+        """return last page object model."""
         return PageDecorator(self.driver, self._webdriver_wait, self._pages,
                              self._logger)
 
@@ -65,13 +71,27 @@ class WebPage:
             self.driver.get(new_page.ACTIVITY)
 
     def locate(self, by, value):
+        """
+        an alternative way for testing without page object and return WebUi
+        class, but can't use page and back method and causing an error.
+        good for quick prototype / write a tests.
+
+        Args:
+            by
+            value
+
+        Usage:
+            web.ui(By.NAME, 'q').ec_presence_of_element_located()
+            web.ui(By.NAME, 'q').get_element().text()
+            web.ui(By.NAME, 'q').get_element().click()
+        """
         return WebUi(self._driver, self._webdriver_wait, self._pages,
                      self._logger, by, value, None, self.locate.__name__,
                      self.__class__.__name__)
 
     @property
     def back(self):
-        """return to previous page."""
+        """return to previous page and delete the last page object."""
         self.driver.back()
         self._pages.pop()
 
@@ -86,17 +106,16 @@ class WebPage:
         """
         return SimpleNamespace(**self.driver.get_window_size())
 
-    @property
-    def ready_state(self):
+    def ready_state(self, wait):
         """execute javascript for page to fully load, disabled for appium"""
         if not self._app:
-            for x in range(30):
+            for x in range(wait):
                 if self.driver.execute_script(
                         'return document.readyState') != 'complete':
                     sleep(1)
 
     def webdriver_wait(self, wait):
-        """set webdriver wait."""
+        """override webdriver wait."""
         self._webdriver_wait = wait
 
     def sleep(self, time):

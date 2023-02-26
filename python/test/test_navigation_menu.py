@@ -40,3 +40,9 @@ class TestNavigationMenu:
         web.locate(By.XPATH, '//button[@type="submit"]/i').click()
         assert 'citronella' in [x.text for x in web.locate(By.XPATH,
         '//span[@class="package-snippet__name"]').get_elements()]
+
+    def test_search_package(self, web):
+        web.page.search_input.send_keys('citronella', return_key=True, clear=True)
+        result = web.page.search_lists_result.get_elements()
+        assert 'citronella' in [
+                x.text for x in web.page.search_lists_result.get_elements()]
