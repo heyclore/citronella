@@ -1,5 +1,5 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from citronella import Ui
+from citronella import ui
 
 
 class CustomViewPage:

@@ -29,13 +29,11 @@ def pytest_runtest_setup(item):
             pytest.skip("previous test failed (%s)" %previousfailed.name)
 
 @pytest.fixture(autouse='true', scope='class')
-def init_driver(request):
+def web(request):
     global driver
     options = UiAutomator2Options()
     options.platformName = 'Android'
     options.app = os.getcwd() + '/APK/ApiDemos-debug.apk.zip'
     driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', options=options)
-    web = WebPage(driver)
-    request.cls.web = web
-    yield
+    yield WebPage(driver)
     driver.quit()

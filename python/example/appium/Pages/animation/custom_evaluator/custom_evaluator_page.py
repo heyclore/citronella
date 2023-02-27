@@ -1,9 +1,9 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from citronella import Ui, PlaceholderPage
+from citronella import ui, PlaceholderPage
 
 
 class CustomEvaluatorPage:
     ACTIVITY = '.animation.CustomEvaluator'
 
     def play_button(self):
-        return Ui(AppiumBy.ACCESSIBILITY_ID, 'Play')
+        return ui(AppiumBy.ACCESSIBILITY_ID, 'Play')

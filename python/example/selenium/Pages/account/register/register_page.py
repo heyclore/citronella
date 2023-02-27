@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from citronella import Ui
+from citronella import ui
 from Pages.components import Header, Footer
 
 
@@ -7,16 +7,16 @@ class RegisterPage(Header, Footer):
     ACTIVITY = 'https://pypi.org/account/register/'
 
     def full_name_input(self):
-        return Ui(By.ID, 'full_name')
+        return ui(By.ID, 'full_name')
 
     def email_input(self):
-        return Ui(By.ID, 'email')
+        return ui(By.ID, 'email')
 
     def username_input(self):
-        return Ui(By.ID, 'username')
+        return ui(By.ID, 'username')
 
     def password_input(self):
-        return Ui(By.ID, 'new_password')
+        return ui(By.ID, 'new_password')
 
     def password_confirm_input(self):
-        return Ui(By.ID, 'password_confirm')
+        return ui(By.ID, 'password_confirm')

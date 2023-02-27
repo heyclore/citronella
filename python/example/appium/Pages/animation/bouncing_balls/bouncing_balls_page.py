@@ -1,5 +1,5 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from citronella import Ui, PlaceholderPage
+from citronella import ui, PlaceholderPage
 
 
 class BouncingBallsPage:

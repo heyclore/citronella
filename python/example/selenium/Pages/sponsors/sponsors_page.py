@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from citronella import Ui
+from citronella import ui
 from Pages.components import Header, Footer, PlaceholderPage
 
 

@@ -1,20 +1,20 @@
 import unittest, logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from citronella import WebPage, Ui, PlaceholderPage
+from citronella import WebPage, ui, PlaceholderPage
 
 
 class HomePage:
     def search_input(self):
-        return Ui(By.ID, 'search')
+        return ui(By.ID, 'search')
 
     def search_button(self):
-        return Ui(By.XPATH, '//button[@type="submit"]/i', SearchPage)
+        return ui(By.XPATH, '//button[@type="submit"]/i', SearchPage)
 
 
 class SearchPage:
     def search_lists_result(self):
-        return Ui(By.XPATH, '//span[@class="package-snippet__name"]')
+        return ui(By.XPATH, '//span[@class="package-snippet__name"]')
 
 
 class SearchPackage(unittest.TestCase):

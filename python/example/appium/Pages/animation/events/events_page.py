@@ -1,12 +1,12 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from citronella import Ui, PlaceholderPage
+from citronella import ui, PlaceholderPage
 
 
 class EventsPage:
     ACTIVITY = '.animation.AnimatorEvents'
 
     def play_button(self):
-        return Ui(AppiumBy.ACCESSIBILITY_ID, 'Play')
+        return ui(AppiumBy.ACCESSIBILITY_ID, 'Play')
 
     def cancel_button(self):
-        return Ui(AppiumBy.ACCESSIBILITY_ID, 'Cancel')
+        return ui(AppiumBy.ACCESSIBILITY_ID, 'Cancel')
