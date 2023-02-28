@@ -102,7 +102,7 @@ class WebUi:
     @logger
     def send_keys(self, text, clear=False, return_key=False):
         """custom webdriver send_keys with optional clear field."""
-        element = self._webdriver_wait(element_to_be_clickable(self._locator))
+        element = self._webdriver_wait(presence_of_element_located(self._locator))
 
         if clear:
             element.clear()

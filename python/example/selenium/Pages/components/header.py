@@ -24,7 +24,8 @@ class Header:
         return ui(By.XPATH, '//li[@class="horizontal-menu__item"][4]', RegisterPage)
 
     def search_input(self):
-        return ui(By.ID, 'search')
+        from Pages.search.search_page import SearchPage
+        return ui(By.ID, 'search', SearchPage)
 
     def search_button(self):
         from Pages.search.search_page import SearchPage
