@@ -9,7 +9,30 @@ Webdriver extension with a page object wrapper.
 ![alt pytest-html](https://github.com/heyclore/citronella/blob/main/python/screenshot/pytest_html.png?raw=true)
 ![alt github-action](https://github.com/heyclore/citronella/blob/main/python/screenshot/github_action.png?raw=true)
 
-## Example Test
+## Example Tests
+Even though this module is mainly designed for page object, it can be used without it for quick prototyping or mockups, etc.
+```python
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from citronella import WebPage
+
+
+driver = webdriver.Chrome()
+
+web = WebPage(driver)
+
+web.driver.get('https://pypi.org/')
+
+web.locate(By.ID, 'search').get_element().send_keys('citronella')
+
+web.locate(By.XPATH, '//button[@type="submit"]/i').get_element().click()
+
+results = web.locate(By.XPATH, '//span[@class="package-snippet__name"]').get_elements()
+
+text_lists = [x.text for x in results]
+```
+
+
 
 ### Selenium
 
@@ -175,22 +198,26 @@ ___
 ### citronella.WebPage
 
 ###### Args:
-- webdriver
+- driver / webdriver
+
+###### Kwargs (optional):
+- webdriver_wait `number(seconds)`, default value is `10`
+- logger `bool`, default value is `True`
 
 ###### Method Lists:
 | Method Name        | Args*       | Kwargs**         | Note |
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | None        | None             | return selenium `webdriver` object |
-| page_object        | Page Object | get_start=(Bool) | Page Object must contain `ACTIVITY` variable with URL(selenium)/State(appium) if using Kwargs** | 
+| locate             | by, value   | None             | similar as`driver.get_element` args |
+| page_object        | Page Object | get_start `bool` | Page Object must contain `ACTIVITY` variable with URL(selenium)/State(appium) if using Kwargs** | 
 | page               | None        | None             |      |
 | back               | None        | None             |      |
-| webdriver_wait     | Int(sec)    | None             | default value is `8` (sec) |
-| ready_state        | None        | None             | execute javascript `document.readyState` manually |
-| ready_state_toggle | None        | None             | enable by default, triggered automatically each `Ui.click` triggered |
+| webdriver_wait     | number(sec) | None             |      |
+| ready_state        | number(sec) | None             | execute javascript `document.readyState` manually, default timeout is `0` |
 | get_window_size    | None        | None             |      |
-| sleep              | Int(sec)    | None             |      |
+| sleep              | number(sec) | None             |      |
 
-### citronella.Ui
+### citronella.ui / citronella.WebUi
 
 ###### Args:
 - by
@@ -200,13 +227,18 @@ ___
 ###### Method Lists:
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
-| send_keys     | String | clear=(Bool)       |      |
-| click         | None   | switch_page=(Bool) | see [test_auth.py](example/selenium/Test/pytest_html_image/test_auth.py) example |
-| is_located    | None   | None               | return `Bool` value without wait |
-| get_attribute | String | None               |      |
+| send_keys     | text   | clear `bool`, return_key `bool` | default value is `False` by default |
+| click         | None   | switch_page `bool` | see [test_auth.py](example/selenium/Test/pytest_html_image/test_auth.py) example |
 | get_element   | None   | None               |      |
 | get_elements  | None   | None               |      |
-| text          | None   | None               |      |
+| ec_element_to_be_clickable | None | None |  |
+| ec_presence_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
+| ec_presence_of_all_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
+| ec_visibility_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
+| ec_visibility_of_all_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
+| ec_visibility_of_any_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
+| ec_invisibility_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
+| ec_element_located_to_be_selected | None | None | wrapper of `EC` / `excpected_condition` |
 
 
 ## Testing powered by
