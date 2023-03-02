@@ -12,12 +12,12 @@ Citronella is a selenium and/or appium webdriver extension with page object wrap
 pip install citronella
 ```
 
-### ruby (in development)
+### ruby (under development)
 ```bash
 gem install citronella
 ```
 
-### node.js (in development)
+### node.js (under development)
 ```bash
 npm i citronella
 ```
