@@ -10,7 +10,7 @@ Webdriver extension with a page object wrapper.
 ![alt github-action](https://github.com/heyclore/citronella/blob/main/python/screenshot/github_action.png?raw=true)
 
 ## Example Tests
-Even though this module is mainly designed for page object, it can be used without it for quick prototyping or mockups, etc.
+Even though this module is mainly designed for the page object model, it can also be used without it for quick prototyping or mockups, etc.
 ```python
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -103,9 +103,9 @@ pip install citronella
 ___
 ## Documentation
 
-There's only 3 modules import in this package.
+There are only three modules imported in this package:
 
-* first module for `conftest.py`
+* The first module is for conftest.py.
 
 ### Selenium
 
@@ -142,7 +142,9 @@ def web(request):
     driver.quit()
 ```
 
-* second and third module for `Page Object Model`
+* The second and third modules are for the page object model.
+
+[Check out this link for more information on the Page Object Design.](https://github.com/heyclore/citronella/tree/main/python/example#readme)
 
 ### Selenium
 
