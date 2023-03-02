@@ -3,7 +3,7 @@
 [![PyPI version](https://badge.fury.io/py/citronella.svg)](https://badge.fury.io/py/citronella)
 [![Downloads](https://pepy.tech/badge/citronella)](https://pepy.tech/project/citronella)
 
-Webdriver extension with a page object wrapper.
+webdriver extension with a page object wrapper.
 
 ![alt terminal](https://github.com/heyclore/citronella/blob/main/python/screenshot/terminal.png?raw=true)
 ![alt pytest-html](https://github.com/heyclore/citronella/blob/main/python/screenshot/pytest_html.png?raw=true)
@@ -19,17 +19,16 @@ from citronella import WebPage
 
 driver = webdriver.Chrome()
 
-web = WebPage(driver)
-
+web = WebPage(driver, webdriver_wait=20, logger=False)
 web.driver.get('https://pypi.org/')
 
 web.locate(By.ID, 'search').get_element().send_keys('citronella')
-
 web.locate(By.XPATH, '//button[@type="submit"]/i').get_element().click()
 
-results = web.locate(By.XPATH, '//span[@class="package-snippet__name"]').get_elements()
-
-text_lists = [x.text for x in results]
+elements = web.locate(By.XPATH, '//span[@class="package-snippet__name"]')
+if elements.ec_visibility_of_all_elements_located():
+    results = elements.get_elements()
+    text_lists = [x.text for x in results]
 ```
 
 
@@ -233,7 +232,7 @@ ___
 | click         | None   | switch_page `bool` | see [test_auth.py](example/selenium/Test/pytest_html_image/test_auth.py) example |
 | get_element   | None   | None               |      |
 | get_elements  | None   | None               |      |
-| ec_element_to_be_clickable | None | None |  |
+| ec_element_to_be_clickable | None | None | wrapper of `EC` / `excpected_condition` |
 | ec_presence_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
 | ec_presence_of_all_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
 | ec_visibility_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
