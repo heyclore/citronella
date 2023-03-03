@@ -1,12 +1,13 @@
-require_relative 'page_store'
-require_relative 'page_wrapper'
+require_relative 'page_tab'
+require_relative 'page_decorator'
 
 module Citronella
   class WebPage
-    def initialize(driver, webdriver_wait=10)
+    def initialize(driver, webdriver_wait:10, logger:true)
       @driver = driver
       @webdriver_wait = webdriver_wait
-      @pages = Citronella::PagesStore::PagesList.new
+      @pages = Citronella::PagesList.new
+      @logger = logger
     end
 
     def driver
@@ -18,7 +19,7 @@ module Citronella
     end
 
     def page
-      Citronella::PageWrapper.ui_decorator(@driver, @webdriver_wait, @pages)
+      Citronella::PageDecorator.new(@driver, @webdriver_wait, @pages, @logger)
     end
   end
 end
