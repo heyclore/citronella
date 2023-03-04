@@ -1,5 +1,6 @@
 require_relative 'page_tab'
 require_relative 'page_decorator'
+require_relative 'web_ui'
 
 module Citronella
   module Web
@@ -23,7 +24,9 @@ module Citronella
         Citronella::Wrapper::PageDecorator.new(@driver, @webdriver_wait, @pages, @logger)
       end
 
-      def locate
+      def locate(args)
+        Citronella::Ui::WebUi.new(@driver, @webdriver_wait, @pages, @logger, args, nil,
+                                  __method__.to_s, self.class.name.split('::').last.to_s)
       end
 
       def back
@@ -38,7 +41,10 @@ module Citronella
         end
       end
 
-      def webdriver_wait
+      def webdriver_wait(wait)
+        puts @webdriver_wait
+        @webdriver_wait = wait
+        puts @webdriver_wait
       end
     end
   end

@@ -10,7 +10,7 @@ end
 
 class HomePage < Component
   def search_button
-    ui(css: 'input[type="submit"]', page: SearchPage , exception: :foo)
+    ui(class: 'home__search__icon', page: SearchPage)
   end
 end
 
@@ -37,4 +37,13 @@ end
 web.back
 web.page.search_input.send_keys('', enter: true)
 lists = web.page.search_lists.get_elements
+web.back
+puts web.page.search_button.enabled?
+puts web.page.search_button.selected?
+puts web.page.search_button.displayed?
+web.page.search_button.get_element.click
+web.back
+web.locate(id: 'home_query').get_element.clear
+web.locate(id: 'home_query').get_element.send_keys('citronella')
+web.locate(class: 'home__search__icon').get_element.click
 web.driver.quit
