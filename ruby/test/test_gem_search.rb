@@ -30,6 +30,8 @@ web.page_object HomePage
 web.driver.navigate.to "https://rubygems.org/"
 web.page.search_input.send_keys('selenium', enter: true)
 web.ready_state(20)
+web.back
+web.page.search_button.click
 lists = web.page.search_lists.get_elements
 for x in lists
   puts x.text
@@ -38,9 +40,9 @@ web.back
 web.page.search_input.send_keys('', enter: true)
 lists = web.page.search_lists.get_elements
 web.back
-puts web.page.search_button.enabled?
-puts web.page.search_button.selected?
-puts web.page.search_button.displayed?
+#puts web.page.search_button.enabled?
+#puts web.page.search_button.selected?
+#puts web.page.search_button.displayed?
 web.page.search_button.get_element.click
 web.back
 web.locate(id: 'home_query').get_element.clear

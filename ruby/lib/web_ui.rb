@@ -6,7 +6,7 @@ module Citronella
       def initialize(driver, webdriver_wait, pages, logger, locator, new_page,
                      function_name, class_name)
         @driver = driver
-        @wait = Selenium::WebDriver::Wait.new(timeout: webdriver_wait)
+        @wait = webdriver_wait
         @pages = pages
         @logger = logger
         @locator = locator
@@ -15,9 +15,12 @@ module Citronella
         @class_name = class_name
       end
 
+      private def webdriver_wait(ele, wait=nil)
+        Selenium::WebDriver::Wait.new(timeout: wait ? wait : @wait).until { ele }
+      end
       def send_keys(text, enter: false)
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
-        el = @wait.until { @driver.find_element(@locator) }
+        el = webdriver_wait(@driver.find_element(@locator))
         el.send_keys text
 
         if enter
@@ -31,8 +34,8 @@ module Citronella
 
       def click
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
-        el = @wait.until { @driver.find_element(@locator) }
-        @wait.until { el.displayed? }
+        el = webdriver_wait(@driver.find_element(@locator))
+        webdriver_wait(el.displayed? )
         el.click
 
         if @new_page
@@ -42,28 +45,28 @@ module Citronella
 
       def get_element
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
-        @wait.until { @driver.find_element(@locator) }
+        webdriver_wait(@driver.find_element(@locator))
       end
 
       def get_elements
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
-        @wait.until { @driver.find_elements(@locator) }
+        webdriver_wait(@driver.find_elements(@locator))
       end
 
-      def enabled?
-        Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
-        @driver.find_element(@locator).enabled?
-      end
+      #def enabled?
+      #  Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
+      #  webdriver_wait(@driver.find_element(@locator)).enabled?
+      #end
 
-      def selected?
-        Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
-        @driver.find_element(@locator).selected?
-      end
+      #def selected?
+      #  Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
+      #  webdriver_wait(@driver.find_element(@locator)).selected?
+      #end
 
-      def displayed?
-        Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
-        @driver.find_element(@locator).displayed?
-      end
+      #def displayed?
+      #  Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
+      #  webdriver_wait(@driver.find_element(@locator)).displayed?
+      #end
     end
   end
 end
