@@ -16,7 +16,13 @@ module Citronella
         @driver
       end
 
-      def page_object(new_page)
+      def page_object(new_page, url=false)
+        if url
+          if not new_page.instance_variable_get(:@url)
+            raise "Error: '@url' variable does not exist in #{new_page}"
+          end
+          @driver.navigate.to(new_page.instance_variable_get(:@url))
+        end
         @pages.get << new_page
       end
 
