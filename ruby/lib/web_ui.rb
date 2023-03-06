@@ -18,28 +18,29 @@ module Citronella
       private def webdriver_wait(ele, wait=nil)
         Selenium::WebDriver::Wait.new(timeout: wait ? wait : @wait).until { ele }
       end
-      def send_keys(text, enter: false)
+
+      def send_keys(text, clear=false, return_key=false, switch_page=true)
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
         el = webdriver_wait(@driver.find_element(@locator))
         el.send_keys text
 
-        if enter
+        if return_key
           el.send_keys :return
 
-          if @new_page
-            @pages.get << @new_page
+          if @new_page and switch_page
+            @pages.append(@new_page)
           end
         end
       end
 
-      def click
+      def click(switch_page=true)
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
         el = webdriver_wait(@driver.find_element(@locator))
         webdriver_wait(el.displayed? )
         el.click
 
-        if @new_page
-          @pages.get << @new_page
+        if @new_page and switch_page
+          @pages.append(@new_page)
         end
       end
 

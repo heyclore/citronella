@@ -1,14 +1,23 @@
 module Citronella
   class PagesList
     def initialize
-      @page_lists = []
+      @pages = []
     end
 
-    def get
-      if @page_lists.length > 5
-        @page_lists.shift
+    def current_page
+      @pages.last
+    end
+
+    def append(new_page)
+      @pages << new_page
+      if @pages.length > 5
+        @pages.shift
       end
-      @page_lists
+    end
+
+    def pop
+      return if @pages.empty?
+      @pages.delete_at(-1)
     end
   end
 end

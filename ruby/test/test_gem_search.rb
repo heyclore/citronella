@@ -12,7 +12,7 @@ driver = Selenium::WebDriver.for :chrome, options: options
 web = Citronella::Web::WebPage.new(driver)
 web.page_object(ContentsPage.new.home_page, url=true)
 #web.driver.navigate.to "https://rubygems.org/"
-web.page.search_input.send_keys('selenium', enter: true)
+web.page.search_input.send_keys('selenium', clear=true, return_key=true)
 web.ready_state(20)
 web.back
 web.page.search_button.click
@@ -21,7 +21,7 @@ for x in lists
   puts x.text
 end
 web.back
-web.page.search_input.send_keys('', enter: true)
+web.page.search_button.click
 lists = web.page.search_lists.get_elements
 web.back
 #puts web.page.search_button.enabled?

@@ -17,13 +17,13 @@ module Citronella
       end
 
       def page_object(new_page, url=false)
+        @pages.append(new_page)
         if url
           if not new_page.instance_variable_get(:@url)
             raise "Error: '@url' variable does not exist in #{new_page}"
           end
           @driver.navigate.to(new_page.instance_variable_get(:@url))
         end
-        @pages.get << new_page
       end
 
       def page
@@ -37,7 +37,7 @@ module Citronella
 
       def back
         driver.navigate.back
-        @pages.get.delete_at(-1)
+        @pages.pop
       end
 
       def ready_state(wait)

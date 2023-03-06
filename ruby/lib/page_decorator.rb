@@ -11,10 +11,10 @@ module Citronella
       end
 
       def method_missing(attr)
-        original_method = @pages.get.last.new.method(attr)
+        original_method = @pages.current_page.new.method(attr)
         args = original_method.call
         Citronella::Ui::WebUi.new(@driver, @webdriver_wait, @pages, @logger,
-                                  args.locator, args.page, attr, @pages.get.last.name)
+                                  args.last, args.first, attr, @pages.current_page.name)
       end
     end
   end

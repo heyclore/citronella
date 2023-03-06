@@ -123,7 +123,7 @@ class WebUi:
             self._pages.append(self._new_page)
 
     @logger
-    def send_keys(self, text, clear=False, return_key=False):
+    def send_keys(self, text, clear=False, return_key=False, switch_page=True):
         """custom webdriver send_keys with optional clear field."""
         element = self._webdriver_wait(presence_of_element_located(self._locator))
 
@@ -135,7 +135,7 @@ class WebUi:
         if return_key:
             element.send_keys(Keys.RETURN)
 
-            if self._new_page:
+            if self._new_page and switch_page:
                 self._pages.append(self._new_page)
 
 #MARK TO REMOVE {
