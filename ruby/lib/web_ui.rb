@@ -15,13 +15,20 @@ module Citronella
         @class_name = class_name
       end
 
-      private def webdriver_wait(ele, wait=nil)
-        Selenium::WebDriver::Wait.new(timeout: wait ? wait : @wait).until { ele }
+      private def webdriver_wait(ele, displayed=false)
+        el = Selenium::WebDriver::Wait.new(timeout: @wait).until { ele }
+        if displayed
+          @wait.times do
+            break if el.displayed?
+            sleep(1)
+          end
+        end
+        el
       end
 
       def send_keys(text, clear=false, return_key=false, switch_page=true)
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
-        el = webdriver_wait(@driver.find_element(@locator))
+        el = webdriver_wait(@driver.find_element(@locator), displayed=true)
         el.send_keys text
 
         if return_key
@@ -35,8 +42,7 @@ module Citronella
 
       def click(switch_page=true)
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
-        el = webdriver_wait(@driver.find_element(@locator))
-        webdriver_wait(el.displayed? )
+        el = webdriver_wait(@driver.find_element(@locator), displayed=true)
         el.click
 
         if @new_page and switch_page
@@ -53,21 +59,6 @@ module Citronella
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
         webdriver_wait(@driver.find_elements(@locator))
       end
-
-      #def enabled?
-      #  Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
-      #  webdriver_wait(@driver.find_element(@locator)).enabled?
-      #end
-
-      #def selected?
-      #  Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
-      #  webdriver_wait(@driver.find_element(@locator)).selected?
-      #end
-
-      #def displayed?
-      #  Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
-      #  webdriver_wait(@driver.find_element(@locator)).displayed?
-      #end
     end
   end
 end

@@ -144,13 +144,3 @@ class WebPage:
     def sleep(self, time):
         """use time.sleep module to manually wait."""
         sleep(time)
-
-    #MARK TO REMOVE {
-    @property
-    def ready_state_toggle(self):
-        """switch ready_state bool"""
-        #self._ready_state = not self._ready_state
-        from logging import warning
-        warning("ready_state_toggle module is deprecated and will be removed in the next version.")
-        warning("will remove this method for next version")
-    #MARK TO REMOVE }

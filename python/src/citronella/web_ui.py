@@ -137,27 +137,3 @@ class WebUi:
 
             if self._new_page and switch_page:
                 self._pages.append(self._new_page)
-
-#MARK TO REMOVE {
-    def get_attribute(self, attribute):
-        from logging import warning
-        warning("get_attribute module is deprecated and will be removed in the next version.")
-        warning('use "web.page.foobar.get_element.get_attribute(attribute)" instead')
-        return self._webdriver_wait(presence_of_element_located(
-            self._locator)).get_attribute(attribute)
-
-    @logger
-    def is_located(self):
-        from logging import warning
-        warning("is_located module is deprecated and will be removed in the next version.")
-        warning('use "web.page.foobar.ec_presence_of_element_located" instead')
-        return True if self._webdriver_wait(
-                presence_of_all_elements_located(self._locator)) else False
-
-    @logger
-    def text(self):
-        from logging import warning
-        warning("text module is deprecated and will be removed in the next version.")
-        warning('use "web.page.foobar.get_element.text" instead')
-        return self.get_element().text
-#MARK TO REMOVE }
