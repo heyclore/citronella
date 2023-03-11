@@ -1,11 +1,11 @@
 import pytest
-from Pages.account.login.login_page import LoginPage
+from Pages.contents_page import ContentsPage
 
 
 class TestAuth:
 
     def test_login_expect_fail(self, web):
-        web.page_object(LoginPage, get_start=True)
+        web.page_object(ContentsPage.login_page(), get_start=True)
 
         web.page.username_input.send_keys('foo')
         web.page.password_input.send_keys('bar')

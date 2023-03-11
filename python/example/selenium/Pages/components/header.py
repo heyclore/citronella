@@ -1,32 +1,26 @@
 from selenium.webdriver.common.by import By
 from citronella import ui
+from Pages.contents_page import ContentsPage
 
 
 class Header:
     def home_page_icon_menu(self):
-        from Pages.home.home_page import HomePage
-        return ui(By.CLASS_NAME, 'site-header__logo', HomePage)
+        return ui(By.CLASS_NAME, 'site-header__logo', ContentsPage.home_page())
 
     def help_button(self):
-        from Pages.help.help_page import HelpPage
-        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][1]', HelpPage)
+        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][1]', ContentsPage.help_page())
 
     def sponsors_button(self):
-        from Pages.sponsors.sponsors_page import SponsorPage
-        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][2]', SponsorPage)
+        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][2]', ContentsPage.sponsors_page())
 
     def login_button(self):
-        from Pages.account.login.login_page import LoginPage
-        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][3]', LoginPage)
+        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][3]', ContentsPage.login_page())
 
     def register_button(self):
-        from Pages.account.register.register_page import RegisterPage
-        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][4]', RegisterPage)
+        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][4]', ContentsPage.register_page())
 
     def search_input(self):
-        from Pages.search.search_page import SearchPage
-        return ui(By.ID, 'search', SearchPage)
+        return ui(By.ID, 'search', ContentsPage.search_page())
 
     def search_button(self):
-        from Pages.search.search_page import SearchPage
-        return ui(By.XPATH, '//button[@type="submit"]/i', SearchPage)
+        return ui(By.XPATH, '//button[@type="submit"]/i', ContentsPage.search_page())

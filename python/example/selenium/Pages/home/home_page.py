@@ -1,9 +1,8 @@
 from selenium.webdriver.common.by import By
 from citronella import ui
-from Pages.components import Header, Footer
+from Pages.contents_page import ContentsPage
 
 
-class HomePage(Header, Footer):
+class HomePage(ContentsPage.header(), ContentsPage.footer()):
     def browse_project_button(self):
-        from Pages.search.search_page import SearchPage
-        return ui(By.XPATH, '//button[@type="submit"]/i', SearchPage)
+        return ui(By.XPATH, '//button[@type="submit"]/i', ContentsPage.search_page())

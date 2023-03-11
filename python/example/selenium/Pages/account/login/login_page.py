@@ -1,9 +1,9 @@
 from selenium.webdriver.common.by import By
 from citronella import ui
-from Pages.components import Header, Footer
+from Pages.contents_page import ContentsPage
 
 
-class LoginPage(Header, Footer):
+class LoginPage(ContentsPage.header(), ContentsPage.footer()):
     ACTIVITY = 'https://pypi.org/account/login/'
 
     def username_input(self):
@@ -13,5 +13,4 @@ class LoginPage(Header, Footer):
         return ui(By.ID, 'password')
 
     def login_button(self):
-        from Pages.manage.projects.projects_page import ProjectsPage
-        return ui(By.XPATH, '//input[@type="submit"]', ProjectsPage)
+        return ui(By.XPATH, '//input[@type="submit"]', ContentsPage.login_page())

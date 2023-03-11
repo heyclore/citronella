@@ -1,9 +1,9 @@
 from selenium.webdriver.common.by import By
 from citronella import ui
-from Pages.components import Footer, SidebarAccount
+from Pages.contents_page import ContentsPage
 
 
-class AccountPage(Footer, SidebarAccount):
+class AccountPage(ContentsPage.header(), ContentsPage.sidebar_account()):
     def full_name_input(self):
         return ui(By.ID, 'name')
 

@@ -1,9 +1,9 @@
 from selenium.webdriver.common.by import By
 from citronella import ui
-from Pages.components import Header, Footer
+from Pages.contents_page import ContentsPage
 
 
-class RegisterPage(Header, Footer):
+class RegisterPage(ContentsPage.header(), ContentsPage.footer()):
     ACTIVITY = 'https://pypi.org/account/register/'
 
     def full_name_input(self):

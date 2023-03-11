@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'citronella'
-  s.version = '0.0.3'
+  s.version = '0.0.4'
 
   s.authors = ['heyclore']
   s.email = 'cloore@gmail.com'
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
 
   s.licenses = 'MIT'
   s.required_ruby_version = '>= 2.7.0'
-  s.homepage = 'https://github.com/heyclore/citronella#readme'
+  s.homepage = 'https://github.com/heyclore/citronella/tree/main/ruby#readme',
   s.metadata = {
     'source_code_uri' => 'https://github.com/heyclore/citronella/tree/main/ruby',
     'github_repo' => 'https://github.com/heyclore/citronella',

@@ -1,3 +1,4 @@
+require 'citronella'
 require_relative '../contents_page'
 
 class SearchPage < ContentsPage.new.header_menu

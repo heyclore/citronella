@@ -8,12 +8,12 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="citronella",
-    version="0.0.5",
+    version="0.0.6",
     license="MIT",
     description="Webdriver Extension with Page Object Wrapper",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/heyclore/citronella",
+    url="https://github.com/heyclore/citronella/tree/main/python#readme",
     author="heyclore",
     author_email="cloore@gmail.com",
     classifiers=[

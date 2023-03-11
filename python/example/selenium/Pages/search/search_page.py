@@ -1,9 +1,9 @@
 from selenium.webdriver.common.by import By
 from citronella import ui
-from Pages.components import Header, Footer
+from Pages.contents_page import ContentsPage
 
 
-class SearchPage(Header, Footer):
+class SearchPage(ContentsPage.header(), ContentsPage.footer()):
     def search_lists_result(self):
         return ui(By.XPATH, '//span[@class="package-snippet__name"]')
 

@@ -1,12 +1,12 @@
 import pytest
-from Pages.home.home_page import HomePage
+from Pages.contents_page import ContentsPage
 
 
 class TestNavigationMenu:
 
     def test_help_page(self, web):
         web.driver.get('https://pypi.org/')
-        web.page_object(HomePage)
+        web.page_object(ContentsPage.home_page())
 
         web.page.help_button.click()
         assert 'Help' in web.driver.title

@@ -1,17 +1,14 @@
 from selenium.webdriver.common.by import By
 from citronella import ui
-from Pages.components import Header, Footer
+from Pages.contents_page import ContentsPage
 
 
-class SiteMapPage(Header, Footer):
+class SiteMapPage(ContentsPage.header(), ContentsPage.footer()):
     def pypi_home_link(self):
-        from Pages.home.home_page import HomePage
-        return ui(By.CLASS_NAME, 'site-header__logo', HomePage)
+        return ui(By.CLASS_NAME, 'site-header__logo', ContentsPage.home_page())
 
     def search_and_filter_projects_link(self):
-        from Pages.search.search_page import SearchPage
-        return ui(By.XPATH, '//button[@type="submit"]/i', SearchPage)
+        return ui(By.XPATH, '//button[@type="submit"]/i', ContentsPage.search_page())
 
     def help_link(self):
-        from Pages.help.help_page import HelpPage
-        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][1]', HelpPage)
+        return ui(By.XPATH, '//li[@class="horizontal-menu__item"][1]', ContentsPage.help_page())
