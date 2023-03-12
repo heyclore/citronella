@@ -139,7 +139,7 @@ ___
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | None        | None             | return selenium `webdriver` object |
 | locate             | None        | how: what        | similar as`driver.get_element` args |
-| page_object        | Page Object | url `bool`       | Page Object must contain `ACTIVITY` variable with URL(selenium)/State(appium) if using Kwargs** | 
+| page_object        | Page Object | url `bool`       | Page Object must contain `@url` variable with if using Kwargs** | 
 | page               | None        | None             |      |
 | back               | None        | None             |      |
 | webdriver_wait     | number(sec) | None             |      |
