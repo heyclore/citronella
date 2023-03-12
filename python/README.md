@@ -10,41 +10,19 @@ webdriver extension with a page object wrapper.
 ![alt github-action](https://github.com/heyclore/citronella/blob/main/python/screenshot/github_action.png?raw=true)
 
 ## Example Tests
-Even though this module is mainly designed for the page object model, it can also be used without it for quick prototyping or mockups, etc.
-```python
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from citronella import WebPage
-
-
-driver = webdriver.Chrome()
-
-web = WebPage(driver, webdriver_wait=20, logger=False)
-web.driver.get('https://pypi.org/')
-
-web.locate(By.ID, 'search').get_element().send_keys('citronella')
-web.locate(By.XPATH, '//button[@type="submit"]/i').get_element().click()
-
-elements = web.locate(By.XPATH, '//span[@class="package-snippet__name"]')
-if elements.ec_visibility_of_all_elements_located():
-    results = elements.get_elements()
-    text_lists = [x.text for x in results]
-```
-
-
 
 ### Selenium
 
 ```python
 import pytest
-from Pages.home.home_page import HomePage
+from Pages.contents_page import ContentsPage
 
 
 class TestNavigationMenu:
 
     def test_help_page(self, web):
         web.driver.get('https://pypi.org/')
-        web.page_object(HomePage)
+        web.page_object(ContentsPage.home_page())
 
         web.page.help_button.click()
         assert 'Help' in web.driver.title
@@ -66,13 +44,13 @@ class TestNavigationMenu:
 
 ```python
 import pytest
-from Pages.api_demos_page import ApiDemosPage
+from Pages.contents_page import ContentsPage
 
 
 class TestNavigationMenu:
 
     def test_accessibility_page(self, web):
-        web.page_object(ApiDemosPage)
+        web.page_object(ContentsPage.api_demo_page())
 
         web.page.accessibility_button.click()
         assert web.page.accessibility_node_provider_button.get_element().is_visible()
@@ -92,6 +70,28 @@ class TestNavigationMenu:
         web.page.os_button.click()
         assert web.page.morse_code_button.get_element().is_visible()
 ```
+
+Even though this module is mainly designed for the page object model, it can also be used without it for quick prototyping or mockups, etc.
+```python
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from citronella import WebPage
+
+
+driver = webdriver.Chrome()
+
+web = WebPage(driver, webdriver_wait=20, logger=False)
+web.driver.get('https://pypi.org/')
+
+web.locate(By.ID, 'search').get_element().send_keys('citronella')
+web.locate(By.XPATH, '//button[@type="submit"]/i').get_element().click()
+
+elements = web.locate(By.XPATH, '//span[@class="package-snippet__name"]')
+if elements.ec_visibility_of_all_elements_located():
+    results = elements.get_elements()
+    text_lists = [x.text for x in results]
+```
+
 ___
 ## Install Package
 
@@ -150,10 +150,10 @@ def web(request):
 ```python
 from selenium.webdriver.common.by import By
 from citronella import Ui, PlaceholderPage
-from Pages.component.HeaderMenu import HeaderMenu
+from Pages.contents_page import ContentsPage
 
 
-class HomePage(HeaderMenu):
+class HomePage(ContentsPage.header()):
 
     def some_button(self):
         return Ui(By.XPATH, '//a[@name="foo"]')
@@ -162,8 +162,7 @@ class HomePage(HeaderMenu):
         return Ui(By.ID, 'search')
 
     def search_button(self):
-        from Pages.SearchPage import SearchPage
-        return Ui(By.NAME, 'search-button', SearchPage)
+        return Ui(By.NAME, 'search-button', ContentsPage.search_page())
 
     def link_to_somewhere_currently_dont_have_page_object(self):
         return Ui(By.NAME, 'search-button', PlaceholderPage)
@@ -174,10 +173,10 @@ class HomePage(HeaderMenu):
 ```python
 from appium.webdriver.common.appiumby import AppiumBy
 from citronella import Ui, PlaceholderPage
-from Pages.component.HeaderMenu import HeaderMenu
+from Pages.contents_page import ContentsPage
 
 
-class HomePage(HeaderMenu):
+class HomePage(ContentsPage.header()):
 
     def some_button(self):
         return Ui(AppiumBy.XPATH, '//a[@name="foo"]')
@@ -187,7 +186,7 @@ class HomePage(HeaderMenu):
 
     def search_button(self):
         from Pages.SearchPage import SearchPage
-        return Ui(AppiumBy.ID, 'search-button', SearchPage)
+        return Ui(AppiumBy.ID, 'search-button', ContentsPage.search_page())
 
     def link_to_somewhere_currently_dont_have_page_object(self):
         return Ui(AppiumBy.ACCESSIBILITY_ID, 'search-button', PlaceholderPage)
@@ -228,7 +227,7 @@ ___
 ###### Method Lists:
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
-| send_keys     | text   | clear `bool`, return_key `bool` | default value is `False` by default |
+| send_keys     | text   | clear `bool`, return_key `bool`, switch_page `bool` |     |
 | click         | None   | switch_page `bool` | see [test_auth.py](example/selenium/Test/pytest_html_image/test_auth.py) example |
 | get_element   | None   | None               |      |
 | get_elements  | None   | None               |      |
