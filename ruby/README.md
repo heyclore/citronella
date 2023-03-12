@@ -45,6 +45,32 @@ class NavigationTest < Test::Unit::TestCase
   end
 end
 ```
+Even though this module is mainly designed for the page object model, it can also be used without it for quick prototyping or mockups, etc.
+```ruby
+require 'test/unit'
+require "selenium-webdriver"
+require 'citronella'
+
+
+class PackageSearchTest < Test::Unit::TestCase
+  def setup
+    options = Selenium::WebDriver::Chrome::Options.new
+    driver = Selenium::WebDriver.for :chrome, options: options
+    @web = Citronella::Web::WebPage.new(driver)
+  end
+
+  def teardown
+    @web.driver.quit
+  end
+
+  def test_search_package
+    @web.driver.navigate.to "https://rubygems.org/"
+    @web.locate(id: 'home_query').get_element.send_keys('citronella')
+    @web.locate(class: 'home__search__icon').get_element.click
+    assert(@web.locate(class: 'gems__gem__name').get_element.text, 'citronella')
+  end
+end
+```
 ___
 ## Install Package
 
@@ -106,43 +132,32 @@ ___
 
 ###### Kwargs (optional):
 - webdriver_wait `number(seconds)`, default value is `10`
-- logger `bool`, default value is `True`
+- logger `bool`, default value is `true`
 
 ###### Method Lists:
 | Method Name        | Args*       | Kwargs**         | Note |
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | None        | None             | return selenium `webdriver` object |
-| locate             | by, value   | None             | similar as`driver.get_element` args |
-| page_object        | Page Object | get_start `bool` | Page Object must contain `ACTIVITY` variable with URL(selenium)/State(appium) if using Kwargs** | 
+| locate             | None        | how: what        | similar as`driver.get_element` args |
+| page_object        | Page Object | url `bool`       | Page Object must contain `ACTIVITY` variable with URL(selenium)/State(appium) if using Kwargs** | 
 | page               | None        | None             |      |
 | back               | None        | None             |      |
 | webdriver_wait     | number(sec) | None             |      |
-| ready_state        | number(sec) | None             | execute javascript `document.readyState` manually, default timeout is `0` |
-| get_window_size    | None        | None             |      |
-| sleep              | number(sec) | None             |      |
+| ready_state        | number(sec) | None             | execute javascript `document.readyState` manually |
 
 ### citronella.ui / citronella.WebUi
 
-###### Args:
-- by
-- value
+###### Kwargs:
+- how: what
 - page_object (optional)
 
 ###### Method Lists:
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
-| send_keys     | text   | clear `bool`, return_key `bool` | default value is `False` by default |
-| click         | None   | switch_page `bool` | see [test_auth.py](example/selenium/Test/pytest_html_image/test_auth.py) example |
+| send_keys     | text   | clear `bool`, return_key `bool`, switch_page `bool` |    |
+| click         | None   | switch_page `bool` |      |
 | get_element   | None   | None               |      |
 | get_elements  | None   | None               |      |
-| ec_element_to_be_clickable | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_presence_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_presence_of_all_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_visibility_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_visibility_of_all_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_visibility_of_any_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_invisibility_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_element_located_to_be_selected | None | None | wrapper of `EC` / `excpected_condition` |
 
 
 ## Testing powered by
