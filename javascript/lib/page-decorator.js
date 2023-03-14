@@ -3,26 +3,29 @@
 const { until } = require('selenium-webdriver');
 const logWrapper = require('./log-wrapper')
 
-class Ui
+class WebUi
 {
   #driver;
   #locator;
   #page;
   #pageLists;
   #wait;
+  #logger;
 
-  constructor(driver, by, page, pageLists, wait)
+  constructor(driver, by, page, pageLists, wait, logger)
   {
     this.#driver = driver;
     this.#locator = by;
     this.#page = page;
     this.#pageLists = pageLists;
     this.#wait = wait;
+    this.#logger = logger;
+    console.log(wait)
   }
 
   async click()
   {
-    let el = await this.#driver.wait(until.elementLocated(this.#locator),15000);
+    let el = await this.#driver.wait(until.elementLocated(this.#locator),this.#wait);
     await el.click()
     this.#pageLists.unshift(this.#page)
     //console.log(this)
@@ -34,19 +37,19 @@ class Ui
 
   async sendKeys(x)
   {
-    let el = await this.#driver.wait(until.elementLocated(this.#locator),15000);
+    let el = await this.#driver.wait(until.elementLocated(this.#locator),this.#wait);
     await el.sendKeys(x)
   }
 
   async getElements()
   {
-    return await this.#driver.wait(until.elementsLocated(this.#locator),15000);
+    return await this.#driver.wait(until.elementsLocated(this.#locator),this.#wait);
   }
 }
 
-function pageDecorator(cls, driver, pageLists, webdriverWait)
+function pageDecorator(driver, webdriverWait, pageLists, logger)
 {
-  let page = new cls();
+  let page = new pageLists.currentPage();
 
   function listPropertiesRecursive(x)
   {
@@ -73,7 +76,7 @@ function pageDecorator(cls, driver, pageLists, webdriverWait)
             get: function ()
             {
               let obj = originalGetters[propertyName].call(this);
-              let ui = new Ui(driver, obj.by, obj.page, pageLists, webdriverWait)
+              let ui = new WebUi(driver, obj.by, obj.page, pageLists, webdriverWait, logger)
               ui.click = logWrapper(page.constructor.name, propertyName, ui.click);
               ui.sendKeys = logWrapper(page.constructor.name, propertyName, ui.sendKeys);
               ui.getElements = logWrapper(page.constructor.name, propertyName, ui.getElements);
