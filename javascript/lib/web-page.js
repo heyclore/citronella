@@ -1,6 +1,6 @@
 'use strict'
 
-const pageDecorator = require('./page-decorator')
+const PageDecorator = require('./page-decorator')
 const PageTab = require('./page-tab')
 
 class WebPage{
@@ -9,7 +9,7 @@ class WebPage{
   #pageLists;
   #logger;
 
-  constructor(driver, wait=10000, logger=false){
+  constructor(driver, wait=10000, logger=true){
     this.#driver = driver;
     this.#wait = wait;
     this.#pageLists = new PageTab;
@@ -21,7 +21,7 @@ class WebPage{
   }
 
   get page(){
-    return pageDecorator(this.#driver, this.#wait, this.#pageLists, this.#logger)
+    return new PageDecorator({driver:this.#driver, webdriverWait:this.#wait, pageLists:this.#pageLists, logger:this.#logger})
   }
 
   pageObject(newPage, url=false){

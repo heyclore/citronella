@@ -20,7 +20,6 @@ class WebUi
     this.#pageLists = pageLists;
     this.#wait = wait;
     this.#logger = logger;
-    console.log(wait)
   }
 
   async click()
@@ -47,52 +46,25 @@ class WebUi
   }
 }
 
-function pageDecorator(driver, webdriverWait, pageLists, logger)
-{
-  let page = new pageLists.currentPage();
-
-  function listPropertiesRecursive(x)
-  {
-    let proto = Object.getPrototypeOf(x);
-    if (proto !== null)
-    {
-      let propertyNames = Object.getOwnPropertyNames(proto);
-      let originalGetters = {};
-
-      for (let i in propertyNames)
-      {
-        let propertyName = propertyNames[i];
-        let property = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(x), propertyName);
-        if (property.get)
-        {
-          originalGetters[propertyName] = property.get;
-
-          if (property.get.name == 'get __proto__' || property.get().click )
-          {
-            return
-          }
-
-          Object.defineProperty(x, propertyName, {
-            get: function ()
-            {
-              let obj = originalGetters[propertyName].call(this);
-              let ui = new WebUi(driver, obj.by, obj.page, pageLists, webdriverWait, logger)
-              ui.click = logWrapper(page.constructor.name, propertyName, ui.click);
-              ui.sendKeys = logWrapper(page.constructor.name, propertyName, ui.sendKeys);
-              ui.getElements = logWrapper(page.constructor.name, propertyName, ui.getElements);
-              ui.propertyName = logWrapper(page.constructor.name, propertyName, ui.getElements);
-              return ui
-            }
-          });
+class PageDecorator {
+  constructor(args) {
+    return new Proxy(this, {
+      get(target, prop) {
+        let currentPage = new args.pageLists.currentPage()
+        if(prop in currentPage){
+          let obj = currentPage[prop]
+          let ui =  new WebUi(args.driver, obj.by, obj.page, args.pageLists, args.webdriverWait, args.logger)
+          ui.click = logWrapper(currentPage.constructor.name, prop, ui.click);
+          ui.sendKeys = logWrapper(currentPage.constructor.name, prop, ui.sendKeys);
+          ui.getElements = logWrapper(currentPage.constructor.name, prop, ui.getElements);
+          ui.propertyName = logWrapper(currentPage.constructor.name, prop, ui.getElements);
+          return ui
         }
+        throw new Error(`'${prop}' doesn't exist in '${currentPage.constructor.name}'`);
       }
-
-      listPropertiesRecursive(proto);
-    }
+    });
   }
-
-  listPropertiesRecursive(page)
-  return page
 }
 
-module.exports = pageDecorator;
+
+module.exports = PageDecorator;

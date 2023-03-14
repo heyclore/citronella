@@ -10,12 +10,10 @@ class PageTab{
 
   unshift(newPage){
     this.#pageList.unshift(newPage)
-    console.log(this.#pageList.length, this.#pageList);
   }
 
   get shift(){
     this.#pageList.shift()
-    console.log(this.#pageList.length, this.#pageList);
   }
 
 }

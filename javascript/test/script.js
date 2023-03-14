@@ -60,8 +60,8 @@ class SearchPage
 
 async function example()
 {
-  //let driver = await new Builder().forBrowser('chrome').build();
-  let driver = await new WebdriverDummy()
+  let driver = await new Builder().forBrowser('chrome').build();
+  //let driver = await new WebdriverDummy()
   let web = new WebPage(driver);
   await web.pageObject(new ContentsPage().homePage, url=true);
   //await driver.get('https://www.npmjs.com/')
