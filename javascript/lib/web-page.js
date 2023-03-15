@@ -1,7 +1,9 @@
 'use strict'
 
+const { until } = require('selenium-webdriver');
 const PageDecorator = require('./page-decorator')
 const PageTab = require('./page-tab')
+const WebUi = require('./web-ui')
 
 class WebPage{
   #driver;
@@ -9,7 +11,7 @@ class WebPage{
   #pageLists;
   #logger;
 
-  constructor(driver, wait=10000, logger=true){
+  constructor(driver, wait, logger){
     this.#driver = driver;
     this.#wait = wait;
     this.#pageLists = new PageTab;
@@ -42,6 +44,14 @@ class WebPage{
 
   webdriverWait(wait){
     this.#wait = wait
+  }
+
+  locate(by){
+  return new WebUi(this.#driver, this.#wait, this.#pageLists, by, null)
+  }
+
+  readyState(timeout=10000){
+    this.driver.wait(this.driver.executeScript('return document.readyState === "complete";'), timeout)
   }
 }
 

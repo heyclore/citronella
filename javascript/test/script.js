@@ -56,17 +56,26 @@ class SearchPage
     return ui(By.css('a[target="_self"]'));
   }
 }
+async function test2()
+{
+  let driver = await new Builder().forBrowser('chrome').build();
+  let web = new WebPage(driver, 10000, true);
+  await web.pageObject(new ContentsPage().homePage, url=true);
+  await web.readyState()
+  await web.locate(By.name('q')).sendKeys('selenium')
+  await web.locate(By.css('button[type="submit"]')).click()
+  await web.back
+  web.driver.quit()
+}
 
-
-async function example()
+async function test()
 {
   let driver = await new Builder().forBrowser('chrome').build();
   //let driver = await new WebdriverDummy()
-  let web = new WebPage(driver);
-  await web.pageObject(new ContentsPage().homePage, url=true);
-  //await driver.get('https://www.npmjs.com/')
+  let web = new WebPage(driver, 10000, true);
+  await web.pageObject(new ContentsPage().homePage);
+  await web.driver.get('https://www.npmjs.com/')
   await web.page.searchPackagesInput.sendKeys('selenium')
-  web.webdriverWait(66666666)
   await web.page.searchButton.click()
   let ElementsResult = await web.page.searchResultLists.getElements()
   let textList = []
@@ -74,8 +83,8 @@ async function example()
     textList.push(await ElementsResult[i].getText())
   }
   console.log(textList)
-  web.back
   web.driver.quit()
 }
 
-example()
+test()
+test2()
