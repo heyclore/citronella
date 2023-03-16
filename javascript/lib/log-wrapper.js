@@ -6,7 +6,6 @@ function logWrapper(className, functionName, func)
   {
     console.log(className +' => '+ functionName +' => ' + func.name);
     let result = func.apply(this, arguments);
-    //console.log("Function result: ", result);
     return result;
   };
 }

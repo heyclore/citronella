@@ -15,7 +15,6 @@ class PageTab{
   get shift(){
     this.#pageList.shift()
   }
-
 }
 
 module.exports = PageTab

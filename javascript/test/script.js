@@ -1,5 +1,5 @@
 const { By, Builder } = require('selenium-webdriver');
-const { ui, WebPage } = require('../lib/index')
+const { ui, WebPage, PlaceholderPage } = require('../lib/index')
 
 class WebdriverDummy
 {
@@ -55,6 +55,11 @@ class SearchPage
   {
     return ui(By.css('a[target="_self"]'));
   }
+
+  get github_icon_link()
+  {
+    return ui(By.css('div.w-100 a.ph3'), new PlaceholderPage)
+  }
 }
 async function test2()
 {
@@ -83,8 +88,11 @@ async function test()
     textList.push(await ElementsResult[i].getText())
   }
   console.log(textList)
-  web.driver.quit()
+  await web.driver.get('https://www.npmjs.com/package/citronella')
+  await web.page.github_icon_link.click()
+  await web.back
+  await web.driver.quit()
 }
 
 test()
-test2()
+//test2()

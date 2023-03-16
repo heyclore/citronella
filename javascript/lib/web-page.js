@@ -42,10 +42,6 @@ class WebPage{
     this.#pageLists.shift
   }
 
-  webdriverWait(wait){
-    this.#wait = wait
-  }
-
   locate(by){
   return new WebUi(this.#driver, this.#wait, this.#pageLists, by, null)
   }
