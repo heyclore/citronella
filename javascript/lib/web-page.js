@@ -43,7 +43,7 @@ class WebPage{
   }
 
   locate(by){
-  return new WebUi(this.#driver, this.#wait, this.#pageLists, by, null)
+  return new WebUi(this.#driver, this.#wait, this.#pageLists, by, null, {logger:false})
   }
 
   readyState(timeout=10000){
