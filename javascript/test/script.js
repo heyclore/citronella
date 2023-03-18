@@ -61,19 +61,8 @@ class SearchPage
     return ui(By.css('div.w-100 a.ph3'), new PlaceholderPage)
   }
 }
-async function test2()
-{
-  let driver = await new Builder().forBrowser('chrome').build();
-  let web = new WebPage(driver, 10000, true);
-  await web.pageObject(new ContentsPage().homePage, url=true);
-  await web.readyState()
-  await web.locate(By.name('q')).sendKeys('selenium')
-  await web.locate(By.css('button[type="submit"]')).click()
-  await web.back
-  web.driver.quit()
-}
 
-async function test()
+async function page()
 {
   let driver = await new Builder().forBrowser('chrome').build();
   //let driver = await new WebdriverDummy()
@@ -94,5 +83,34 @@ async function test()
   await web.driver.quit()
 }
 
-test()
-//test2()
+async function locator()
+{
+  let driver = await new Builder().forBrowser('chrome').build();
+  let web = new WebPage(driver, 10000, true);
+  await web.pageObject(new ContentsPage().homePage, url=true);
+  await web.readyState()
+  await web.locate(By.name('q')).sendKeys('selenium')
+  await web.locate(By.css('button[type="submit"]')).click()
+  await web.back
+  web.driver.quit()
+}
+
+async function webUi()
+{
+  let driver = await new Builder().forBrowser('chrome').build();
+  let web = new WebPage(driver, 10000, true);
+  await web.pageObject(new ContentsPage().homePage, url=true);
+  await web.page.searchPackagesInput.untilElementLocated()
+  await web.page.searchPackagesInput.untilElementsLocated()
+  await web.page.searchPackagesInput.untilElementIsVisible()
+  //await web.page.searchPackagesInput.untilElementIsNotVisible()
+  await web.page.searchPackagesInput.untilElementIsEnabled()
+  //await web.page.searchPackagesInput.untilElementIsDisabled()
+  //await web.page.searchPackagesInput.untilElementIsSelected()
+  await web.page.searchPackagesInput.untilElementIsNotSelected()
+  web.driver.quit()
+}
+
+//page()
+//locator()
+webUi()

@@ -2,7 +2,6 @@
 
 const WebUi = require('./web-ui')
 
-
 class PageDecorator {
   constructor(args) {
     return new Proxy(this, {
@@ -18,6 +17,5 @@ class PageDecorator {
     });
   }
 }
-
 
 module.exports = PageDecorator;

@@ -1,6 +1,8 @@
 'use strict'
 
-const { elementLocated, elementsLocated, elementIsVisible } = require('selenium-webdriver/lib/until');
+const { elementLocated, elementsLocated, elementIsVisible, elementIsNotVisible,
+  elementIsEnabled, elementIsDisabled, elementIsSelected,
+  elementIsNotSelected } = require('selenium-webdriver/lib/until');
 const logger = require('./logger')
 
 class WebUi
