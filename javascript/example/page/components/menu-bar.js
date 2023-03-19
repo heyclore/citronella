@@ -1,6 +1,6 @@
 const { By } = require('selenium-webdriver');
 const { ui } = require('citronella')
-const { ContentsPage } = require('../contents-page')
+const ContentsPage = require('../contents-page')
 
 class MenuBar{
   get proButton(){
@@ -20,6 +20,16 @@ class MenuBar{
   }
 
   get signinButton(){
-    return ui(By.id('signin'), new ContentsPage().signinPage);
+    return ui(By.id('signin'), new ContentsPage().loginPage);
+  }
+
+  get searchPackagesInput(){
+    return ui(By.name('q'), new ContentsPage().searchPage);
+  }
+
+  get searchButton(){
+    return ui(By.css('button[type="submit"]'), new ContentsPage().searchPage);
   }
 }
+
+module.exports = MenuBar
