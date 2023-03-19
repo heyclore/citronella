@@ -1,4 +1,4 @@
-const { By, Builder } = require('selenium-webdriver');
+const { By, Builder} = require('selenium-webdriver');
 const { ui, WebPage, PlaceholderPage } = require('../lib/index')
 
 class WebdriverDummy
@@ -32,7 +32,7 @@ class Foobar
 {
   get searchPackagesInput2()
   {
-    return ui(By.name('q'));
+    return ui(By.name('q'), new ContentsPage().searchPage);
   }
 }
 
@@ -41,7 +41,7 @@ class HomePage extends new ContentsPage().fooBar
   static URL = 'https://www.npmjs.com/'
   get searchPackagesInput()
   {
-    return ui(By.name('q'));
+    return ui(By.name('q'), new ContentsPage().searchPage);
   }
   get searchButton()
   {
@@ -111,6 +111,24 @@ async function webUi()
   web.driver.quit()
 }
 
+async function key()
+{
+  let driver = await new Builder().forBrowser('chrome').build();
+  //let driver = await new WebdriverDummy()
+  let web = new WebPage(driver, 10000, true);
+  await web.pageObject(new ContentsPage().homePage);
+  await web.driver.get('https://www.npmjs.com/')
+  await web.page.searchPackagesInput.sendKeys('selenium', {enter: true})
+  let ElementsResult = await web.page.searchResultLists.getElements()
+  let textList = []
+  for (let i in ElementsResult) {
+    textList.push(await ElementsResult[i].getText())
+  }
+  console.log(textList)
+  await web.driver.quit()
+}
+
 //page()
 //locator()
-webUi()
+//webUi()
+key()
