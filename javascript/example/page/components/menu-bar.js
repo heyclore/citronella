@@ -3,6 +3,10 @@ const { ui } = require('citronella')
 const ContentsPage = require('../contents-page')
 
 class MenuBar{
+  get npmHomepageIcon(){
+    return ui(By.css('a[href="/"]'), new ContentsPage().homePage);
+  }
+
   get proButton(){
     return ui(By.id('nav-pro-link'), new ContentsPage().proPage);
   }
