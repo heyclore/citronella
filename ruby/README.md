@@ -1,6 +1,6 @@
 # Citronella
 
-[![Gem Version](https://badge.fury.io/rb/citronella.png)](http://badge.fury.io/rb/citronella)
+[![Gem Version](https://badge.fury.io/rb/citronella.svg)](http://badge.fury.io/rb/citronella)
 
 webdriver extension with a page object wrapper.
 
