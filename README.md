@@ -1,8 +1,8 @@
 # Citronella
 
 [![pypi version](https://badge.fury.io/py/citronella.svg)](https://badge.fury.io/py/citronella)
-[![gem version](https://badge.fury.io/rb/citronella.png)](https://badge.fury.io/rb/citronella)
-[![npm version](https://badge.fury.io/js/citronella.png)](https://badge.fury.io/js/citronella)
+[![gem version](https://badge.fury.io/rb/citronella.svg)](https://badge.fury.io/rb/citronella)
+[![npm version](https://badge.fury.io/js/citronella.svg)](https://badge.fury.io/js/citronella)
 
 Citronella is a selenium and/or appium webdriver extension with page object wrapper for create a tests a bit simple.
 
