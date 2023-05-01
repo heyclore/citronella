@@ -29,18 +29,21 @@ def ui(by, value, page=None):
         by
         ui
 
-    Kwarg:
-        page(optional)
-
     Usage:
-        without reference / page object. ui(By.NAME, 'q')
-        with reference / page object.    ui(By.ID, 'submit', UserMenuPage)
-
-    page are reference for the next page object if the element redirect to
-    another page with WebUi click and send_keys(enter key) from input form.
+        ui(By.NAME, 'q')
     """
+    if page:
+        raise Exception(
+                '\n\t ========================================================'
+                '\n\t The use of "page" kwargs for ui module is deprecated and will remove for the next version.'
+                '\n\t Please install the previous version to run the current script.'
+                '\n\t "pip install citronella==0.0.5"'
+                '\n\t'
+                '\n\t or review the latest update/change.'
+                '\n\t ========================================================'
+                ) from None
     return {
             'by': by,
             'value': value,
-            'page': page,
+            'page': page
             }

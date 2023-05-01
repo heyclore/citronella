@@ -34,14 +34,12 @@ from .logger import logger
 
 class WebUi:
     """a wrapped object of a web element."""
-    def __init__(self, driver, webdriver_wait, pages, logger, by, value,
-                 new_page, function_name, class_name):
+    def __init__(self, driver, webdriver_wait, logger, by, value,
+                 function_name, class_name):
         self._driver = driver
         self._wait = webdriver_wait
-        self._pages = pages
         self._logger = logger
         self._locator = (by, value)
-        self._new_page = new_page
         self._function_name = function_name
         self._class_name = class_name
 
@@ -111,7 +109,7 @@ class WebUi:
             self._locator))
 
     @logger
-    def click(self, switch_page=True):
+    def click(self):
         """click to web element."""
         try:
             self._webdriver_wait(element_to_be_clickable(self._locator)).click()
@@ -119,11 +117,8 @@ class WebUi:
             sleep(2)
             self._webdriver_wait(element_to_be_clickable(self._locator)).click()
 
-        if self._new_page and switch_page:
-            self._pages.append(self._new_page)
-
     @logger
-    def send_keys(self, text, clear=False, return_key=False, switch_page=True):
+    def send_keys(self, text, clear=False, return_key=False):
         """custom webdriver send_keys with optional clear field."""
         element = self._webdriver_wait(presence_of_element_located(self._locator))
 
@@ -134,6 +129,3 @@ class WebUi:
 
         if return_key:
             element.send_keys(Keys.RETURN)
-
-            if self._new_page and switch_page:
-                self._pages.append(self._new_page)

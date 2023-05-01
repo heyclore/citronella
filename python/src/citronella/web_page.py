@@ -24,7 +24,6 @@
 from types import SimpleNamespace
 from time import sleep
 from .page_decorator import PageDecorator
-from .page_tab import PageTab
 from .web_ui import WebUi
 
 
@@ -47,7 +46,7 @@ class WebPage:
     def __init__(self, driver, webdriver_wait=10, logger=True):
         self._driver = driver
         self._webdriver_wait = webdriver_wait
-        self._pages = PageTab()
+        self._pages = None
         self._logger = logger
         self._app = driver.current_package if 'appium' in str(
                 driver.__class__) else None
@@ -84,7 +83,7 @@ class WebPage:
             or
             self.browser.page_object(Homepage, get_start=True)
         """
-        self._pages.append(new_page)
+        self._pages = new_page
         if get_start:
             if 'ACTIVITY' not in dir(new_page):
                 raise ValueError(
@@ -108,15 +107,13 @@ class WebPage:
             web.ui(By.NAME, 'q').get_element().text()
             web.ui(By.NAME, 'q').get_element().click()
         """
-        return WebUi(self._driver, self._webdriver_wait, self._pages,
-                     self._logger, by, value, None, self.locate.__name__,
-                     self.__class__.__name__)
+        return WebUi(self._driver, self._webdriver_wait, self._logger, by,
+                     value, self.locate.__name__, self.__class__.__name__)
 
     @property
     def back(self):
-        """return to previous page and delete the last page object."""
+        """return to previous page."""
         self.driver.back()
-        self._pages.pop()
 
     @property
     def get_window_size(self):
@@ -129,10 +126,10 @@ class WebPage:
         """
         return SimpleNamespace(**self.driver.get_window_size())
 
-    def ready_state(self, wait):
+    def ready_state(self, timeout=30):
         """execute javascript for page to fully load, disabled for appium"""
         if not self._app:
-            for x in range(wait):
+            for x in range(timeout):
                 if self.driver.execute_script(
                         'return document.readyState') != 'complete':
                     sleep(1)
