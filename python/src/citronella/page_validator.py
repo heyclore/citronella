@@ -21,26 +21,12 @@
 #SOFTWARE.
 
 
-from .deprecated import logwarning
-
-
-def ui(by, value, page=None):
-    """
-    forward the data to page decorator and wrap into WebUi class.
-
-    Args:
-        by
-        ui
-
-    Usage:
-        ui(By.NAME, 'q')
-    """
-    ##
-    if page:
-        logwarning('"page" kwargs for ui module is deprecated and will '
-        'remove for the next version.')
-    ##
-    return {
-            'by': by,
-            'value': value,
-            }
+def page_validator(obj):
+    if not obj:
+        return obj
+    if isinstance(obj, type):
+        return obj
+    raise Exception('\n\tdon\'t initialized the contents_page'
+                    '\n\t"web = WebPage(driver, contents_page=ContentsPage)"'
+                    '\n\tnot'
+                    '\n\t"web = WebPage(driver, contents_page=ContentsPage())"')

@@ -21,26 +21,15 @@
 #SOFTWARE.
 
 
-from .deprecated import logwarning
+from logging import warning
 
 
-def ui(by, value, page=None):
-    """
-    forward the data to page decorator and wrap into WebUi class.
-
-    Args:
-        by
-        ui
-
-    Usage:
-        ui(By.NAME, 'q')
-    """
-    ##
-    if page:
-        logwarning('"page" kwargs for ui module is deprecated and will '
-        'remove for the next version.')
-    ##
-    return {
-            'by': by,
-            'value': value,
-            }
+def logwarning(x):
+    warning(
+            '\n\t ========================================================'
+            f'\n\t {x}'
+            '\n\t Please install the previous version to run the current script.'
+            '\n\n\t "pip install citronella==0.0.5"'
+            '\n\n\t or review the latest update/change.'
+            '\n\t ========================================================'
+            )

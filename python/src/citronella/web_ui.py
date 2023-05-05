@@ -30,6 +30,7 @@ from selenium.webdriver.support.expected_conditions import \
         visibility_of_any_elements_located, invisibility_of_element_located, \
         element_located_to_be_selected, element_to_be_clickable
 from .logger import logger
+from .deprecated import logwarning
 
 
 class WebUi:
@@ -109,8 +110,13 @@ class WebUi:
             self._locator))
 
     @logger
-    def click(self):
+    def click(self, switch_page=True):
         """click to web element."""
+        ##
+        if not switch_page:
+            logwarning('"switch_page" kwargs is deprecated and will remove for the next version')
+            return
+        ##
         try:
             self._webdriver_wait(element_to_be_clickable(self._locator)).click()
         except Exception as e:
@@ -118,8 +124,13 @@ class WebUi:
             self._webdriver_wait(element_to_be_clickable(self._locator)).click()
 
     @logger
-    def send_keys(self, text, clear=False, return_key=False):
+    def send_keys(self, text, clear=False, return_key=False, switch_page=True):
         """custom webdriver send_keys with optional clear field."""
+        ##
+        if not switch_page:
+            logwarning('"switch_page" kwargs is deprecated and will remove for the next version')
+            return
+        ##
         element = self._webdriver_wait(presence_of_element_located(self._locator))
 
         if clear:

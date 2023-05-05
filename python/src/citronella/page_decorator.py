@@ -26,25 +26,25 @@ from .web_ui import WebUi
 
 class PageDecorator:
     """This is a page decorator class."""
-    def __init__(self, driver, webdriver_wait, pages, logger, web_ui=False):
+    def __init__(self, driver, webdriver_wait, contents_page, logger):
         self.driver = driver
         self.webdriver_wait = webdriver_wait
-        self.pages = pages
+        self.contents_page = contents_page
         self.logger = logger
-        self.web_ui = web_ui
 
     def __getattr__(self, attr):
         """look up the attr / method name inside page object."""
         try:
-            ui = self.pages().__getattribute__(attr)()
-            print(ui)
+            ui = self.contents_page().__getattribute__(attr)()
         except TypeError as e:
             raise Exception(f'please add "self" to "{attr}" method '
-                            f'from {self.pages.__name__}')
+                            f'from {self.contents_page.__name__}')
         except Exception as e:
             raise Exception(e)
-        if not self.web_ui:
-            return PageDecorator(self.driver, self.webdriver_wait, ui,
-                                 self.logger, True)
-        return WebUi(self.driver, self.webdriver_wait, self.logger, ui['by'],
-                     ui['value'], attr, self.pages.__class__.__name__)
+
+        if isinstance(ui, dict):
+            return WebUi(self.driver, self.webdriver_wait, self.logger,
+                         ui['by'], ui['value'], attr,
+                         self.contents_page.__class__.__name__)
+
+        return PageDecorator(self.driver, self.webdriver_wait, ui, self.logger)

@@ -23,74 +23,70 @@
 
 from types import SimpleNamespace
 from time import sleep
+from logging import warning
 from .page_decorator import PageDecorator
 from .web_ui import WebUi
+from .page_validator import page_validator
+from .deprecated import logwarning
 
 
 class WebPage:
     """
     an object class that use across the tests.
+    contents_page are need to set if using page object strategy, it does not
+    requied if only using this to access 'web.locate'.
     webdriver_wait is set '10' seconds by default
     logger is set 'True' by default
 
     Args:
         driver
     Kwargs (optional):
+        contents_page
         webdriver_wait
         logger
 
     Usage:
         driver = webdriver.Chrome()
-        web = WebPage(driver)
+        web = WebPage(driver, contents_page=ContentsPage)
+        or
+        web = WebPage(driver) without contents_page to access "web.locate" only
     """
-    def __init__(self, driver, webdriver_wait=10, logger=True):
+    def __init__(self, driver, contents_page=None, webdriver_wait=10, logger=True):
         self._driver = driver
         self._webdriver_wait = webdriver_wait
-        self._pages = None
+        self._contents_page = page_validator(contents_page)
         self._logger = logger
-        self._app = driver.current_package if 'appium' in str(
-                driver.__class__) else None
 
     @property
     def driver(self):
         """return the original selenium / appium driver."""
         return self._driver
 
-    @property
-    def page(self):
-        """return last page object model."""
-        return PageDecorator(self.driver, self._webdriver_wait, self._pages,
-                             self._logger)
-
+    ##
     def page_object(self, new_page, get_start=False):
         """
-        initialize page object module object, get_start kwargs is optional and
-        it set to FALSE by default, it can be use if the page object have
-        an ACTIVITY constant variable.
-        in selenium:
-        it's equal as self.driver.get(url)
-        in appium:
-        it's equal as self.driver.start_activity(package_name, activity_name)
+        initialize page object module object.
 
         Args:
             page_object_model
 
-        Kwargs:
-            get_start=True
-
         Usage:
-            self.browser.page_object(Homepage)
-            or
-            self.browser.page_object(Homepage, get_start=True)
+            web.page_object(ContentsPage)
         """
-        self._pages = new_page
-        if get_start:
-            if 'ACTIVITY' not in dir(new_page):
-                raise ValueError(
-                        f'ACTIVITY is not exist in {new_page.__qualname__}')
-            if self._app:
-                return self.driver.start_activity(self._app, new_page.ACTIVITY)
-            self.driver.get(new_page.ACTIVITY)
+        self._contents_page = new_page
+        logwarning('"page_object" method is deprecated and will remove for the next version')
+    ##
+
+    @property
+    def page(self):
+        """return a page decorator object of ContentsPage."""
+        if not self._contents_page:
+            warning('\n\tpage object hasn\'t been set yet.'
+                    '\n\t"web = WebPage(driver, contents_page=ContentsPage)" '
+                    'before "using web.page.foo.click()" etc.')
+            exit()
+        return PageDecorator(self.driver, self._webdriver_wait, self._contents_page,
+                             self._logger)
 
     def locate(self, by, value):
         """
@@ -103,17 +99,20 @@ class WebPage:
             value
 
         Usage:
-            web.ui(By.NAME, 'q').ec_presence_of_element_located()
-            web.ui(By.NAME, 'q').get_element().text()
-            web.ui(By.NAME, 'q').get_element().click()
+            web.locate(By.NAME, 'q').ec_presence_of_element_located()
+            web.locate(By.NAME, 'q').get_element().text()
+            web.locate(By.NAME, 'q').get_element().click()
         """
         return WebUi(self._driver, self._webdriver_wait, self._logger, by,
                      value, self.locate.__name__, self.__class__.__name__)
 
+    ##
     @property
     def back(self):
         """return to previous page."""
         self.driver.back()
+        logwarning('"back" method is deprecated and will remove for the next '
+                   'version.\n\t use "web.driver.back()" instead.')
 
     @property
     def get_window_size(self):
@@ -121,18 +120,20 @@ class WebPage:
         get current windows size.
 
         Usage:
-            height = self.browser.get_window_size.height
-            width = self.browser.get_window_size.width
+            height = web.get_window_size.height
+            width = web.get_window_size.width
         """
+        logwarning('"get_window_size" method is deprecated and will remove for the next '
+                   'version.\n\t use "web.driver.get_window_size()" instead.')
         return SimpleNamespace(**self.driver.get_window_size())
+    ##
 
     def ready_state(self, timeout=30):
-        """execute javascript for page to fully load, disabled for appium"""
-        if not self._app:
-            for x in range(timeout):
-                if self.driver.execute_script(
-                        'return document.readyState') != 'complete':
-                    sleep(1)
+        """execute javascript for page to fully load"""
+        for x in range(timeout):
+            if self.driver.execute_script(
+                    'return document.readyState') != 'complete':
+                sleep(1)
 
     def webdriver_wait(self, wait):
         """override webdriver wait."""
