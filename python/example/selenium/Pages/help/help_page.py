@@ -3,7 +3,7 @@ from citronella import ui
 from Pages.contents_page import ContentsPage
 
 
-class HelpPage(ContentsPage.header(), ContentsPage.footer()):
+class HelpPage(ContentsPage().header(), ContentsPage().footer()):
     def basics_link(self):
         return ui(By.XPATH, '//a[@href="#basics"]')
 

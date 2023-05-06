@@ -3,8 +3,7 @@ from citronella import ui
 from Pages.contents_page import ContentsPage
 
 
-class RegisterPage(ContentsPage.header(), ContentsPage.footer()):
-    ACTIVITY = 'https://pypi.org/account/register/'
+class RegisterPage(ContentsPage().header(), ContentsPage().footer()):
 
     def full_name_input(self):
         return ui(By.ID, 'full_name')

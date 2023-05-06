@@ -3,8 +3,7 @@ from citronella import ui
 from Pages.contents_page import ContentsPage
 
 
-class LoginPage(ContentsPage.header(), ContentsPage.footer()):
-    ACTIVITY = 'https://pypi.org/account/login/'
+class LoginPage(ContentsPage().header(), ContentsPage().footer()):
 
     def username_input(self):
         return ui(By.ID, 'username')
@@ -13,4 +12,4 @@ class LoginPage(ContentsPage.header(), ContentsPage.footer()):
         return ui(By.ID, 'password')
 
     def login_button(self):
-        return ui(By.XPATH, '//input[@type="submit"]', ContentsPage.login_page())
+        return ui(By.XPATH, '//input[@type="submit"]')

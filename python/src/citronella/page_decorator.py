@@ -37,14 +37,16 @@ class PageDecorator:
         try:
             ui = self.contents_page().__getattribute__(attr)()
         except TypeError as e:
-            raise Exception(f'please add "self" to "{attr}" method '
-                            f'from {self.contents_page.__name__}')
+            if 'takes 0 positional arguments but 1 was given' in str(e):
+                raise Exception(f'please add "self" to "{attr}" method '
+                                f'from {self.contents_page.__name__}')
+            raise Exception(e)
         except Exception as e:
             raise Exception(e)
 
         if isinstance(ui, dict):
             return WebUi(self.driver, self.webdriver_wait, self.logger,
                          ui['by'], ui['value'], attr,
-                         self.contents_page.__class__.__name__)
+                         self.contents_page.__name__)
 
         return PageDecorator(self.driver, self.webdriver_wait, ui, self.logger)

@@ -3,6 +3,6 @@ from citronella import ui
 from Pages.contents_page import ContentsPage
 
 
-class HomePage(ContentsPage.header(), ContentsPage.footer()):
+class HomePage(ContentsPage().header(), ContentsPage().footer()):
     def browse_project_button(self):
-        return ui(By.XPATH, '//button[@type="submit"]/i', ContentsPage.search_page())
+        return ui(By.XPATH, '//button[@type="submit"]/i')
