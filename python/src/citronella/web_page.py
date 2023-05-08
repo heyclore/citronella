@@ -47,14 +47,14 @@ class WebPage:
 
     Usage:
         driver = webdriver.Chrome()
-        web = WebPage(driver, contents_page=ContentsPage)
+        web = WebPage(driver)
         or
         web = WebPage(driver) without contents_page to access "web.locate" only
     """
-    def __init__(self, driver, contents_page=None, webdriver_wait=10, logger=True):
+    def __init__(self, driver, webdriver_wait=10, logger=True):
         self._driver = driver
         self._webdriver_wait = webdriver_wait
-        self._contents_page = page_validator(contents_page)
+        self._contents_page = None
         self._logger = logger
 
     @property
@@ -74,7 +74,9 @@ class WebPage:
             web.page_object(ContentsPage)
         """
         self._contents_page = new_page
-        logwarning('"page_object" method is deprecated and will remove for the next version')
+        logwarning('\n\t "page_object" method is deprecated and will remove for the next version'
+                   '\n\t use "web.page = HomePage" instead \n\t or \n\t "web.page = ContentsPage"'
+                   )
     ##
 
     @property
@@ -84,9 +86,12 @@ class WebPage:
             warning('\n\tpage object hasn\'t been set yet.'
                     '\n\t"web = WebPage(driver, contents_page=ContentsPage)" '
                     'before "using web.page.foo.click()" etc.')
-            exit()
         return PageDecorator(self.driver, self._webdriver_wait, self._contents_page,
                              self._logger)
+
+    @page.setter
+    def page(self, new_page):
+        self._contents_page = page_validator(new_page)
 
     def locate(self, by, value):
         """

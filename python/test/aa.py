@@ -32,7 +32,9 @@ class Foo:
     def get_window_size(self):
         return {'width':8, 'height': 8}
 
-web = WebPage(Foo(), contents_page=ContentsPage)
+web = WebPage(Foo())
+web.page
+web.page = ContentsPage
 web.page.home_page.browse_project_button.click
 web.get_window_size
 web.back
