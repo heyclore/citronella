@@ -30,10 +30,12 @@ def pytest_runtest_setup(item):
 
 @pytest.fixture(autouse='true', scope='class')
 def web(request):
+    from logging import warning
     global driver
     options = UiAutomator2Options()
     options.platformName = 'Android'
-    options.app = os.getcwd() + '/APK/ApiDemos-debug.apk.zip'
+    options.app = os.getcwd() + '/APK/ApiDemos-debug.apk'
+    warning(options)
     driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', options=options)
     yield WebPage(driver)
     driver.quit()
