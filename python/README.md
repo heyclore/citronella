@@ -22,21 +22,21 @@ class TestNavigationMenu:
 
     def test_help_page(self, web):
         web.driver.get('https://pypi.org/')
-        web.page_object(ContentsPage.home_page())
+        web.page = ContentsPage
 
-        web.page.help_button.click()
+        web.page.home_page.help_button.click()
         assert 'Help' in web.driver.title
 
     def test_sponsors_page(self, web):
-        web.page.sponsors_button.click()
+        web.page.help_page.sponsors_button.click()
         assert 'Sponsors' in web.driver.title
 
     def test_login_page(self, web):
-        web.page.login_button.click()
+        web.page.sponsors_page.login_button.click()
         assert 'Log' in web.driver.title
 
     def test_register_page(self, web):
-        web.page.register_button.click()
+        web.page.login_page.register_button.click()
         assert 'Create' in web.driver.title
 ```
 
@@ -47,28 +47,15 @@ import pytest
 from Pages.contents_page import ContentsPage
 
 
-class TestNavigationMenu:
+class TestInput:
 
-    def test_accessibility_page(self, web):
-        web.page_object(ContentsPage.api_demo_page())
-
-        web.page.accessibility_button.click()
-        assert web.page.accessibility_node_provider_button.get_element().is_visible()
-
-    def test_animation_page(self, web):
-        web.back
-        web.page.animation_button.click()
-        assert web.page.cloning_button.get_element().is_visible()
-
-    def test_app_page(self, web):
-        web.back
-        web.page.app_button.click()
-        assert web.page.activity_button.get_element().is_visible()
-
-    def test_os_page(self, web):
-        web.back
-        web.page.os_button.click()
-        assert web.page.morse_code_button.get_element().is_visible()
+    def test_input(self, web):
+        web.page = ContentsPage
+        web.page.home_page.gallery_button.click()
+        web.page.gallery_page.text_input.send_keys('citronella')
+        web.page.gallery_page.add_button.click()
+        elements = web.page.gallery_page.text_lists.get_elements()
+        assert 'citronella' in [x.text for x in elements]
 ```
 
 Even though this module is mainly designed for the page object model, it can also be used without it for quick prototyping or mockups, etc.
@@ -141,19 +128,17 @@ def web(request):
     driver.quit()
 ```
 
-* The second and third modules are for the page object model.
-
-[Check out this link for more information on the Page Object Design.](https://github.com/heyclore/citronella/tree/main/python/example#readme)
+* The second module are for the page object model.
 
 ### Selenium
 
 ```python
 from selenium.webdriver.common.by import By
-from citronella import Ui, PlaceholderPage
+from citronella import Ui
 from Pages.contents_page import ContentsPage
 
 
-class HomePage(ContentsPage.header()):
+class HomePage(ContentsPage().header()):
 
     def some_button(self):
         return Ui(By.XPATH, '//a[@name="foo"]')
@@ -162,21 +147,21 @@ class HomePage(ContentsPage.header()):
         return Ui(By.ID, 'search')
 
     def search_button(self):
-        return Ui(By.NAME, 'search-button', ContentsPage.search_page())
+        return Ui(By.NAME, 'search-button')
 
     def link_to_somewhere_currently_dont_have_page_object(self):
-        return Ui(By.NAME, 'search-button', PlaceholderPage)
+        return Ui(By.NAME, 'search-button')
 ```
 
 ### Appium
 
 ```python
 from appium.webdriver.common.appiumby import AppiumBy
-from citronella import Ui, PlaceholderPage
+from citronella import Ui
 from Pages.contents_page import ContentsPage
 
 
-class HomePage(ContentsPage.header()):
+class HomePage(ContentsPage().header()):
 
     def some_button(self):
         return Ui(AppiumBy.XPATH, '//a[@name="foo"]')
@@ -185,11 +170,10 @@ class HomePage(ContentsPage.header()):
         return Ui(AppiumBy.ACCESSIBILITY_ID, 'search')
 
     def search_button(self):
-        from Pages.SearchPage import SearchPage
-        return Ui(AppiumBy.ID, 'search-button', ContentsPage.search_page())
+        return Ui(AppiumBy.ID, 'search-button')
 
     def link_to_somewhere_currently_dont_have_page_object(self):
-        return Ui(AppiumBy.ACCESSIBILITY_ID, 'search-button', PlaceholderPage)
+        return Ui(AppiumBy.ACCESSIBILITY_ID, 'search-button')
 ```
 
 ___
@@ -209,12 +193,10 @@ ___
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | None        | None             | return selenium `webdriver` object |
 | locate             | by, value   | None             | similar as`driver.get_element` args |
-| page_object        | Page Object | get_start `bool` | Page Object must contain `ACTIVITY` variable with URL(selenium)/State(appium) if using Kwargs** | 
-| page               | None        | None             |      |
-| back               | None        | None             |      |
+| page               | page object | None             | setter |
+| page               | None        | None             | getter |
 | webdriver_wait     | number(sec) | None             |      |
 | ready_state        | number(sec) | None             | execute javascript `document.readyState` manually, default timeout is `0` |
-| get_window_size    | None        | None             |      |
 | sleep              | number(sec) | None             |      |
 
 ### citronella.ui / citronella.WebUi
@@ -222,13 +204,12 @@ ___
 ###### Args:
 - by
 - value
-- page_object (optional)
 
 ###### Method Lists:
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
-| send_keys     | text   | clear `bool`, return_key `bool`, switch_page `bool` |     |
-| click         | None   | switch_page `bool` | see [test_auth.py](example/selenium/Test/pytest_html_image/test_auth.py) example |
+| send_keys     | text   | clear `bool`, return_key `bool` |     |
+| click         | None   | none               |      |
 | get_element   | None   | None               |      |
 | get_elements  | None   | None               |      |
 | ec_element_to_be_clickable | None | None | wrapper of `EC` / `excpected_condition` |
