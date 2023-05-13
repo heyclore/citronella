@@ -89,7 +89,7 @@ pip install citronella
 ___
 ## Documentation
 
-There are only three modules imported in this package:
+There are only two modules import in this package:
 
 * The first module is for conftest.py.
 
@@ -148,9 +148,6 @@ class HomePage(ContentsPage().header()):
 
     def search_button(self):
         return ui(By.NAME, 'search-button')
-
-    def link_to_somewhere_currently_dont_have_page_object(self):
-        return ui(By.NAME, 'search-button')
 ```
 
 ### Appium
@@ -171,9 +168,6 @@ class HomePage(ContentsPage().header()):
 
     def search_button(self):
         return ui(AppiumBy.ID, 'search-button')
-
-    def link_to_somewhere_currently_dont_have_page_object(self):
-        return ui(AppiumBy.ACCESSIBILITY_ID, 'search-button')
 ```
 
 ___
