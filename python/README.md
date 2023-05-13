@@ -134,46 +134,46 @@ def web(request):
 
 ```python
 from selenium.webdriver.common.by import By
-from citronella import Ui
+from citronella import ui
 from Pages.contents_page import ContentsPage
 
 
 class HomePage(ContentsPage().header()):
 
     def some_button(self):
-        return Ui(By.XPATH, '//a[@name="foo"]')
+        return ui(By.XPATH, '//a[@name="foo"]')
 
     def search_input(self):
-        return Ui(By.ID, 'search')
+        return ui(By.ID, 'search')
 
     def search_button(self):
-        return Ui(By.NAME, 'search-button')
+        return ui(By.NAME, 'search-button')
 
     def link_to_somewhere_currently_dont_have_page_object(self):
-        return Ui(By.NAME, 'search-button')
+        return ui(By.NAME, 'search-button')
 ```
 
 ### Appium
 
 ```python
 from appium.webdriver.common.appiumby import AppiumBy
-from citronella import Ui
+from citronella import ui
 from Pages.contents_page import ContentsPage
 
 
 class HomePage(ContentsPage().header()):
 
     def some_button(self):
-        return Ui(AppiumBy.XPATH, '//a[@name="foo"]')
+        return ui(AppiumBy.XPATH, '//a[@name="foo"]')
 
     def search_input(self):
-        return Ui(AppiumBy.ACCESSIBILITY_ID, 'search')
+        return ui(AppiumBy.ACCESSIBILITY_ID, 'search')
 
     def search_button(self):
-        return Ui(AppiumBy.ID, 'search-button')
+        return ui(AppiumBy.ID, 'search-button')
 
     def link_to_somewhere_currently_dont_have_page_object(self):
-        return Ui(AppiumBy.ACCESSIBILITY_ID, 'search-button')
+        return ui(AppiumBy.ACCESSIBILITY_ID, 'search-button')
 ```
 
 ___
@@ -191,13 +191,13 @@ ___
 ###### Method Lists:
 | Method Name        | Args*       | Kwargs**         | Note |
 | ------------------ |:-----------:|:----------------:|:----:|
-| driver             | None        | None             | return selenium `webdriver` object |
-| locate             | by, value   | None             | similar as`driver.get_element` args |
-| page               | page object | None             | setter |
-| page               | None        | None             | getter |
-| webdriver_wait     | number(sec) | None             |      |
-| ready_state        | number(sec) | None             | execute javascript `document.readyState` manually, default timeout is `0` |
-| sleep              | number(sec) | None             |      |
+| driver             | -           | -                | return selenium `webdriver` object |
+| locate             | by, value   | -                | similar as`driver.get_element` args |
+| page               | page object | -                | setter |
+| page               | -           | -                | getter |
+| webdriver_wait     | number(sec) | -                |      |
+| ready_state        | number(sec) | -                | execute javascript `document.readyState` manually, default timeout is `30` |
+| sleep              | number(sec) | -                |      |
 
 ### citronella.ui / citronella.WebUi
 
@@ -209,17 +209,17 @@ ___
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
 | send_keys     | text   | clear `bool`, return_key `bool` |     |
-| click         | None   | none               |      |
-| get_element   | None   | None               |      |
-| get_elements  | None   | None               |      |
-| ec_element_to_be_clickable | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_presence_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_presence_of_all_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_visibility_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_visibility_of_all_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_visibility_of_any_elements_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_invisibility_of_element_located | None | None | wrapper of `EC` / `excpected_condition` |
-| ec_element_located_to_be_selected | None | None | wrapper of `EC` / `excpected_condition` |
+| click         | -      | -                  |      |
+| get_element   | -      | -                  |      |
+| get_elements  | -      | -                  |      |
+| ec_element_to_be_clickable | -    | -    | wrapper of `EC` / `excpected_condition` |
+| ec_presence_of_element_located | -    | -    | wrapper of `EC` / `excpected_condition` |
+| ec_presence_of_all_elements_located | -    | -    | wrapper of `EC` / `excpected_condition` |
+| ec_visibility_of_element_located | -    | -    | wrapper of `EC` / `excpected_condition` |
+| ec_visibility_of_all_elements_located | -    | -    | wrapper of `EC` / `excpected_condition` |
+| ec_visibility_of_any_elements_located | -    | -    | wrapper of `EC` / `excpected_condition` |
+| ec_invisibility_of_element_located | -    | -    | wrapper of `EC` / `excpected_condition` |
+| ec_element_located_to_be_selected | -    | -    | wrapper of `EC` / `excpected_condition` |
 
 
 ## Testing powered by
