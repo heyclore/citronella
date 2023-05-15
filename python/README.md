@@ -171,6 +171,83 @@ class HomePage(ContentsPage().header()):
 ```
 
 ___
+## Page Object Design / Strategy
+
+There's a two ways to create a page object for `WebPage`:
+
+1. Straightforward approach: This method requires importing the page object for each test.
+```python
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from citronella import WebPage, ui
+
+
+class HomePage:
+    def auth_buton(self):
+        return ui(By.XPATH, '//a[@name="foo"]')
+
+class LoginPage:
+    def email_input(self):
+        return ui(By.ID, 'email')
+
+    def password_input(self):
+        return ui(By.ID, 'password')
+
+    def login_buton(self):
+        return ui(By.ID, 'login')
+
+driver = webdriver.Chrome()
+web = WebPage(driver)
+web.driver.get('https://foobarbaz.com/')
+web.page = HomePage
+web.page.auth_button.click()
+web.page = LoginPage
+web.page.email_input.send_keys('foo')
+web.page.password_input.send_keys('bar')
+web.page.login_button.click()
+```
+
+2. Lazy loading approach: This method is slightly more complex but offers the benefit of lazy loading.
+see [ContentsPage example](https://github.com/heyclore/citronella/blob/main/python/example/selenium/Pages/contents_page.py)
+or this [Page object example](https://github.com/heyclore/citronella/tree/main/python/example/selenium/Pages)
+```python
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from citronella import WebPage, ui
+
+
+class ContentsPage:
+    def home_page(self):
+        return HomePage
+
+    def login_page(self):
+        return LoginPage
+
+class HomePage:
+    def auth_buton(self):
+        return ui(By.XPATH, '//a[@name="foo"]')
+
+class LoginPage:
+    def email_input(self):
+        return ui(By.ID, 'email')
+
+    def password_input(self):
+        return ui(By.ID, 'password')
+
+    def login_buton(self):
+        return ui(By.ID, 'login')
+
+driver = webdriver.Chrome()
+web = WebPage(driver)
+web.driver.get('https://foobarbaz.com/')
+web.page = ContentsPage
+web.page.home_page.auth_button.click()
+web.page.login_page.email_input.send_keys('foo')
+web.page.login_page.password_input.send_keys('bar')
+web.page.login_page.login_button.click()
+```
+
+___
 ## Usage
 
 ### citronella.WebPage
