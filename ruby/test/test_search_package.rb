@@ -1,6 +1,7 @@
 require 'test/unit'
 require "selenium-webdriver"
-require_relative '../lib/citronella'
+$LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
+require "citronella"
 
 
 class PackageSearchTest < Test::Unit::TestCase

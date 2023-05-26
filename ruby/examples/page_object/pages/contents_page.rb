@@ -15,7 +15,7 @@ class ContentsPage
   end
 
   def release_page
-    require_relative 'release/release_page'
+    require_relative 'releases/release_page'
     ReleasePage
   end
 

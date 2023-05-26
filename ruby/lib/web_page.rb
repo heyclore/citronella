@@ -46,7 +46,7 @@ module Citronella
       def initialize(driver, webdriver_wait:10, logger:true)
         @driver = driver
         @webdriver_wait = webdriver_wait
-        @pages = Citronella::PagesList.new
+        @page = nil
         @logger = logger
       end
 
@@ -55,37 +55,14 @@ module Citronella
         @driver
       end
 
-      def page_object(new_page, url=false)
-        """
-        initialize page object module object, url kwargs is optional and
-        it set to FALSE by default, it can be use if the page object have
-        an @url variable.
-        in selenium:
-        it's equal as self.driver.navigate.to(url)
-
-        Args:
-            page_object_model
-
-        Kwargs:
-            url=true
-
-        Usage:
-            self.browser.page_object(Homepage)
-            or
-            self.browser.page_object(Homepage, url=true)
-        """
-        @pages.append(new_page)
-        if url
-          if not new_page.instance_variable_get(:@url)
-            raise "Error: '@url' variable does not exist in #{new_page}"
-          end
-          @driver.navigate.to(new_page.instance_variable_get(:@url))
-        end
-      end
-
       def page
         """return last page object model."""
-        Citronella::Wrapper::PageDecorator.new(@driver, @webdriver_wait, @pages, @logger)
+        Citronella::Wrapper::PageDecorator.new(@driver, @webdriver_wait, @page,
+                                               @logger)
+      end
+
+      def page=(page)
+        @page = page
       end
 
       def locate(args)
@@ -102,20 +79,16 @@ module Citronella
             web.ui(name: 'q').get_element.text
             web.ui(name: 'q').get_element.click
         """
-        Citronella::Ui::WebUi.new(@driver, @webdriver_wait, @pages, @logger, args, nil,
-                                  __method__.to_s, self.class.name.split('::').last.to_s)
-      end
-
-      def back
-        """return to previous page and delete the last page object."""
-        @driver.navigate.back
-        @pages.pop
+        Citronella::Ui::WebUi.new(@driver, @webdriver_wait, @logger, args,
+                                  __method__.to_s,
+                                  self.class.name.split('::').last.to_s)
       end
 
       def ready_state(wait)
         """execute javascript for page to fully load"""
         wait.times do |i|
-          return if driver.execute_script("return document.readyState") == "complete"
+          return if driver.execute_script(
+            "return document.readyState") == "complete"
           sleep(1)
         end
       end

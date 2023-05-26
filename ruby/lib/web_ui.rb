@@ -27,14 +27,12 @@ module Citronella
   module Ui
     class WebUi
       """a wrapped object of a web element."""
-      def initialize(driver, webdriver_wait, pages, logger, locator, new_page,
-                     function_name, class_name)
+      def initialize(driver, webdriver_wait, logger, locator, function_name,
+                     class_name)
         @driver = driver
         @wait = webdriver_wait
-        @pages = pages
         @logger = logger
         @locator = locator
-        @new_page = new_page
         @function_name = function_name
         @class_name = class_name
       end
@@ -59,10 +57,6 @@ module Citronella
 
         if return_key
           el.send_keys :return
-
-          if @new_page and switch_page
-            @pages.append(@new_page)
-          end
         end
       end
 
@@ -71,21 +65,19 @@ module Citronella
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
         el = webdriver_wait(@driver.find_element(@locator), displayed=true)
         el.click
-
-        if @new_page and switch_page
-          @pages.append(@new_page)
-        end
       end
 
       def get_element
         """return web element, equal as find_element."""
-        Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
+        Citronella::Log.logger(@logger, @class_name, @function_name,
+                               __method__.to_s)
         webdriver_wait(@driver.find_element(@locator))
       end
 
       def get_elements
         """return list of web element, equal as find_elements."""
-        Citronella::Log.logger(@logger, @class_name, @function_name, __method__.to_s)
+        Citronella::Log.logger(@logger, @class_name, @function_name,
+                               __method__.to_s)
         webdriver_wait(@driver.find_elements(@locator))
       end
     end

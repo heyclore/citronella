@@ -27,19 +27,22 @@ module Citronella
   module Wrapper
     class PageDecorator
       """This is a page decorator class."""
-      def initialize(driver, webdriver_wait, pages, logger)
+      def initialize(driver, webdriver_wait, page, logger)
         @driver = driver
         @webdriver_wait = webdriver_wait
-        @pages = pages
+        @page = page
         @logger = logger
       end
 
       def method_missing(attr)
         """look up the attr / method name inside page object."""
-        original_method = @pages.current_page.new.method(attr)
+        original_method = @page.new.method(attr)
         args = original_method.call
-        Citronella::Ui::WebUi.new(@driver, @webdriver_wait, @pages, @logger,
-                                  args.last, args.first, attr, @pages.current_page.name)
+        if args.instance_of?(Class)
+          return PageDecorator.new(@driver, @webdriver_wait, args, @logger)
+        end
+        Citronella::Ui::WebUi.new(@driver, @webdriver_wait, @logger,
+                                  args.last, attr, @page.name)
       end
     end
   end

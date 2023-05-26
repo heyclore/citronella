@@ -1,12 +1,15 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    power_assert (2.0.3)
     rexml (3.2.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.8.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    test-unit (3.5.8)
+      power_assert
     websocket (1.2.9)
 
 PLATFORMS
@@ -14,6 +17,7 @@ PLATFORMS
 
 DEPENDENCIES
   selenium-webdriver
+  test-unit
 
 BUNDLED WITH
    2.1.2
