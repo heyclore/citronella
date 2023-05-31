@@ -20,23 +20,11 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
-
+# a wrapper for driver.find_element or driver.find_elements
+# @overload ui(args)
+# @param locator [Symbol] follow by value [String] (id: 'name') / (class: 'foo')
+# @return [Citronella::Ui::WebUi] object
+#
 def ui(args)
-  """
-  forward the data to page decorator and wrap into WebUi class.
-
-  Args:
-      by
-
-  Kwarg:
-      page(optional)
-
-  Usage:
-      without reference / page object. ui(name:  'q')
-      with reference / page object.    ui(id: 'submit', UserMenuPage)
-
-  page are reference for the next page object if the element redirect to
-  another page with WebUi click and send_keys(enter key) from input form.
-  """
-  return args.delete(:page), args
+  args
 end

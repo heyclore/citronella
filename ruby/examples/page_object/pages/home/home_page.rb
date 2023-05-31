@@ -1,14 +1,15 @@
+##
 require 'citronella'
-require_relative '../contents_page'
+require_relative '../components/header_menu.rb'
 
-class HomePage < ContentsPage.new.header_menu
-  @url = "https://rubygems.org/"
+class HomePage
+  include HeaderMenu
 
   def search_button
-    ui(class: 'home__search__icon', page: ContentsPage.new.search_page)
+    ui(class: 'home__search__icon')
   end
 
   def code_link_button
-    ui(css: 'div.nav--v > a:nth-child(3)', page: Citronella::Dummy::PlaceholderPage)
+    ui(css: 'div.nav--v > a:nth-child(3)')
   end
 end

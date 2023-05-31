@@ -1,7 +1,9 @@
 require 'citronella'
-require_relative '../contents_page'
+require_relative '../components/header_menu.rb'
 
-class ReleasePage < ContentsPage.new.header_menu
+class ReleasePage
+  include HeaderMenu
+
   def all_gems_button
     ui(css: 'a.news__nav-link:nth-child(1)')
   end

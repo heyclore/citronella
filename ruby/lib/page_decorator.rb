@@ -42,7 +42,7 @@ module Citronella
           return PageDecorator.new(@driver, @webdriver_wait, args, @logger)
         end
         Citronella::Ui::WebUi.new(@driver, @webdriver_wait, @logger,
-                                  args.last, attr, @page.name)
+                                  args, attr, @page.name)
       end
     end
   end
