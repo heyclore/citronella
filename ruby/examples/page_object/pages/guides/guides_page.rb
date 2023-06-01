@@ -1,7 +1,9 @@
 require 'citronella'
-require_relative '../contents_page'
+require_relative '../components/header_menu'
 
-class GuidesPage < ContentsPage.new.header_menu
+class GuidesPage
+  include HeaderMenu
+
   def rubybems_basic_button
     ui(css: 'a.nav--v__link:nth-child(1)')
   end

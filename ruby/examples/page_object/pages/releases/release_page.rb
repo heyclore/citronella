@@ -1,5 +1,5 @@
 require 'citronella'
-require_relative '../components/header_menu.rb'
+require_relative '../components/header_menu'
 
 class ReleasePage
   include HeaderMenu

@@ -26,7 +26,13 @@ require_relative 'web_ui.rb'
 module Citronella
   module Wrapper
     class PageDecorator
-      """This is a page decorator class."""
+      # a wrapper for page object class
+      #
+      # @param [Webdriver] driver
+      # @param [Integer] webdriver_wait
+      # @param [PageObject] page class
+      # @param [boolean] logger
+      #
       def initialize(driver, webdriver_wait, page, logger)
         @driver = driver
         @webdriver_wait = webdriver_wait
@@ -34,8 +40,11 @@ module Citronella
         @logger = logger
       end
 
+      # look up the attr / method name inside page object
+      #
+      # @return [PageDecorator, WebUi]
+      #
       def method_missing(attr)
-        """look up the attr / method name inside page object."""
         original_method = @page.new.method(attr)
         args = original_method.call
         if args.instance_of?(Class)

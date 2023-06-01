@@ -25,8 +25,15 @@ require 'logger'
 
 module Citronella
   module Log
+    # a wrapper for ui method
+    #
+    # @param [boolean] logger
+    # @param [String] class_name
+    # @param [String] function_name
+    # @param [String] name
+    #
     def self.logger(logger, class_name, function_name, name)
-      """This is a logger method."""
+      # This is a logger method
       if logger
         Logger.new(STDOUT, level: Logger::INFO).info("#{class_name} => #{function_name} => #{name}")
       end

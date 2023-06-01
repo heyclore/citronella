@@ -1,7 +1,9 @@
 require 'citronella'
-require_relative '../contents_page'
+require_relative '../components/header_menu'
 
-class SignUpPage < ContentsPage.new.header_menu
+class SignUpPage
+  include HeaderMenu
+
   def email_input
     ui(id: 'user_email')
   end

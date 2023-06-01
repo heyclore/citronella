@@ -1,5 +1,4 @@
 require 'citronella'
-require_relative '../contents_page'
 
 module HeaderMenu
   def home_logo

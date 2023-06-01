@@ -1,7 +1,9 @@
 require 'citronella'
-require_relative '../contents_page'
+require_relative '../components/header_menu'
 
-class SearchPage < ContentsPage.new.header_menu
+class SearchPage
+  include HeaderMenu
+
   def search_lists
     ui(class: 'gems__gem__name')
   end

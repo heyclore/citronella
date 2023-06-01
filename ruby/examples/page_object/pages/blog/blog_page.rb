@@ -1,5 +1,6 @@
 require 'citronella'
-require_relative '../contents_page'
+require_relative '../components/header_menu'
 
-class BlogPage < ContentsPage.new.header_menu
+class BlogPage
+  include HeaderMenu
 end

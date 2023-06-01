@@ -1,9 +1,8 @@
 require 'test/unit'
 require "selenium-webdriver"
-require_relative '../examples/page_object/pages/contents_page'
+require_relative '../examples/page_object/pages/contents_page_alternative'
 $LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
 require "citronella"
-
 
 class NavigationTest < Test::Unit::TestCase
   def setup

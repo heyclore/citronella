@@ -21,7 +21,6 @@
 #SOFTWARE.
 
 
-require_relative 'page_tab'
 require_relative 'page_decorator'
 require_relative 'web_ui'
 

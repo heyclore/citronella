@@ -26,7 +26,15 @@ require_relative 'logger'
 module Citronella
   module Ui
     class WebUi
-      """a wrapped object of a web element."""
+      # a wrapped object of a web element
+      #
+      # @param [Webdriver] driver
+      # @param [Integer] webdriver_wait
+      # @param [boolean] logger
+      # @param [Hash] locator
+      # @param [String] function_name
+      # @param [String] class_name
+      #
       def initialize(driver, webdriver_wait, logger, locator, function_name,
                      class_name)
         @driver = driver
@@ -49,7 +57,7 @@ module Citronella
         el
       end
 
-      def send_keys(text, clear=false, return_key=false, switch_page=true)
+      def send_keys(text, clear=false, return_key=false)
         """custom webdriver send_keys with optional clear field."""
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
         el = webdriver_wait(@driver.find_element(@locator), displayed=true)
@@ -60,7 +68,7 @@ module Citronella
         end
       end
 
-      def click(switch_page=true)
+      def click
         """click to web element."""
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
         el = webdriver_wait(@driver.find_element(@locator), displayed=true)
