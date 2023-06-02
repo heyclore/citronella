@@ -124,6 +124,65 @@ end
 ```
 
 ___
+## Page Object Design / Strategy
+see full [Page object](https://github.com/heyclore/citronella/tree/main/ruby/examples/page_object/pages) example
+```ruby
+require "selenium-webdriver"
+require 'citronella'
+
+module HeaderMenu
+  def home_logo
+    ui(class: 'header__logo')
+  end
+
+  def search_input
+    ui(id: 'home_query')
+  end
+  
+  def gems_button
+    ui(css: 'a[href="/gems"]')
+  end
+end
+
+class HomePage
+  include HeaderMenu
+
+  def search_button
+    ui(class: 'home__search__icon')
+  end
+
+  def code_link_button
+    ui(css: 'div.nav--v > a:nth-child(3)')
+  end
+end
+
+class SearchPage
+  include HeaderMenu
+
+  def search_lists
+    ui(class: 'gems__gem__name')
+  end
+end
+
+class ContentsPage
+  def home_page
+    HomePage
+  end
+
+  def search_page
+    SearchPage
+  end
+end
+
+options = Selenium::WebDriver::Chrome::Options.new
+driver = Selenium::WebDriver.for :chrome, options: options
+web = Citronella::Web::WebPage.new(driver)
+web.page = ContentsPage
+web.driver.navigate.to('https://rubygems.org')
+web.page.home_page.search_input.send_keys('citronella', return_key=true)
+puts web.page.search_page.search_list.get_element.text
+```
+___
 ## Usage
 
 ### citronella.WebPage
@@ -138,13 +197,12 @@ ___
 ###### Method Lists:
 | Method Name        | Args*       | Kwargs**         | Note |
 | ------------------ |:-----------:|:----------------:|:----:|
-| driver             | None        | None             | return selenium `webdriver` object |
-| locate             | None        | how: what        | similar as`driver.get_element` args |
-| page               | Page Object | None             | setter |
-| page               | None        | None             | getter |
-| back               | None        | None             |      |
-| webdriver_wait     | number(sec) | None             |      |
-| ready_state        | number(sec) | None             | execute javascript `document.readyState` manually |
+| driver             | -           | -                | return selenium `webdriver` object |
+| locate             | -           | how: what        | similar as`driver.get_element` args |
+| page               | Page Object | -                | setter |
+| page               | -           | -                | getter |
+| webdriver_wait     | number(sec) | -                |      |
+| ready_state        | number(sec) | -                | execute javascript `document.readyState` manually |
 
 ### citronella.ui / citronella.WebUi
 
@@ -155,9 +213,9 @@ ___
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
 | send_keys     | text   | clear `bool`, return_key `bool` |      |
-| click         | None   | None               |      |
-| get_element   | None   | None               |      |
-| get_elements  | None   | None               |      |
+| click         | -      | -                  |      |
+| get_element   | -      | -                  |      |
+| get_elements  | -      | -                  |      |
 
 
 ## Testing powered by
