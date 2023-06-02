@@ -17,6 +17,8 @@ class NavigationTest < Test::Unit::TestCase
     options = Selenium::WebDriver::Chrome::Options.new
     driver = Selenium::WebDriver.for :chrome, options: options
     @web = Citronella::Web::WebPage.new(driver)
+    @web.page = ContentsPage
+    @web.driver.navigate.to('https://rubygems.org')
   end
 
   def teardown
@@ -24,23 +26,22 @@ class NavigationTest < Test::Unit::TestCase
   end
 
   def test_navigation
-    @web.page_object(ContentsPage.new.home_page, url=true)
-    @web.page.releases_button.click
+    @web.page.home_page.releases_button.click
     assert_includes(@web.driver.title, 'Releases')
 
-    @web.page.gems_button.click
+    @web.page.release_page.gems_button.click
     assert_includes(@web.driver.title, 'Gem')
     
-    @web.page.sign_in_button.click
+    @web.page.gems_page.sign_in_button.click
     assert_includes(@web.driver.title, 'Sign in')
     
-    @web.page.sign_up_button.click
+    @web.page.sign_in_page.sign_up_button.click
     assert_includes(@web.driver.title, 'Sign up')
     
-    @web.page.guides_button.click
+    @web.page.sign_up_page.guides_button.click
     assert_includes(@web.driver.title, 'Guides')
     
-    @web.page.blog_button.click
+    @web.page.guides_page.blog_button.click
     assert_includes(@web.driver.title, 'Blog')
   end
 end
@@ -81,7 +82,7 @@ gem install citronella
 ___
 ## Documentation
 
-There are only three modules imported in this package:
+There are only two modules imported in this package:
 
 * The first module is for the tests.
 
@@ -103,21 +104,21 @@ class NavigationTest < Test::Unit::TestCase
 end
 ```
 
-* The second and third modules are for the page object model.
+* The last module is for the page object model.
 
-```python
+```ruby
 require 'citronella'
-require_relative '../contents_page'
+require_relative '../components/header_menu'
 
-class HomePage < ContentsPage.new.header_menu
-  @url = "https://rubygems.org/"
+class HomePage
+  include HeaderMenu
 
   def search_button
-    ui(class: 'home__search__icon', page: ContentsPage.new.search_page)
+    ui(class: 'home__search__icon')
   end
 
   def code_link_button
-    ui(css: 'div.nav--v > a:nth-child(3)', page: Citronella::Dummy::PlaceholderPage)
+    ui(css: 'div.nav--v > a:nth-child(3)')
   end
 end
 ```
@@ -139,8 +140,8 @@ ___
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | None        | None             | return selenium `webdriver` object |
 | locate             | None        | how: what        | similar as`driver.get_element` args |
-| page_object        | Page Object | url `bool`       | Page Object must contain `@url` variable with if using Kwargs** | 
-| page               | None        | None             |      |
+| page               | Page Object | None             | setter |
+| page               | None        | None             | getter |
 | back               | None        | None             |      |
 | webdriver_wait     | number(sec) | None             |      |
 | ready_state        | number(sec) | None             | execute javascript `document.readyState` manually |
@@ -149,13 +150,12 @@ ___
 
 ###### Kwargs:
 - how: what
-- page_object (optional)
 
 ###### Method Lists:
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
-| send_keys     | text   | clear `bool`, return_key `bool`, switch_page `bool` |    |
-| click         | None   | switch_page `bool` |      |
+| send_keys     | text   | clear `bool`, return_key `bool` |      |
+| click         | None   | None               |      |
 | get_element   | None   | None               |      |
 | get_elements  | None   | None               |      |
 
