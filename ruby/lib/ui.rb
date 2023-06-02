@@ -20,10 +20,13 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
-# a wrapper for driver.find_element or driver.find_elements
+
+# A wrapper for driver.find_element or driver.find_elements.
+#
 # @overload ui(args)
-# @param locator [Symbol] follow by value [String] (id: 'name') / (class: 'foo')
-# @return [Citronella::Ui::WebUi] object
+#   @param locator [Symbol] The locator type.
+#   @param value [String] The locator value.
+#   @return [Citronella::Ui::WebUi] The web element object.
 #
 def ui(args)
   args

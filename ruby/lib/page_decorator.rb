@@ -26,12 +26,12 @@ require_relative 'web_ui.rb'
 module Citronella
   module Wrapper
     class PageDecorator
-      # a wrapper for page object class
+      # A wrapper for page object class.
       #
-      # @param [Webdriver] driver
-      # @param [Integer] webdriver_wait
-      # @param [PageObject] page class
-      # @param [boolean] logger
+      # @param [Webdriver] driver The web driver object.
+      # @param [Integer] webdriver_wait The timeout for webdriver wait.
+      # @param [PageObject] page The page object class.
+      # @param [Boolean] logger A flag indicating whether to log actions.
       #
       def initialize(driver, webdriver_wait, page, logger)
         @driver = driver
@@ -40,7 +40,7 @@ module Citronella
         @logger = logger
       end
 
-      # look up the attr / method name inside page object
+      # Looks up the attribute/method name inside the page object.
       #
       # @return [PageDecorator, WebUi]
       #

@@ -26,14 +26,13 @@ require_relative 'logger'
 module Citronella
   module Ui
     class WebUi
-      # a wrapped object of a web element
       #
-      # @param [Webdriver] driver
-      # @param [Integer] webdriver_wait
-      # @param [boolean] logger
-      # @param [Hash] locator
-      # @param [String] function_name
-      # @param [String] class_name
+      # @param [Webdriver] driver The web driver object.
+      # @param [Integer] webdriver_wait The timeout for webdriver wait.
+      # @param [Boolean] logger A flag indicating whether to log actions.
+      # @param [Hash] locator The locator for the web element.
+      # @param [String] function_name The name of the function.
+      # @param [String] class_name The name of the class.
       #
       def initialize(driver, webdriver_wait, logger, locator, function_name,
                      class_name)
@@ -45,8 +44,13 @@ module Citronella
         @class_name = class_name
       end
 
+      # Waits for a web element to be available and returns it.
+      #
+      # @param [Webdriver] ele The web driver object.
+      # @param [Boolean] displayed Flag indicating whether to wait for the element to be displayed.
+      # @return [Webdriver::Element] The web element.
+      #
       private def webdriver_wait(ele, displayed=false)
-        """return a web element or elements."""
         el = Selenium::WebDriver::Wait.new(timeout: @wait).until { ele }
         if displayed
           @wait.times do
@@ -57,8 +61,13 @@ module Citronella
         el
       end
 
+      # Sends keys to the web element.
+      #
+      # @param [String] text The text to be sent.
+      # @param [Boolean] clear Flag indicating whether to clear the field before sending keys.
+      # @param [Boolean] return_key Flag indicating whether to send a return key.
+      #
       def send_keys(text, clear=false, return_key=false)
-        """custom webdriver send_keys with optional clear field."""
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
         el = webdriver_wait(@driver.find_element(@locator), displayed=true)
         el.send_keys text
@@ -68,22 +77,29 @@ module Citronella
         end
       end
 
+      # Clicks on the web element.
+      #
       def click
-        """click to web element."""
         Citronella::Log.logger(@logger, @class_name, @function_name, __method__)
         el = webdriver_wait(@driver.find_element(@locator), displayed=true)
         el.click
       end
 
+      # Returns a web element using find_element method.
+      #
+      # @return [Webdriver::Element] The web element.
+      #
       def get_element
-        """return web element, equal as find_element."""
         Citronella::Log.logger(@logger, @class_name, @function_name,
                                __method__.to_s)
         webdriver_wait(@driver.find_element(@locator))
       end
 
+      # Returns a list of web elements using find_elements method.
+      #
+      # @return [Array<Webdriver::Element>] The list of web elements.
+      #
       def get_elements
-        """return list of web element, equal as find_elements."""
         Citronella::Log.logger(@logger, @class_name, @function_name,
                                __method__.to_s)
         webdriver_wait(@driver.find_elements(@locator))

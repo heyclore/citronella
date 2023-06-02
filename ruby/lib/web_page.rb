@@ -26,22 +26,19 @@ require_relative 'web_ui'
 
 module Citronella
   module Web
+    # An object class that is used across the tests.
+    # `webdriver_wait` is set to '10' seconds by default.
+    # `logger` is set to 'true' by default.
+    #
+    # @param [Webdriver] driver The web driver object.
+    # @param [Integer] webdriver_wait The timeout for webdriver wait.
+    # @param [Boolean] logger A flag indicating whether to log actions.
+    #
+    # Usage:
+    #   driver = Selenium::WebDriver.for :chrome
+    #   web = WebPage.new(driver)
+    #
     class WebPage
-      """
-      an object class that use across the tests.
-      webdriver_wait is set '10' seconds by default
-      logger is set 'True' by default
-
-      Args:
-          driver
-      Kwargs (optional):
-          webdriver_wait
-          logger
-
-      Usage:
-          driver = Selenium::WebDriver.for :chrome
-          web = WebPage(driver)
-      """
       def initialize(driver, webdriver_wait:10, logger:true)
         @driver = driver
         @webdriver_wait = webdriver_wait
@@ -49,42 +46,53 @@ module Citronella
         @logger = logger
       end
 
+      # Returns the original Selenium driver.
+      #
+      # @return [Webdriver] The web driver object.
+      #
       def driver
-        """return the original selenium / appium driver."""
         @driver
       end
 
+      # Returns the wrapped page object model.
+      #
+      # @return [Citronella::Wrapper::PageDecorator] The page object model.
+      #
       def page
-        """return last page object model."""
         Citronella::Wrapper::PageDecorator.new(@driver, @webdriver_wait, @page,
                                                @logger)
       end
 
+      # Sets the page object model.
+      #
+      # @param [PageObject] page The page object model.
+      #
       def page=(page)
         @page = page
       end
 
+      # An alternative way for testing without using page objects.
+      # It returns a WebUi class, but can't use `page` and may cause an error.
+      # It's good for quick prototypes or writing tests.
+      #
+      # @param [Hash] args The locator details.
+      # @return [Citronella::Ui::WebUi] The web element.
+      #
+      # Usage:
+      #   web.ui(name: 'q').get_element.text
+      #   web.ui(name: 'q').get_element.click
+      #
       def locate(args)
-        """
-        an alternative way for testing without page object and return WebUi
-        class, but can't use page and back method and causing an error.
-        good for quick prototype / write a tests.
-
-        Args:
-            by
-            value
-
-        Usage:
-            web.ui(name: 'q').get_element.text
-            web.ui(name: 'q').get_element.click
-        """
         Citronella::Ui::WebUi.new(@driver, @webdriver_wait, @logger, args,
                                   __method__.to_s,
                                   self.class.name.split('::').last.to_s)
       end
 
+      # Executes JavaScript to wait for the page to fully load.
+      #
+      # @param [Integer] wait The number of times to check the page's ready state.
+      #
       def ready_state(wait)
-        """execute javascript for page to fully load"""
         wait.times do |i|
           return if driver.execute_script(
             "return document.readyState") == "complete"
@@ -92,8 +100,11 @@ module Citronella
         end
       end
 
+      # Overrides the `webdriver_wait` value.
+      #
+      # @param [Integer] wait The new value for `webdriver_wait`.
+      #
       def webdriver_wait(wait)
-        """override webdriver wait."""
         @webdriver_wait = wait
       end
     end
