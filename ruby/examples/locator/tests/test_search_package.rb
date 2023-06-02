@@ -1,6 +1,6 @@
 require 'test/unit'
 require "selenium-webdriver"
-require_relative '../../../lib/citronella'
+require "citronella"
 
 
 class PackageSearchTest < Test::Unit::TestCase
