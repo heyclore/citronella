@@ -30,13 +30,12 @@ const WebUi = require('./web-ui')
 class WebPage{
   #driver;
   #wait;
-  #pageLists;
+  #page;
   #logger;
 
   constructor(driver, wait, logger){
     this.#driver = driver;
     this.#wait = wait;
-    this.#pageLists = new PageTab;
     this.#logger = logger
   }
 
@@ -44,28 +43,17 @@ class WebPage{
     return this.#driver
   }
 
+  set page(page){
+    this.#page = page
+  }
+
   get page(){
-    return new PageDecorator({driver:this.#driver, webdriverWait:this.#wait, pageLists:this.#pageLists, logger:this.#logger})
-  }
-
-  pageObject(newPage, url=false){
-    this.#pageLists.unshift(newPage)
-    if (url){
-      let path = newPage.URL
-      if(!path){
-        throw new Error(`the 'static URL' variable doesn't exist in ${newPage.name}`);
-      }
-      this.#driver.get(newPage.URL)
-    }
-  }
-
-  get back(){
-    this.#driver.navigate().back()
-    this.#pageLists.shift
+    return new PageDecorator({driver:this.#driver, webdriverWait:this.#wait,
+      page:this.#page, logger:this.#logger})
   }
 
   locate(by){
-  return new WebUi(this.#driver, this.#wait, this.#pageLists, by, null, {logger:false})
+  return new WebUi(this.#driver, this.#wait, this.#page, by, null, {logger:false})
   }
 
   readyState(timeout=10000){

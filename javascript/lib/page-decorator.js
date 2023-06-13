@@ -28,11 +28,16 @@ class PageDecorator {
   constructor(args) {
     return new Proxy(this, {
       get(target, prop) {
-        let currentPage = new args.pageLists.currentPage()
+        let currentPage = new args.page()
         if(prop in currentPage){
           let obj = currentPage[prop]
-          let ui =  new WebUi(args.driver, args.webdriverWait, args.pageLists, obj.by, obj.page, {logger: args.logger, cls: currentPage.constructor.name, method: prop})
-          return ui
+          if(obj.by){
+            let ui =  new WebUi(args.driver, args.webdriverWait, obj.by,
+              {logger: args.logger, cls: currentPage.constructor.name, method: prop})
+            return ui
+          }
+          return new PageDecorator({driver:args.driver, webdriverWait:args.wait,
+            page:obj, logger:args.logger})
         }
         throw new Error(`'${prop}' doesn't exist in '${currentPage.constructor.name}'`);
       }

@@ -2,22 +2,32 @@ const { By, Builder} = require('selenium-webdriver');
 const { ui, WebPage, PlaceholderPage } = require('citronella')
 const ContentsPage = require('../example/page/contents-page')
 
+class Webb{
+  get(x){return this;}
+  wait(x){return this;}
+  sendKeys(x){return this;}
+  click(x){return this;}
+  navigate(x){return this;}
+  back(x){return this;}
+  quit(x){return this;}
+}
+
 async function page()
 {
   let driver = await new Builder().forBrowser('chrome').build();
+  //let driver = new Webb();
   let web = new WebPage(driver, 10000, true);
-  await web.pageObject(new ContentsPage().homePage);
+  web.page = ContentsPage;
   await web.driver.get('https://www.npmjs.com/')
-  await web.page.searchPackagesInput.sendKeys('selenium')
-  await web.page.searchButton.click()
-  let ElementsResult = await web.page.searchResultLists.getElements()
+  await web.page.homePage.searchPackagesInput.sendKeys('selenium')
+  await web.page.homePage.searchButton.click()
+  let ElementsResult = await web.page.searchPage.searchResultLists.getElements()
   let textList = []
   for (let i in ElementsResult) {
     textList.push(await ElementsResult[i].getText())
   }
   console.log(textList)
   await web.driver.get('https://www.npmjs.com/package/citronella')
-  await web.back
   web.driver.quit()
 }
 

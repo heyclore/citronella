@@ -32,18 +32,14 @@ class WebUi
 {
   #driver;
   #wait;
-  #pageLists;
   #locator;
-  #page;
   #logger;
 
-  constructor(driver, wait, pageLists, locator, page, logger)
+  constructor(driver, wait, locator, logger)
   {
     this.#driver = driver;
     this.#wait = wait;
-    this.#pageLists = pageLists;
     this.#locator = locator;
-    this.#page = page;
     this.#logger = logger;
   }
 
@@ -60,7 +56,6 @@ class WebUi
     if(redirect == false){
       return
     }
-    this.#pageLists.unshift(this.#page)
   }
 
   async sendKeys(text, args)
@@ -71,9 +66,6 @@ class WebUi
     if(args){
       if(args.return == true || args.enter == true){
         await el.sendKeys(Key.ENTER)
-        if(this.#page && (args.redirect == undefined || args.redirect != false)){
-          this.#pageLists.unshift(this.#page)
-        }
       }
     }
   }
