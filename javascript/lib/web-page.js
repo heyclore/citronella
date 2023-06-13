@@ -24,7 +24,6 @@
 
 const { until } = require('selenium-webdriver');
 const PageDecorator = require('./page-decorator')
-const PageTab = require('./page-tab')
 const WebUi = require('./web-ui')
 
 class WebPage{

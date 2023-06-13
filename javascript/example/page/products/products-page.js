@@ -1,8 +1,8 @@
 const { By } = require('selenium-webdriver');
 const { ui } = require('citronella')
-const ContentsPage = require('../contents-page')
+const MenuBar = require('../components/menu-bar')
 
-class ProductsPage extends new ContentsPage().menuBar{
+class ProductsPage extends MenuBar{
   get createFreeButton()
   {
     return ui(By.css('a.db[href="/signup"'));

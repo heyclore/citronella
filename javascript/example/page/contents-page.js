@@ -1,7 +1,4 @@
 class ContentsPage{
-  get menuBar(){
-    return require('./components/menu-bar')
-  }
 
   get homePage(){
     return require('./home/home-page')

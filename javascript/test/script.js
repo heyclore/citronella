@@ -1,5 +1,5 @@
 const { By, Builder} = require('selenium-webdriver');
-const { ui, WebPage, PlaceholderPage } = require('citronella')
+const { ui, WebPage } = require('citronella')
 const ContentsPage = require('../example/page/contents-page')
 
 class Webb{
@@ -14,8 +14,8 @@ class Webb{
 
 async function page()
 {
-  let driver = await new Builder().forBrowser('chrome').build();
-  //let driver = new Webb();
+  //let driver = await new Builder().forBrowser('chrome').build();
+  let driver = new Webb();
   let web = new WebPage(driver, 10000, true);
   web.page = ContentsPage;
   await web.driver.get('https://www.npmjs.com/')

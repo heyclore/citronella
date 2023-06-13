@@ -1,38 +1,37 @@
 const { By } = require('selenium-webdriver');
 const { ui } = require('citronella')
-const ContentsPage = require('../contents-page')
 
 class MenuBar{
   get npmHomepageIcon(){
-    return ui(By.css('a[href="/"]'), new ContentsPage().homePage);
+    return ui(By.css('a[href="/"]'));
   }
 
   get proButton(){
-    return ui(By.id('nav-pro-link'), new ContentsPage().proPage);
+    return ui(By.id('nav-pro-link'));
   }
 
   get teamsButton(){
-    return ui(By.id('nav-teams-link'), new ContentsPage().teamsPage);
+    return ui(By.id('nav-teams-link'));
   }
 
   get pricingButton(){
-    return ui(By.id('nav-pricing-link'), new ContentsPage().productsPage);
+    return ui(By.id('nav-pricing-link'));
   }
 
   get signupButton(){
-    return ui(By.id('signup'), new ContentsPage().signupPage);
+    return ui(By.id('signup'));
   }
 
   get signinButton(){
-    return ui(By.id('signin'), new ContentsPage().loginPage);
+    return ui(By.id('signin'));
   }
 
   get searchPackagesInput(){
-    return ui(By.name('q'), new ContentsPage().searchPage);
+    return ui(By.name('q'));
   }
 
   get searchButton(){
-    return ui(By.css('button[type="submit"]'), new ContentsPage().searchPage);
+    return ui(By.css('button[type="submit"]'));
   }
 }
 

@@ -1,8 +1,8 @@
 const { By } = require('selenium-webdriver');
 const { ui } = require('citronella')
-const ContentsPage = require('../../contents-page')
+const MenuBar = require('../../components/menu-bar')
 
-class ProPage extends new ContentsPage().menuBar{
+class ProPage extends MenuBar{
   get getStartedButton()
   {
     return ui(By.css('a[href="/signup"'));
