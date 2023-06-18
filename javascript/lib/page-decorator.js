@@ -25,19 +25,18 @@
 const WebUi = require('./web-ui')
 
 class PageDecorator {
-  constructor(args) {
+  constructor(driver, wait, page, logger) {
     return new Proxy(this, {
       get(target, prop) {
-        let currentPage = new args.page()
+        let currentPage = new page()
         if(prop in currentPage){
           let obj = currentPage[prop]
           if(obj.by){
-            let ui =  new WebUi(args.driver, args.webdriverWait, obj.by,
-              {logger: args.logger, cls: currentPage.constructor.name, method: prop})
+            let ui =  new WebUi(driver, wait, obj.by,
+              {logger: logger, cls: currentPage.constructor.name, method: prop})
             return ui
           }
-          return new PageDecorator({driver:args.driver, webdriverWait:args.wait,
-            page:obj, logger:args.logger})
+          return new PageDecorator(driver, wait, obj, logger)
         }
         throw new Error(`'${prop}' doesn't exist in '${currentPage.constructor.name}'`);
       }

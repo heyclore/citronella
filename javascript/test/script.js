@@ -14,8 +14,8 @@ class Webb{
 
 async function page()
 {
-  //let driver = await new Builder().forBrowser('chrome').build();
-  let driver = new Webb();
+  let driver = await new Builder().forBrowser('chrome').build();
+  //let driver = new Webb();
   let web = new WebPage(driver, 10000, true);
   web.page = ContentsPage;
   await web.driver.get('https://www.npmjs.com/')
@@ -35,11 +35,10 @@ async function locator()
 {
   let driver = await new Builder().forBrowser('chrome').build();
   let web = new WebPage(driver, 10000, true);
-  await web.pageObject(new ContentsPage().homePage, url=true);
+  await web.driver.get('https://www.npmjs.com/')
   await web.readyState()
   await web.locate(By.name('q')).sendKeys('selenium')
   await web.locate(By.css('button[type="submit"]')).click()
-  await web.back
   web.driver.quit()
 }
 
@@ -47,27 +46,27 @@ async function webUi()
 {
   let driver = await new Builder().forBrowser('chrome').build();
   let web = new WebPage(driver, 10000, true);
-  await web.pageObject(new ContentsPage().homePage, url=true);
-  await web.page.searchPackagesInput.untilElementLocated()
-  await web.page.searchPackagesInput.untilElementsLocated()
-  await web.page.searchPackagesInput.untilElementIsVisible()
-  //await web.page.searchPackagesInput.untilElementIsNotVisible()
-  await web.page.searchPackagesInput.untilElementIsEnabled()
-  //await web.page.searchPackagesInput.untilElementIsDisabled()
-  //await web.page.searchPackagesInput.untilElementIsSelected()
-  await web.page.searchPackagesInput.untilElementIsNotSelected()
+  web.page = ContentsPage;
+  await web.driver.get('https://www.npmjs.com/')
+  await web.page.homePage.searchPackagesInput.untilElementLocated()
+  await web.page.homePage.searchPackagesInput.untilElementsLocated()
+  await web.page.homePage.searchPackagesInput.untilElementIsVisible()
+  //await web.page.homePage.searchPackagesInput.untilElementIsNotVisible()
+  await web.page.homePage.searchPackagesInput.untilElementIsEnabled()
+  //await web.page.homePage.searchPackagesInput.untilElementIsDisabled()
+  //await web.page.homePage.searchPackagesInput.untilElementIsSelected()
+  await web.page.homePage.searchPackagesInput.untilElementIsNotSelected()
   web.driver.quit()
 }
 
 async function key()
 {
   let driver = await new Builder().forBrowser('chrome').build();
-  //let driver = await new WebdriverDummy()
   let web = new WebPage(driver, 10000, true);
-  await web.pageObject(new ContentsPage().homePage);
+  web.page = ContentsPage;
   await web.driver.get('https://www.npmjs.com/')
-  await web.page.searchPackagesInput.sendKeys('selenium', {enter: true})
-  let ElementsResult = await web.page.searchResultLists.getElements()
+  await web.page.homePage.searchPackagesInput.sendKeys('selenium', {enter: true})
+  let ElementsResult = await web.page.searchPage.searchResultLists.getElements()
   let textList = []
   for (let i in ElementsResult) {
     textList.push(await ElementsResult[i].getText())
@@ -76,7 +75,11 @@ async function key()
   await web.driver.quit()
 }
 
-page()
-//locator()
-//webUi()
-//key()
+async function main()
+{
+  await page()
+  await locator()
+  await webUi()
+  await key()
+}
+main()

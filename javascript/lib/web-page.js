@@ -47,16 +47,22 @@ class WebPage{
   }
 
   get page(){
-    return new PageDecorator({driver:this.#driver, webdriverWait:this.#wait,
-      page:this.#page, logger:this.#logger})
+    return new PageDecorator(this.#driver, this.#wait,
+      this.#page, this.#logger)
   }
 
   locate(by){
-  return new WebUi(this.#driver, this.#wait, this.#page, by, null, {logger:false})
+  return new WebUi(this.#driver, this.#wait, by, {logger: this.#logger,
+    cls: this.locate.name, method: by})
   }
 
   readyState(timeout=10000){
-    this.driver.wait(this.driver.executeScript('return document.readyState === "complete";'), timeout)
+    this.driver.wait(this.driver.executeScript(
+      'return document.readyState === "complete";'), timeout)
+  }
+
+  sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
 
