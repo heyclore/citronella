@@ -10,7 +10,7 @@ webdriver extension with a page object wrapper.
 ## Example Tests
 
 ```javascript
-const { By, Builder } = require("selenium-webdriver");
+const { Builder } = require("selenium-webdriver");
 const { WebPage } = require("citronella");
 const ContentsPage = require("../page/contents-page");
 const assert = require("assert");
@@ -56,7 +56,11 @@ describe("test navigation", function () {
 
 Even though this module is mainly designed for the page object model, it can also be used without it for quick prototyping or mockups, etc.
 ```javascript
-describe("test locate method", function () {
+const { By, Builder } = require("selenium-webdriver");
+const { WebPage } = require("citronella");
+const assert = require("assert");
+
+describe("test search package with locate method", function () {
   this.timeout(10000);
   before(async function () {
     driver = await new Builder().forBrowser("chrome").build();
@@ -68,7 +72,7 @@ describe("test locate method", function () {
     driver.quit();
   });
 
-  it("search result", async function () {
+  it("check if a package exists in the list of results", async function () {
     await web.locate(By.name("q")).sendKeys("citronella");
     await web.locate(By.css('button[type="submit"]')).click();
     await web.locate(By.name("foo")).getElements();
@@ -85,7 +89,7 @@ ___
 ## Install Package
 
 ```bash
-pip install citronella
+npm i citronella
 ```
 
 ___
@@ -93,41 +97,39 @@ ___
 
 There are only two modules import in this package:
 
-* The first module is for conftest.py.
+* The first module is for the test script.
 
-### Selenium
+```javascript
+const { Builder } = require("selenium-webdriver");
+const { WebPage } = require("citronella");
 
-```python
-import pytest
-from selenium import webdriver
-from citronella import WebPage
-
-
-@pytest.fixture(autouse=True, scope='class')
-def web(request):
-    driver = webdriver.Chrome()
-    yield WebPage(driver)
-    driver.quit()
+describe("test navigation", function () {
+  this.timeout(10000);
+  before(async function () {
+    driver = await new Builder().forBrowser("chrome").build();
+    web = new WebPage(driver, 10000, true);
+  });
+});
 ```
 
-### Selenium
+* The second module are for the page object model.
 
-```python
-from selenium.webdriver.common.by import By
-from citronella import ui
-from Pages.contents_page import ContentsPage
+```javascript
+const { By } = require("selenium-webdriver");
+const { ui } = require("citronella");
+const MenuBar = require("../components/menu-bar");
 
+class HomePage extends MenuBar {
+  get signUpForFreeButton() {
+    return ui(By.css('div.w-100 a[href="/signup"]'));
+  }
 
-class HomePage(ContentsPage().header()):
+  get signUpForFreeButton() {
+    return ui(By.css('div.w-100 a[href="/products/pro"]'));
+  }
+}
 
-    def some_button(self):
-        return ui(By.XPATH, '//a[@name="foo"]')
-
-    def search_input(self):
-        return ui(By.ID, 'search')
-
-    def search_button(self):
-        return ui(By.NAME, 'search-button')
+module.exports = HomePage;
 ```
 
 ___
