@@ -137,18 +137,13 @@ ___
 
 see full [Page object](https://github.com/heyclore/citronella/tree/main/javascript/example/page) example
 
-1. Straightforward approach: This method requires importing the page object for each test.
 ```javascript
-const { By } = require("selenium-webdriver");
-const { ui } = require("citronella");
+const { By, Builder } = require("selenium-webdriver");
+const { ui, WebPage } = require("citronella");
 
 class HomePage {
   get signUpForFreeButton() {
     return ui(By.css('div.w-100 a[href="/signup"]'));
-  }
-
-  get signUpForFreeButton() {
-    return ui(By.css('div.w-100 a[href="/products/pro"]'));
   }
 }
 
@@ -198,27 +193,23 @@ ___
 
 ###### Args:
 - driver / webdriver
-
-###### Kwargs (optional):
-- webdriver_wait `number(seconds)`, default value is `10`
-- logger `bool`, default value is `True`
+- wait (ms)
+- logger (bool)
 
 ###### Method Lists:
 | Method Name        | Args*       | Kwargs**         | Note |
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | -           | -                | return selenium `webdriver` object |
-| locate             | by, value   | -                | similar as`driver.get_element` args |
+| locate             | by          | -                | similar as`driver.get_element` args |
 | page               | page object | -                | setter |
 | page               | -           | -                | getter |
-| webdriver_wait     | number(sec) | -                |      |
-| ready_state        | number(sec) | -                | execute javascript `document.readyState` manually, default timeout is `30` |
-| sleep              | number(sec) | -                |      |
+| readyState         | timeout(ms) | -                | execute javascript `document.readyState` manually |
+| sleep              | number(ms)  | -                |      |
 
 ### citronella.ui / citronella.WebUi
 
 ###### Args:
 - by
-- value
 
 ###### Method Lists:
 | Method Name   | Args*  | Kwargs**           | Note |
