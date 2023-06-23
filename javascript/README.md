@@ -135,78 +135,60 @@ module.exports = HomePage;
 ___
 ## Page Object Design / Strategy
 
-There's a two ways to create a page object for `WebPage`:
+see full [Page object](https://github.com/heyclore/citronella/tree/main/javascript/example/page) example
 
 1. Straightforward approach: This method requires importing the page object for each test.
-```python
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from citronella import WebPage, ui
+```javascript
+const { By } = require("selenium-webdriver");
+const { ui } = require("citronella");
 
+class HomePage {
+  get signUpForFreeButton() {
+    return ui(By.css('div.w-100 a[href="/signup"]'));
+  }
 
-class HomePage:
-    def auth_buton(self):
-        return ui(By.XPATH, '//a[@name="foo"]')
+  get signUpForFreeButton() {
+    return ui(By.css('div.w-100 a[href="/products/pro"]'));
+  }
+}
 
-class LoginPage:
-    def email_input(self):
-        return ui(By.ID, 'email')
+class SignupPage {
+  get usernameInput() {
+    return ui(By.id("signup_name"));
+  }  
 
-    def password_input(self):
-        return ui(By.ID, 'password')
+  get passwordInput() {
+    return ui(By.id("signup_password"));
+  }
 
-    def login_buton(self):
-        return ui(By.ID, 'login')
+  get signUpButton() {
+    return ui(By.id("signup_button"));
+  }
+}
 
-driver = webdriver.Chrome()
-web = WebPage(driver)
-web.driver.get('https://foobarbaz.com/')
-web.page = HomePage
-web.page.auth_button.click()
-web.page = LoginPage
-web.page.email_input.send_keys('foo')
-web.page.password_input.send_keys('bar')
-web.page.login_button.click()
-```
+class ContentsPage {
+  get homePage() {
+    return HomePage;
+  }
 
-2. Lazy loading approach: This method is slightly more complex but offers the benefit of lazy loading.
-see [ContentsPage example](https://github.com/heyclore/citronella/blob/main/python/example/selenium/Pages/contents_page.py)
-or this [Page object example](https://github.com/heyclore/citronella/tree/main/python/example/selenium/Pages)
-```python
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from citronella import WebPage, ui
+  get signupPage() {
+    return SignupPage;
+  }
+}
 
+main(async function () {
+  driver = await new Builder().forBrowser("chrome").build();
+  web = new WebPage(driver, 10000, true);
+  web.page = ContentsPage;
+  await web.driver.get("https://www.npmjs.com/");
 
-class ContentsPage:
-    def home_page(self):
-        return HomePage
+  await web.page.homePage.signUpForFreeButton.click();
+  await web.page.signupPage.usernameInput.sendKeys("foo@bar.baz");
+  await web.page.signupPage.passwordInput.sendKeys("FizzBuzz");
+  await web.page.signupPage.signUpButton.click();
+}
 
-    def login_page(self):
-        return LoginPage
-
-class HomePage:
-    def auth_buton(self):
-        return ui(By.XPATH, '//a[@name="foo"]')
-
-class LoginPage:
-    def email_input(self):
-        return ui(By.ID, 'email')
-
-    def password_input(self):
-        return ui(By.ID, 'password')
-
-    def login_buton(self):
-        return ui(By.ID, 'login')
-
-driver = webdriver.Chrome()
-web = WebPage(driver)
-web.driver.get('https://foobarbaz.com/')
-web.page = ContentsPage
-web.page.home_page.auth_button.click()
-web.page.login_page.email_input.send_keys('foo')
-web.page.login_page.password_input.send_keys('bar')
-web.page.login_page.login_button.click()
+main();
 ```
 
 ___
