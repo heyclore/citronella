@@ -214,18 +214,18 @@ ___
 ###### Method Lists:
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
-| send_keys     | text   | clear `bool`, return_key `bool` |     |
+| sendKeys      | text   | return_key `bool`  |      |
 | click         | -      | -                  |      |
-| get_element   | -      | -                  |      |
-| get_elements  | -      | -                  |      |
-| ec_element_to_be_clickable | -    | -    | wrapper of `EC` / `excpected_condition` |
-| ec_presence_of_element_located | -    | -    | wrapper of `EC` / `excpected_condition` |
-| ec_presence_of_all_elements_located | -    | -    | wrapper of `EC` / `excpected_condition` |
-| ec_visibility_of_element_located | -    | -    | wrapper of `EC` / `excpected_condition` |
-| ec_visibility_of_all_elements_located | -    | -    | wrapper of `EC` / `excpected_condition` |
-| ec_visibility_of_any_elements_located | -    | -    | wrapper of `EC` / `excpected_condition` |
-| ec_invisibility_of_element_located | -    | -    | wrapper of `EC` / `excpected_condition` |
-| ec_element_located_to_be_selected | -    | -    | wrapper of `EC` / `excpected_condition` |
+| getElement    | -      | -                  |      |
+| getElements   | -      | -                  |      |
+| untilElementLocated | -    | -    | wrapper of `until` / `elementLocated` |
+| untilElementsLocated | -    | -    | wrapper of `until` / `elementsLocated` |
+| untilElementIsVisible | -    | -    | wrapper of `until` / `elementIsVisible` |
+| untilElementIsNotVisible | -    | -    | wrapper of `until` / `elementIsNotVisible` |
+| untilElementIsEnabled | -    | -    | wrapper of `until` / `elementIsEnabled` |
+| untilElementIsDisabled | -    | -    | wrapper of `until` / `elementIsDisabled` |
+| untilElementIsSelected | -    | -    | wrapper of `until` / `elementIsSelected` |
+| untilElementIsNotSelected | -    | -    | wrapper of `until` / `elementIsNotSelected` |
 
 
 ## Testing powered by
