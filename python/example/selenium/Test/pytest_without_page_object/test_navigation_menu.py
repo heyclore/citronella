@@ -7,16 +7,16 @@ class TestWithoutPageObject:
     def test_navigation(self, web):
         web.driver.get('https://pypi.org/')
 
-        web.locate(By.XPATH, '//li[@class="horizontal-menu__item"][1]').get_element().click()
+        web.locate(By.XPATH, '//li[@class="horizontal-menu__item"][1]').click()
         assert 'Help' in web.driver.title
 
-        web.locate(By.XPATH, '//li[@class="horizontal-menu__item"][2]').get_element().click()
+        web.locate(By.XPATH, '//li[@class="horizontal-menu__item"][2]').click()
         assert 'Sponsors' in web.driver.title
 
-        web.locate(By.XPATH, '//li[@class="horizontal-menu__item"][3]').get_element().click()
+        web.locate(By.XPATH, '//li[@class="horizontal-menu__item"][3]').click()
         assert 'Log' in web.driver.title
 
-        web.locate(By.XPATH, '//li[@class="horizontal-menu__item"][4]').get_element().click()
+        web.locate(By.XPATH, '//li[@class="horizontal-menu__item"][4]').click()
         assert 'Create' in web.driver.title
 
     def test_search_package(self, web):
