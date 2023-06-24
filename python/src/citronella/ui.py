@@ -24,7 +24,7 @@
 from .deprecated import logwarning
 
 
-def ui(by, value, page=None):
+def ui(by, value):
     """
     forward the data to page decorator and wrap into WebUi class.
 
@@ -35,11 +35,6 @@ def ui(by, value, page=None):
     Usage:
         ui(By.NAME, 'q')
     """
-    ##
-    if page:
-        logwarning('"page" kwargs for ui module is deprecated and will '
-        'remove for the next version.')
-    ##
     return {
             'by': by,
             'value': value,

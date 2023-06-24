@@ -62,23 +62,6 @@ class WebPage:
         """return the original selenium / appium driver."""
         return self._driver
 
-    ##
-    def page_object(self, new_page, get_start=False):
-        """
-        initialize page object module object.
-
-        Args:
-            page_object_model
-
-        Usage:
-            web.page_object(ContentsPage)
-        """
-        self._contents_page = new_page
-        logwarning('\n\t "page_object" method is deprecated and will remove for the next version'
-                   '\n\t use "web.page = HomePage" instead \n\t or \n\t "web.page = ContentsPage"'
-                   )
-    ##
-
     @property
     def page(self):
         """return a page decorator object of ContentsPage."""
@@ -110,28 +93,6 @@ class WebPage:
         """
         return WebUi(self._driver, self._webdriver_wait, self._logger, by,
                      value, self.locate.__name__, self.__class__.__name__)
-
-    ##
-    @property
-    def back(self):
-        """return to previous page."""
-        self.driver.back()
-        logwarning('"back" method is deprecated and will remove for the next '
-                   'version.\n\t use "web.driver.back()" instead.')
-
-    @property
-    def get_window_size(self):
-        """
-        get current windows size.
-
-        Usage:
-            height = web.get_window_size.height
-            width = web.get_window_size.width
-        """
-        logwarning('"get_window_size" method is deprecated and will remove for the next '
-                   'version.\n\t use "web.driver.get_window_size()" instead.')
-        return SimpleNamespace(**self.driver.get_window_size())
-    ##
 
     def ready_state(self, timeout=30):
         """execute javascript for page to fully load"""

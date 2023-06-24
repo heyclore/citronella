@@ -23,4 +23,3 @@
 
 from .ui import ui
 from .web_page import WebPage
-from .placeholder_page import PlaceholderPage

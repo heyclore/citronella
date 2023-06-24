@@ -8,7 +8,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="citronella",
-    version="0.0.6",
+    version="1.0.1",
     license="MIT",
     description="Webdriver Extension with Page Object Wrapper",
     long_description=long_description,
