@@ -214,7 +214,7 @@ ___
 ###### Method Lists:
 | Method Name   | Args*  | Kwargs**           | Note |
 | ------------- |:------:|:------------------:|:----:|
-| sendKeys      | text   | return_key `bool`  |      |
+| sendKeys      | text, returnKey(bool) | -   |      |
 | click         | -      | -                  |      |
 | getElement    | -      | -                  |      |
 | getElements   | -      | -                  |      |
