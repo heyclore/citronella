@@ -75,7 +75,7 @@ describe("test search package with locate method", function () {
   it("check if a package exists in the list of results", async function () {
     await web.locate(By.name("q")).sendKeys("citronella");
     await web.locate(By.css('button[type="submit"]')).click();
-    await web.locate(By.name("foo")).getElements();
+    let ElementsResult = await web.locate(By.name("foo")).getElements();
     let textList = [];
     for (let i in ElementsResult) {
       textList.push(await ElementsResult[i].getText());
