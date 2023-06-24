@@ -92,7 +92,7 @@ class WebPage:
             web.locate(By.NAME, 'q').get_element().click()
         """
         return WebUi(self._driver, self._webdriver_wait, self._logger, by,
-                     value, self.locate.__name__, self.__class__.__name__)
+                     value, f'{by}: {value}', self.locate.__name__)
 
     def ready_state(self, timeout=30):
         """execute javascript for page to fully load"""

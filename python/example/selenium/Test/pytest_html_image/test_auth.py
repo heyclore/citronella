@@ -10,7 +10,7 @@ class TestAuth:
 
         web.page.login_page.username_input.send_keys('foo')
         web.page.login_page.password_input.send_keys('bar')
-        web.page.login_page.login_button.click(switch_page=False)
+        web.page.login_page.login_button.click()
         assert 'Log' in web.driver.title
     
     def test_login_success(self, web):

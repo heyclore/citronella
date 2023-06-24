@@ -1,9 +1,9 @@
 from selenium.webdriver.common.by import By
 from citronella import ui
-from Pages.contents_page import ContentsPage
+from Pages.components import Header, Footer
 
 
-class HelpPage(ContentsPage().header(), ContentsPage().footer()):
+class HelpPage(Header, Footer):
     def basics_link(self):
         return ui(By.XPATH, '//a[@href="#basics"]')
 

@@ -1,17 +1,5 @@
 class ContentsPage:
 
-    def header(self):
-        from Pages.components import Header
-        return Header
-
-    def footer(self):
-        from Pages.components import Footer
-        return Footer
-
-    def sidebar_account(self):
-        from Pages.components import SidebarAccount
-        return SidebarAccount
-
     def home_page(self):
         from Pages.home.home_page import HomePage
         return HomePage

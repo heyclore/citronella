@@ -1,7 +1,7 @@
 from appium.webdriver.common.appiumby import AppiumBy
 from citronella import ui
-from Pages.contents_page import ContentsPage
+from Pages.navigation_menu import NavigationMenu
 
 
-class HomePage(ContentsPage().navigation_menu()):
+class HomePage(NavigationMenu):
     pass

@@ -1,9 +1,9 @@
 from selenium.webdriver.common.by import By
 from citronella import ui
-from Pages.contents_page import ContentsPage
+from Pages.components import Header, Footer
 
 
-class SiteMapPage(ContentsPage.header(), ContentsPage.footer()):
+class SiteMapPage(Header, Footer):
     def pypi_home_link(self):
         return ui(By.CLASS_NAME, 'site-header__logo')
 

@@ -1,7 +1,7 @@
 import unittest, logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from citronella import WebPage, ui, PlaceholderPage
+from citronella import WebPage, ui
 
 
 class HomePage:
@@ -9,7 +9,7 @@ class HomePage:
         return ui(By.ID, 'search')
 
     def search_button(self):
-        return ui(By.XPATH, '//button[@type="submit"]/i', SearchPage)
+        return ui(By.XPATH, '//button[@type="submit"]/i')
 
 
 class SearchPage:
@@ -27,10 +27,11 @@ class SearchPackage(unittest.TestCase):
     
     def test_help_page(self):
         self.web.driver.get('https://pypi.org/')
-        self.web.page_object(HomePage)
+        self.web.page = HomePage
 
         self.web.page.search_input.send_keys('citronella')
         self.web.page.search_button.click()
+        self.web.page = SearchPage
         result = self.web.page.search_lists_result.get_elements()
         assert 'citronella' in [x.text for x in result]
 
