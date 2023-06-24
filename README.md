@@ -4,7 +4,7 @@
 [![gem version](https://badge.fury.io/rb/citronella.svg)](https://badge.fury.io/rb/citronella)
 [![npm version](https://badge.fury.io/js/citronella.svg)](https://badge.fury.io/js/citronella)
 
-Citronella is a selenium and/or appium webdriver extension with page object wrapper for create a tests a bit simple.
+webdriver extension with a page object wrapper.
 
 ## Install Package
 
