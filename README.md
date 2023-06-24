@@ -8,17 +8,17 @@ Citronella is a selenium and/or appium webdriver extension with page object wrap
 
 ## Install Package
 
-### python
+### [Python](https://github.com/heyclore/citronella/tree/main/python)
 ```bash
 pip install citronella
 ```
 
-### ruby
+### [Ruby](https://github.com/heyclore/citronella/tree/main/ruby)
 ```bash
 gem install citronella
 ```
 
-### node.js (under development)
+### [Javascript](https://github.com/heyclore/citronella/tree/main/javascript)
 ```bash
 npm i citronella
 ```
