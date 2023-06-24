@@ -46,6 +46,8 @@ class NavigationTest < Test::Unit::TestCase
   end
 end
 ```
+![alt terminal](https://github.com/heyclore/citronella/blob/main/ruby/screenshot/terminal.png?raw=true)
+
 Even though this module is mainly designed for the page object model, it can also be used without it for quick prototyping or mockups, etc.
 ```ruby
 require 'test/unit'
@@ -66,12 +68,14 @@ class PackageSearchTest < Test::Unit::TestCase
 
   def test_search_package
     @web.driver.navigate.to "https://rubygems.org/"
-    @web.locate(id: 'home_query').get_element.send_keys('citronella')
-    @web.locate(class: 'home__search__icon').get_element.click
+    @web.locate(id: 'home_query').send_keys('citronella')
+    @web.locate(class: 'home__search__icon').click
     assert(@web.locate(class: 'gems__gem__name').get_element.text, 'citronella')
   end
 end
 ```
+![alt terminal](https://github.com/heyclore/citronella/blob/main/ruby/screenshot/terminal2.png?raw=true)
+
 ___
 ## Install Package
 
