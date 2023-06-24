@@ -84,8 +84,7 @@ module Citronella
       #
       def locate(args)
         Citronella::Ui::WebUi.new(@driver, @webdriver_wait, @logger, args,
-                                  __method__.to_s,
-                                  self.class.name.split('::').last.to_s)
+                                  args, __method__.to_s)
       end
 
       # Executes JavaScript to wait for the page to fully load.
