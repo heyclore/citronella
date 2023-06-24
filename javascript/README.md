@@ -4,9 +4,6 @@
 
 webdriver extension with a page object wrapper.
 
-![alt terminal](https://github.com/heyclore/citronella/blob/main/javascript/screenshot/terminal.png?raw=true)
-![alt terminal2](https://github.com/heyclore/citronella/blob/main/javascript/screenshot/terminal2.png?raw=true)
-
 ## Example Tests
 
 ```javascript
@@ -53,6 +50,7 @@ describe("test navigation", function () {
   });
 });
 ```
+![alt terminal](https://github.com/heyclore/citronella/blob/main/javascript/screenshot/terminal.png?raw=true)
 
 Even though this module is mainly designed for the page object model, it can also be used without it for quick prototyping or mockups, etc.
 ```javascript
@@ -72,10 +70,11 @@ describe("test search package with locate method", function () {
     driver.quit();
   });
 
-  it("check if a package exists in the list of results", async function () {
-    await web.locate(By.name("q")).sendKeys("citronella");
+  it("results list include citronella", async function () {
+    await web.locate(By.name("q")).sendKeys("citron");
     await web.locate(By.css('button[type="submit"]')).click();
-    let ElementsResult = await web.locate(By.name("foo")).getElements();
+    let ElementsResult =
+      await web.locate(By.css('a[target="_self"]')).getElements();
     let textList = [];
     for (let i in ElementsResult) {
       textList.push(await ElementsResult[i].getText());
@@ -84,6 +83,7 @@ describe("test search package with locate method", function () {
   });
 });
 ```
+![alt terminal2](https://github.com/heyclore/citronella/blob/main/javascript/screenshot/terminal2.png?raw=true)
 
 ___
 ## Install Package
