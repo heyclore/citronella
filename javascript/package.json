@@ -1,7 +1,7 @@
 {
   "name": "citronella",
-  "version": "0.0.3",
-  "description": "Citronella is a webdriver extension with a page object wrapper",
+  "version": "1.0.0",
+  "description": "webdriver extension with a page object wrapper",
   "main": "./index.js",
   "scripts": {
     "test": "node test/script.js"
@@ -12,7 +12,10 @@
   },
   "keywords": [
     "webdriver",
-    "webdriverjs"
+    "selenium",
+    "test",
+    "unittest",
+    "page object"
   ],
   "author": "heyclore",
   "license": "MIT",
