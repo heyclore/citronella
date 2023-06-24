@@ -135,10 +135,10 @@ def web(request):
 ```python
 from selenium.webdriver.common.by import By
 from citronella import ui
-from Pages.contents_page import ContentsPage
+from Pages.components import Header
 
 
-class HomePage(ContentsPage().header()):
+class HomePage(Header):
 
     def some_button(self):
         return ui(By.XPATH, '//a[@name="foo"]')
@@ -155,10 +155,10 @@ class HomePage(ContentsPage().header()):
 ```python
 from appium.webdriver.common.appiumby import AppiumBy
 from citronella import ui
-from Pages.contents_page import ContentsPage
+from Pages.components import Header
 
 
-class HomePage(ContentsPage().header()):
+class HomePage(Header):
 
     def some_button(self):
         return ui(AppiumBy.XPATH, '//a[@name="foo"]')
