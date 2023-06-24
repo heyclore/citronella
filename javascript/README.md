@@ -200,7 +200,7 @@ ___
 | Method Name        | Args*       | Kwargs**         | Note |
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | -           | -                | return selenium `webdriver` object |
-| locate             | by          | -                | similar as`driver.get_element` args |
+| locate             | by          | -                | similar as`driver.findElement` args |
 | page               | page object | -                | setter |
 | page               | -           | -                | getter |
 | readyState         | timeout(ms) | -                | execute javascript `document.readyState` manually |
