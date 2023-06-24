@@ -218,14 +218,14 @@ ___
 | click         | -      | -                  |      |
 | getElement    | -      | -                  |      |
 | getElements   | -      | -                  |      |
-| untilElementLocated | -    | -    | wrapper of `until` / `elementLocated` |
-| untilElementsLocated | -    | -    | wrapper of `until` / `elementsLocated` |
-| untilElementIsVisible | -    | -    | wrapper of `until` / `elementIsVisible` |
-| untilElementIsNotVisible | -    | -    | wrapper of `until` / `elementIsNotVisible` |
-| untilElementIsEnabled | -    | -    | wrapper of `until` / `elementIsEnabled` |
-| untilElementIsDisabled | -    | -    | wrapper of `until` / `elementIsDisabled` |
-| untilElementIsSelected | -    | -    | wrapper of `until` / `elementIsSelected` |
-| untilElementIsNotSelected | -    | -    | wrapper of `until` / `elementIsNotSelected` |
+| untilElementLocated | -    | -    | wrapper of `webdriverWait` / `elementLocated` |
+| untilElementsLocated | -    | -    | wrapper of `webdriverWait` / `elementsLocated` |
+| untilElementIsVisible | -    | -    | wrapper of `webdriverWait` / `elementIsVisible` |
+| untilElementIsNotVisible | -    | -    | wrapper of `webdriverWait` / `elementIsNotVisible` |
+| untilElementIsEnabled | -    | -    | wrapper of `webdriverWait` / `elementIsEnabled` |
+| untilElementIsDisabled | -    | -    | wrapper of `webdriverWait` / `elementIsDisabled` |
+| untilElementIsSelected | -    | -    | wrapper of `webdriverWait` / `elementIsSelected` |
+| untilElementIsNotSelected | -    | -    | wrapper of `webdriverWait` / `elementIsNotSelected` |
 
 
 ## Testing powered by
