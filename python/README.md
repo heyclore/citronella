@@ -70,8 +70,8 @@ driver = webdriver.Chrome()
 web = WebPage(driver, webdriver_wait=20, logger=False)
 web.driver.get('https://pypi.org/')
 
-web.locate(By.ID, 'search').get_element().send_keys('citronella')
-web.locate(By.XPATH, '//button[@type="submit"]/i').get_element().click()
+web.locate(By.ID, 'search').send_keys('citronella')
+web.locate(By.XPATH, '//button[@type="submit"]/i').click()
 
 elements = web.locate(By.XPATH, '//span[@class="package-snippet__name"]')
 if elements.ec_visibility_of_all_elements_located():
