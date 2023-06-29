@@ -1,6 +1,6 @@
 {
   "name": "citronella",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "webdriver extension with a page object wrapper",
   "main": "./index.js",
   "scripts": {
