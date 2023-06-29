@@ -263,7 +263,7 @@ ___
 | Method Name        | Args*       | Kwargs**         | Note |
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | -           | -                | return selenium `webdriver` object |
-| locate             | by, value   | -                | similar as`driver.get_element` args |
+| locate             | by, value   | -                | similar as`driver.get_element` as input & return [citronella.WebUi](https://github.com/heyclore/citronella/tree/main/python#citronellaui--citronellawebui) object |
 | page               | page object | -                | setter |
 | page               | -           | -                | getter |
 | webdriver_wait     | number(sec) | -                |      |
