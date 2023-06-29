@@ -200,7 +200,7 @@ ___
 | Method Name        | Args*       | Kwargs**         | Note |
 | ------------------ |:-----------:|:----------------:|:----:|
 | driver             | -           | -                | return selenium `webdriver` object |
-| locate             | by          | -                | similar as`driver.findElement` args |
+| locate             | by          | -                | similar as`driver.findElement` as input & return [citronella.WebUi](https://github.com/heyclore/citronella/tree/main/ruby#citronellaui--citronellawebui) object |
 | page               | page object | -                | setter |
 | page               | -           | -                | getter |
 | readyState         | timeout(ms) | -                | execute javascript `document.readyState` manually |
