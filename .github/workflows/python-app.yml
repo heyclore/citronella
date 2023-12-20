@@ -27,4 +27,4 @@ jobs:
         pip install citronella
     - name: Test with pytest
       run: |
-        run: echo "Hello"
+        echo "Hello"
